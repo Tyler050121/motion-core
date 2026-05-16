@@ -35,14 +35,7 @@ namespace MotionCore.Gameplay.Character
         {
             m_CurrentMixerState.Parameter = Character.Parameters.MoveSpeed;
 
-            Vector2 move = Character.Parameters.MoveInput;
-            if (move.sqrMagnitude <= 0.0001f)
-                return;
-
-            float targetAngle = Mathf.Atan2(move.x, move.y) * Mathf.Rad2Deg;
-            Vector3 eulerAngles = Character.FacingRoot.eulerAngles;
-            eulerAngles.y = Mathf.MoveTowardsAngle(eulerAngles.y, targetAngle, m_TurnSpeed * Time.deltaTime);
-            Character.FacingRoot.eulerAngles = eulerAngles;
+            Character.Parameters.SetFacing(Character.Parameters.MoveDirection, m_TurnSpeed);
         }
 
         void PlayMoveMixer()
