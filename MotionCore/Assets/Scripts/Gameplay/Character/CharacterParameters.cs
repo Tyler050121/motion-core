@@ -24,12 +24,14 @@ namespace MotionCore.Gameplay.Character
         public bool HasFacingDirection => m_FacingDirection.sqrMagnitude > 0.0001f;
 
         public bool HasMoveInput => m_MoveInput.sqrMagnitude > 0.0001f;
+        public bool IsRunning {get; private set;}
 
-        public void SetMove(Vector2 moveInput, Vector3 moveDirection, float moveSpeed)
+        public void SetMove(Vector2 moveInput, Vector3 moveDirection, float moveSpeed, float runThresholdSpeed)
         {
             m_MoveInput = moveInput.sqrMagnitude > 1f ? moveInput.normalized : moveInput;
             m_MoveDirection = moveDirection.sqrMagnitude > 1f ? moveDirection.normalized : moveDirection;
             m_MoveSpeed = moveSpeed;
+            IsRunning = moveSpeed > runThresholdSpeed;
         }
 
         public void SetFacing(Vector3 facingDirection, float turnSpeed)

@@ -40,6 +40,7 @@ namespace MotionCore.Gameplay.Character
         void OnGUI()
         {
             GUILayout.BeginArea(new Rect(12f, 12f, 300f, 112f), GUI.skin.box);
+            // GUILayout.Label($"Current State: {m_Brain.CurrentStateType}");
             GUILayout.Label($"Move Speed: {m_Brain.MoveSpeed:0.00}");
             GUILayout.Space(4f);
             GUILayout.Label("WASD Camera-Relative Move");

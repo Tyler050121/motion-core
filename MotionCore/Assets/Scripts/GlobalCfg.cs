@@ -15,8 +15,9 @@ public enum CharacterStateType
     Dead
 }
 
-public enum CharacterStateExitMode
+public enum CharacterStateExitPhase
 {
     Locked,
-    CanCancel
+    CanCancel,
+    Finished
 }

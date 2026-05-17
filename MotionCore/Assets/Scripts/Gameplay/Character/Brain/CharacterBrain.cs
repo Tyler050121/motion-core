@@ -1,6 +1,7 @@
 using Animancer;
 using Animancer.FSM;
 using Animancer.Units;
+using Cinemachine;
 using UnityEngine;
 
 namespace MotionCore.Gameplay.Character
@@ -16,13 +17,17 @@ namespace MotionCore.Gameplay.Character
         [SerializeField] float m_RunSpeed = 3f;
         [SerializeField] float m_WalkSpeedChangeRate = 8f;
         [SerializeField] float m_RunSpeedChangeRate = 3f;
+        [SerializeField] CinemachineFreeLook m_FreeLookCamera;
 
+        float m_RunThresholdSpeed;
         StateMachine<CharacterState>.InputBuffer m_InputBuffer;
 
         public float MoveSpeed => m_Character.Parameters.MoveSpeed;
+        // public CharacterStateType CurrentStateType => m_Character.StateMachine.CurrentState.Type;
 
         void Awake()
         {
+            m_RunThresholdSpeed = (m_WalkSpeed + m_RunSpeed) * 0.5f;
             m_InputBuffer = new StateMachine<CharacterState>.InputBuffer(m_Character.StateMachine);
         }
 
@@ -57,16 +62,15 @@ namespace MotionCore.Gameplay.Character
             float speedChangeRate = targetSpeed <= m_WalkSpeed ? m_WalkSpeedChangeRate : m_RunSpeedChangeRate;
             float moveSpeed = Mathf.MoveTowards(m_Character.Parameters.MoveSpeed, targetSpeed, speedChangeRate * Time.deltaTime);
 
-            Vector3 forward = Camera.main.transform.forward;
-            Vector3 right = Camera.main.transform.right;
-            forward.y = 0f;
-            right.y = 0f;
+            Quaternion cameraYaw = Quaternion.Euler(0f, m_FreeLookCamera.m_XAxis.Value, 0f);
+            Vector3 forward = cameraYaw * Vector3.forward;
+            Vector3 right = cameraYaw * Vector3.right;
 
             Vector3 moveDirection = hasMoveInput
                 ? right.normalized * clampedInput.x + forward.normalized * clampedInput.y
                 : Vector3.zero;
 
-            m_Character.Parameters.SetMove(clampedInput, moveDirection, moveSpeed);
+            m_Character.Parameters.SetMove(clampedInput, moveDirection, moveSpeed, m_RunThresholdSpeed);
 
             if (hasMoveInput)
                 m_Character.StateMachine.TrySetState(m_MoveState);

@@ -9,12 +9,12 @@ namespace MotionCore.Gameplay.Character
         [SerializeField] Character m_Character;
 
         protected Character Character => m_Character;
-        protected CharacterStateExitMode ExitMode { get; set; } = CharacterStateExitMode.CanCancel;
+        protected CharacterStateExitPhase ExitPhase { get; set; } = CharacterStateExitPhase.CanCancel;
         protected virtual bool CanInterruptSelf => false;
 
         public abstract CharacterStateType Type { get; }
 
-        protected void OpenCanCancel() => ExitMode = CharacterStateExitMode.CanCancel;
+        protected void OpenCanCancel() => ExitPhase = CharacterStateExitPhase.CanCancel;
 
 #if UNITY_EDITOR
         protected override void OnValidate()
@@ -32,7 +32,7 @@ namespace MotionCore.Gameplay.Character
                 if (nextState == this)
                     return CanInterruptSelf;
 
-                return CharacterStateRules.CanExit(Type, nextState.Type, ExitMode);
+                return CharacterStateRules.CanExit(Type, nextState.Type, ExitPhase);
             }
         }
     }
