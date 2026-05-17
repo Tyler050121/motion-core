@@ -706,6 +706,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: VCam_Exploration_FreeLook
       objectReference: {fileID: 0}
+    - target: {fileID: 2715005693877034788, guid: 0b42bfcdcb7dc4533880cb74d9736140,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9996151
+      objectReference: {fileID: 0}
+    - target: {fileID: 2715005693877034788, guid: 0b42bfcdcb7dc4533880cb74d9736140,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0277457
+      objectReference: {fileID: 0}
     - target: {fileID: 2774912290598002276, guid: 0b42bfcdcb7dc4533880cb74d9736140,
         type: 3}
       propertyPath: m_Follow
@@ -831,6 +841,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2501418995336163100, guid: 8cb0328f13fff4f13838ec034ad9e985,
         type: 3}
+      propertyPath: m_MoveConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: b7db31cf61c044b6804644cf98d66c31,
+        type: 2}
+    - target: {fileID: 2501418995336163100, guid: 8cb0328f13fff4f13838ec034ad9e985,
+        type: 3}
       propertyPath: m_FreeLookCamera
       value: 
       objectReference: {fileID: 780597588}
@@ -846,6 +862,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -5974484811468555479, guid: 19f7276f66a284cbfa65e2726e1fd573,
         type: 2}
+    - target: {fileID: 4699053006546641189, guid: 8cb0328f13fff4f13838ec034ad9e985,
+        type: 3}
+      propertyPath: m_RunTurnBackCooldown
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7778320943819192780, guid: 8cb0328f13fff4f13838ec034ad9e985,
         type: 3}
       propertyPath: m_Name

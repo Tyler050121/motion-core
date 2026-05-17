@@ -2,6 +2,8 @@ using Animancer;
 using Animancer.FSM;
 using Animancer.Units;
 using Cinemachine;
+using MotionCore.Bootstrap;
+using MotionCore.Infrastructure;
 using UnityEngine;
 
 namespace MotionCore.Gameplay.Character
@@ -12,14 +14,10 @@ namespace MotionCore.Gameplay.Character
         [SerializeField] Character m_Character;
         [SerializeField] MoveState m_MoveState;
         [SerializeField] EvadeState m_EvadeState;
+        [SerializeField] MoveConfig m_MoveConfig;
         [SerializeField, Seconds] float m_InputTimeOut = 0.35f;
-        [SerializeField] float m_WalkSpeed = 1f;
-        [SerializeField] float m_RunSpeed = 3f;
-        [SerializeField] float m_WalkSpeedChangeRate = 8f;
-        [SerializeField] float m_RunSpeedChangeRate = 3f;
         [SerializeField] CinemachineFreeLook m_FreeLookCamera;
 
-        float m_RunThresholdSpeed;
         StateMachine<CharacterState>.InputBuffer m_InputBuffer;
 
         public float MoveSpeed => m_Character.Parameters.MoveSpeed;
@@ -27,7 +25,8 @@ namespace MotionCore.Gameplay.Character
 
         void Awake()
         {
-            m_RunThresholdSpeed = (m_WalkSpeed + m_RunSpeed) * 0.5f;
+            ITimerService timer = ServiceLocator.Resolve<ITimerService>();
+            m_MoveState.SetContext(timer, m_MoveConfig);
             m_InputBuffer = new StateMachine<CharacterState>.InputBuffer(m_Character.StateMachine);
         }
 
@@ -58,8 +57,8 @@ namespace MotionCore.Gameplay.Character
         {
             bool hasMoveInput = moveInput.sqrMagnitude > 0.0001f;
             Vector2 clampedInput = moveInput.sqrMagnitude > 1f ? moveInput.normalized : moveInput;
-            float targetSpeed = hasMoveInput ? (wantsRun ? m_RunSpeed : m_WalkSpeed) : 0f;
-            float speedChangeRate = targetSpeed <= m_WalkSpeed ? m_WalkSpeedChangeRate : m_RunSpeedChangeRate;
+            float targetSpeed = hasMoveInput ? (wantsRun ? m_MoveConfig.RunSpeed : m_MoveConfig.WalkSpeed) : 0f;
+            float speedChangeRate = targetSpeed <= m_MoveConfig.WalkSpeed ? m_MoveConfig.WalkSpeedChangeRate : m_MoveConfig.RunSpeedChangeRate;
             float moveSpeed = Mathf.MoveTowards(m_Character.Parameters.MoveSpeed, targetSpeed, speedChangeRate * Time.deltaTime);
 
             Quaternion cameraYaw = Quaternion.Euler(0f, m_FreeLookCamera.m_XAxis.Value, 0f);
@@ -70,7 +69,7 @@ namespace MotionCore.Gameplay.Character
                 ? right.normalized * clampedInput.x + forward.normalized * clampedInput.y
                 : Vector3.zero;
 
-            m_Character.Parameters.SetMove(clampedInput, moveDirection, moveSpeed, m_RunThresholdSpeed);
+            m_Character.Parameters.SetMove(clampedInput, moveDirection, moveSpeed, moveSpeed > m_MoveConfig.RunThresholdSpeed);
 
             if (hasMoveInput)
                 m_Character.StateMachine.TrySetState(m_MoveState);

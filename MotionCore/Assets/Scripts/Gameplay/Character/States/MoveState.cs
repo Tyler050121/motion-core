@@ -1,5 +1,6 @@
 using Animancer;
 using Animancer.FSM;
+using MotionCore.Infrastructure;
 using UnityEngine;
 
 namespace MotionCore.Gameplay.Character
@@ -10,14 +11,21 @@ namespace MotionCore.Gameplay.Character
         [SerializeField] TransitionAsset m_MoveMixer;
         [SerializeField] TransitionAsset m_MoveEndMixer;
         [SerializeField] TransitionAsset m_RunTurnBack;
-        [SerializeField] float m_RunTurnBackAngle = 135f;
-        [SerializeField] float m_TurnSpeed = 540f;
 
         LinearMixerState m_CurrentMixerState;
+        ITimerService m_Timer;
+        MoveConfig m_MoveConfig;
+        readonly TimerHandle m_RunTurnBackTimer = new();
         bool m_IsExitingToIdle;
         bool m_IsTurningBack;
 
         public override CharacterStateType Type => CharacterStateType.Move;
+
+        public void SetContext(ITimerService timer, MoveConfig moveConfig)
+        {
+            m_Timer = timer;
+            m_MoveConfig = moveConfig;
+        }
 
         public override bool CanExitState
         {
@@ -66,13 +74,18 @@ namespace MotionCore.Gameplay.Character
 
             if (m_IsTurningBack)
             {
-                Character.Parameters.SetFacing(Character.Parameters.MoveDirection, m_TurnSpeed);
+                Character.Parameters.SetFacing(Character.Parameters.MoveDirection, m_MoveConfig.TurnSpeed);
                 return;
             }
 
             m_CurrentMixerState.Parameter = Character.Parameters.MoveSpeed;
 
-            Character.Parameters.SetFacing(Character.Parameters.MoveDirection, m_TurnSpeed);
+            Character.Parameters.SetFacing(Character.Parameters.MoveDirection, m_MoveConfig.TurnSpeed);
+        }
+
+        void OnDisable()
+        {
+            m_Timer.RemoveByOwner(this);
         }
 
         void PlayMoveMixer()
@@ -108,6 +121,9 @@ namespace MotionCore.Gameplay.Character
             if (m_IsTurningBack)
                 return false;
 
+            if (m_RunTurnBackTimer.IsActive)
+                return false;
+
             if (!Character.Parameters.IsRunning || !Character.Parameters.HasMoveInput)
                 return false;
 
@@ -118,12 +134,13 @@ namespace MotionCore.Gameplay.Character
             facingDirection.y = 0f;
 
             float angle = Vector3.Angle(facingDirection, moveDirection);
-            return angle >= m_RunTurnBackAngle;
+            return angle >= m_MoveConfig.RunTurnBackAngle;
         }
 
         void PlayRunTurnBack()
         {
             m_IsTurningBack = true;
+            m_Timer.Delay(this, m_MoveConfig.RunTurnBackCooldown, m_RunTurnBackTimer);
             AnimancerState state = Character.Animancer.Play(m_RunTurnBack);
             state.Events(this).OnEnd = PlayMoveMixer;
         }

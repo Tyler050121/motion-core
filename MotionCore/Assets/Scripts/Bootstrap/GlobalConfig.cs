@@ -9,5 +9,10 @@ namespace MotionCore.Bootstrap
         {
             public const bool RunInBackground = true;
         }
+
+        public static class Timer
+        {
+            public const int InvalidId = -1;
+        }
     }
 }

@@ -1,5 +1,6 @@
 using MotionCore.Bootstrap;
 using MotionCore.Gameplay;
+using MotionCore.Infrastructure;
 using UnityEngine;
 
 namespace MotionCore.ApplicationLifecycle
@@ -12,13 +13,16 @@ namespace MotionCore.ApplicationLifecycle
     public sealed class ApplicationController : MonoBehaviour
     {
         ICursorService m_Cursor;
+        ITimerService m_Timer;
         bool m_RuntimeStarted;
 
         void Awake()
         {
             Application.runInBackground = GlobalConfig.Application.RunInBackground;
             m_Cursor = new CursorService();
+            m_Timer = new TimerService();
             ServiceLocator.Register(m_Cursor);
+            ServiceLocator.Register(m_Timer);
         }
 
         void Start()
@@ -33,6 +37,7 @@ namespace MotionCore.ApplicationLifecycle
                 return;
 
             m_Cursor.Tick();
+            m_Timer.Tick(Time.deltaTime);
         }
 
         void OnApplicationFocus(bool focus)
@@ -46,6 +51,7 @@ namespace MotionCore.ApplicationLifecycle
         void OnDestroy()
         {
             ServiceLocator.Unregister(m_Cursor);
+            ServiceLocator.Unregister(m_Timer);
         }
     }
 }

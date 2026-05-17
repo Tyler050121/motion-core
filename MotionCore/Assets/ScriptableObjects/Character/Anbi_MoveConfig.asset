@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dabfdae32e244d43bb708f8a446fd168, type: 3}
+  m_Name: Anbi_MoveConfig
+  m_EditorClassIdentifier: 
+  m_WalkSpeed: 1
+  m_RunSpeed: 3
+  m_WalkSpeedChangeRate: 8
+  m_RunSpeedChangeRate: 3
+  m_TurnSpeed: 540
+  m_RunTurnBackAngle: 135
+  m_RunTurnBackCooldown: 1
