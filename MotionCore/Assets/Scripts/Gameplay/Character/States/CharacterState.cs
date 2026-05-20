@@ -4,6 +4,30 @@ using UnityEngine;
 
 namespace MotionCore.Gameplay.Character
 {
+    public enum CharacterStateType
+    {
+        Idle,
+        Move,
+        Evade,
+        TurnBack,
+        SwitchIn,
+        SwitchOut,
+        QuestStart,
+        BasicAttack,
+        HeavyAttack,
+        Skill,
+        Ultimate,
+        Hit,
+        Dead
+    }
+
+    public enum CharacterStateExitPhase
+    {
+        Locked,
+        CanCancel,
+        Finished
+    }
+
     public abstract class CharacterState : StateBehaviour
     {
         [SerializeField] Character m_Character;

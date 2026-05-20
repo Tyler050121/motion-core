@@ -9,18 +9,19 @@ using UnityEngine;
 namespace MotionCore.Gameplay.Character
 {
     [DisallowMultipleComponent]
-    public sealed class CharacterBrain : MonoBehaviour, ICharacterActionPlayer
+    public sealed class CharacterBrain : MonoBehaviour, ICommandReceiver
     {
         [SerializeField] Character m_Character;
         [SerializeField] MoveState m_MoveState;
         [SerializeField] EvadeState m_EvadeState;
+        [SerializeField] ActionState m_ActionState;
         [SerializeField] MoveConfig m_MoveConfig;
         [SerializeField, Seconds] float m_InputTimeOut = 0.35f;
         [SerializeField] CinemachineFreeLook m_FreeLookCamera;
 
         StateMachine<CharacterState>.InputBuffer m_InputBuffer;
 
-        public float MoveSpeed => m_Character.Parameters.MoveSpeed;
+        // public float MoveSpeed => m_Character.Parameters.MoveSpeed;
         // public CharacterStateType CurrentStateType => m_Character.StateMachine.CurrentState.Type;
 
         void Awake()
@@ -80,6 +81,18 @@ namespace MotionCore.Gameplay.Character
         public bool TryEvade()
         {
             m_InputBuffer.Buffer(m_EvadeState, m_InputTimeOut);
+            return m_InputBuffer.Update(0f);
+        }
+
+        public bool TryAction(ActionDefinition definition)
+        {
+            if (!m_ActionState.QueueAction(definition))
+                return false;
+
+            if (m_Character.StateMachine.CurrentState == m_ActionState)
+                return true;
+
+            m_InputBuffer.Buffer(m_ActionState, m_InputTimeOut);
             return m_InputBuffer.Update(0f);
         }
     }
