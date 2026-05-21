@@ -8,6 +8,6 @@ namespace MotionCore.Gameplay.Character
 
         bool TryEvade();
 
-        bool TryAction(ActionDefinition definition);
+        bool TryAttack(AttackDefinition definition);
     }
 }

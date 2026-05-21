@@ -21,11 +21,19 @@ namespace MotionCore.Gameplay.Character
         Dead
     }
 
-    public enum CharacterStateExitPhase
+    [System.Flags]
+    public enum CharacterStateExitOptions
     {
-        Locked,
-        CanCancel,
-        Finished
+        None = 0,
+        Move = 1 << 0,
+        Evade = 1 << 1,
+        Attack = 1 << 2,
+        Skill = 1 << 3,
+        Switch = 1 << 4,
+        Idle = 1 << 5,
+        Default = Evade,
+        Cancel = Move | Skill | Switch | Attack,
+        All = Default | Cancel
     }
 
     public abstract class CharacterState : StateBehaviour
@@ -33,12 +41,12 @@ namespace MotionCore.Gameplay.Character
         [SerializeField] Character m_Character;
 
         protected Character Character => m_Character;
-        protected CharacterStateExitPhase ExitPhase { get; set; } = CharacterStateExitPhase.CanCancel;
+        protected CharacterStateExitOptions ExitOptions { get; set; } = CharacterStateExitOptions.All;
         protected virtual bool CanInterruptSelf => false;
 
         public abstract CharacterStateType Type { get; }
 
-        protected void OpenCanCancel() => ExitPhase = CharacterStateExitPhase.CanCancel;
+        protected void OpenCanCancel() => ExitOptions |= CharacterStateExitOptions.Cancel;
 
 #if UNITY_EDITOR
         protected override void OnValidate()
@@ -56,7 +64,7 @@ namespace MotionCore.Gameplay.Character
                 if (nextState == this)
                     return CanInterruptSelf;
 
-                return CharacterStateRules.CanExit(Type, nextState.Type, ExitPhase);
+                return CharacterStateRules.CanExit(Type, nextState.Type, ExitOptions);
             }
         }
     }

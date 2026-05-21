@@ -2,18 +2,32 @@ namespace MotionCore.Gameplay.Character
 {
     public static class CharacterStateRules
     {
-        public static bool CanExit(CharacterStateType currentState, CharacterStateType nextState, CharacterStateExitPhase exitPhase)
+        public static bool CanExit(CharacterStateType currentState, CharacterStateType nextState, CharacterStateExitOptions exitOptions)
         {
             if (currentState == CharacterStateType.Idle)
                 return true;
 
-            if (nextState == CharacterStateType.Idle)
-                return exitPhase == CharacterStateExitPhase.Finished;
-
             if (nextState == CharacterStateType.Hit || nextState == CharacterStateType.Dead)
                 return true;
 
-            return exitPhase == CharacterStateExitPhase.CanCancel;
+            return (exitOptions & GetRequiredOption(nextState)) != 0;
+        }
+
+        static CharacterStateExitOptions GetRequiredOption(CharacterStateType nextState)
+        {
+            return nextState switch
+            {
+                CharacterStateType.Idle => CharacterStateExitOptions.Idle,
+                CharacterStateType.Move => CharacterStateExitOptions.Move,
+                CharacterStateType.Evade => CharacterStateExitOptions.Evade,
+                CharacterStateType.BasicAttack => CharacterStateExitOptions.Attack,
+                CharacterStateType.HeavyAttack => CharacterStateExitOptions.Attack,
+                CharacterStateType.Skill => CharacterStateExitOptions.Skill,
+                CharacterStateType.Ultimate => CharacterStateExitOptions.Skill,
+                CharacterStateType.SwitchIn => CharacterStateExitOptions.Switch,
+                CharacterStateType.SwitchOut => CharacterStateExitOptions.Switch,
+                _ => CharacterStateExitOptions.Default
+            };
         }
     }
 }

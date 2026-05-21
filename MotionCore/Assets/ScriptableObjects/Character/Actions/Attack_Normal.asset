@@ -19,6 +19,8 @@ MonoBehaviour:
     m_EventBindings:
     - m_Event: {fileID: 11400000, guid: bdd8c6e6f24cd471182f6663dea679b7, type: 2}
       m_Type: 0
+    - m_Event: {fileID: 11400000, guid: 6e5b9143ae79d47aaa31880fa29889d5, type: 2}
+      m_Type: 1
     m_EndStep:
       m_Animation: {fileID: 4273269075220535968, guid: 19f7276f66a284cbfa65e2726e1fd573,
         type: 2}
@@ -30,8 +32,36 @@ MonoBehaviour:
     m_EventBindings:
     - m_Event: {fileID: 11400000, guid: bdd8c6e6f24cd471182f6663dea679b7, type: 2}
       m_Type: 0
+    - m_Event: {fileID: 11400000, guid: 6e5b9143ae79d47aaa31880fa29889d5, type: 2}
+      m_Type: 1
     m_EndStep:
       m_Animation: {fileID: 2360240572361095127, guid: 19f7276f66a284cbfa65e2726e1fd573,
+        type: 2}
+      m_EventBindings: []
+    m_ComboGraceSeconds: 0.35
+    m_ComboGraceStartType: 1
+  - m_Animation: {fileID: -4506043261380770619, guid: 19f7276f66a284cbfa65e2726e1fd573,
+      type: 2}
+    m_EventBindings:
+    - m_Event: {fileID: 11400000, guid: bdd8c6e6f24cd471182f6663dea679b7, type: 2}
+      m_Type: 0
+    - m_Event: {fileID: 11400000, guid: 6e5b9143ae79d47aaa31880fa29889d5, type: 2}
+      m_Type: 1
+    m_EndStep:
+      m_Animation: {fileID: 2402424924664540453, guid: 19f7276f66a284cbfa65e2726e1fd573,
+        type: 2}
+      m_EventBindings: []
+    m_ComboGraceSeconds: 0.35
+    m_ComboGraceStartType: 1
+  - m_Animation: {fileID: -440235273159886873, guid: 19f7276f66a284cbfa65e2726e1fd573,
+      type: 2}
+    m_EventBindings:
+    - m_Event: {fileID: 11400000, guid: bdd8c6e6f24cd471182f6663dea679b7, type: 2}
+      m_Type: 0
+    - m_Event: {fileID: 11400000, guid: 6e5b9143ae79d47aaa31880fa29889d5, type: 2}
+      m_Type: 1
+    m_EndStep:
+      m_Animation: {fileID: 3642906781861955544, guid: 19f7276f66a284cbfa65e2726e1fd573,
         type: 2}
       m_EventBindings: []
     m_ComboGraceSeconds: 0.35

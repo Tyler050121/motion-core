@@ -41,7 +41,7 @@ namespace MotionCore.Gameplay.Character
 
         void OnEnable()
         {
-            ExitPhase = CharacterStateExitPhase.CanCancel;
+            ExitOptions = CharacterStateExitOptions.All;
             m_IsExitingToIdle = false;
             m_IsTurningBack = false;
             m_CurrentMixerState = null;
@@ -103,7 +103,7 @@ namespace MotionCore.Gameplay.Character
             //* 目前这个Mixer只有跑步的结束动画，所以如果不是跑步了就直接切Idle。
             if (!Character.Parameters.IsRunning)
             {
-                ExitPhase = CharacterStateExitPhase.Finished;
+                ExitOptions |= CharacterStateExitOptions.Idle;
                 return;
             }
 
@@ -111,7 +111,7 @@ namespace MotionCore.Gameplay.Character
             m_CurrentMixerState.Parameter = Character.Parameters.MoveSpeed;
             m_CurrentMixerState.Events(this).OnEnd = () =>
             {
-                ExitPhase = CharacterStateExitPhase.Finished;
+                ExitOptions |= CharacterStateExitOptions.Idle;
                 Character.StateMachine.TrySetDefaultState();
             };
         }

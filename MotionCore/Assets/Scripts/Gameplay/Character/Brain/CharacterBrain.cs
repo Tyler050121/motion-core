@@ -14,7 +14,7 @@ namespace MotionCore.Gameplay.Character
         [SerializeField] Character m_Character;
         [SerializeField] MoveState m_MoveState;
         [SerializeField] EvadeState m_EvadeState;
-        [SerializeField] ActionState m_ActionState;
+        [SerializeField] AttackState m_AttackState;
         [SerializeField] MoveConfig m_MoveConfig;
         [SerializeField, Seconds] float m_InputTimeOut = 0.35f;
         [SerializeField] CinemachineFreeLook m_FreeLookCamera;
@@ -84,15 +84,15 @@ namespace MotionCore.Gameplay.Character
             return m_InputBuffer.Update(0f);
         }
 
-        public bool TryAction(ActionDefinition definition)
+        public bool TryAttack(AttackDefinition definition)
         {
-            if (!m_ActionState.QueueAction(definition))
+            if (!m_AttackState.QueueAttack(definition))
                 return false;
 
-            if (m_Character.StateMachine.CurrentState == m_ActionState)
+            if (m_Character.StateMachine.CurrentState == m_AttackState)
                 return true;
 
-            m_InputBuffer.Buffer(m_ActionState, m_InputTimeOut);
+            m_InputBuffer.Buffer(m_AttackState, m_InputTimeOut);
             return m_InputBuffer.Update(0f);
         }
     }

@@ -9,7 +9,7 @@ namespace MotionCore.Gameplay.Character
         [SerializeField] KeyCode m_EvadeKey = KeyCode.LeftShift;
         [SerializeField] KeyCode m_BasicAttackKey = KeyCode.Mouse0;
         [SerializeField] KeyCode m_RunKey = KeyCode.LeftShift;
-        [SerializeField] ActionDefinition m_BasicAttackAction;
+        [SerializeField] AttackDefinition m_BasicAttackAction;
 
         void Update()
         {
@@ -39,7 +39,7 @@ namespace MotionCore.Gameplay.Character
                 m_Brain.TryEvade();
 
             if (Input.GetKeyDown(m_BasicAttackKey))
-                m_Brain.TryAction(m_BasicAttackAction);
+                m_Brain.TryAttack(m_BasicAttackAction);
         }
 
         void OnGUI()

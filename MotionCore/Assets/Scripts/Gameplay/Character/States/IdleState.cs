@@ -11,7 +11,7 @@ namespace MotionCore.Gameplay.Character
 
         void OnEnable()
         {
-            ExitPhase = CharacterStateExitPhase.CanCancel;
+            ExitOptions = CharacterStateExitOptions.All;
             Character.Animancer.Play(m_Idle);
         }
     }

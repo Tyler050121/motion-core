@@ -4,17 +4,17 @@ using UnityEngine;
 
 namespace MotionCore.Gameplay.Character
 {
-    [CreateAssetMenu(menuName = "MotionCore/Character/Action Definition")]
-    public sealed class ActionDefinition : ScriptableObject
+    [CreateAssetMenu(menuName = "MotionCore/Character/Attack Definition")]
+    public sealed class AttackDefinition : ScriptableObject
     {
         [SerializeField] CharacterStateType m_StateType = CharacterStateType.BasicAttack;
         public CharacterStateType StateType => m_StateType;
 
-        [SerializeField] ActionStepDefinition[] m_Steps = Array.Empty<ActionStepDefinition>();
-        public ActionStepDefinition[] Steps => m_Steps;
+        [SerializeField] AttackStepDefinition[] m_Steps = Array.Empty<AttackStepDefinition>();
+        public AttackStepDefinition[] Steps => m_Steps;
         public int StepCount => m_Steps.Length;
 
-        public bool TryGetStep(int stepIndex, out ActionStepDefinition step)
+        public bool TryGetStep(int stepIndex, out AttackStepDefinition step)
         {
             if (stepIndex >= 0 && stepIndex < m_Steps.Length)
             {
@@ -27,7 +27,7 @@ namespace MotionCore.Gameplay.Character
         }
 
         [Serializable]
-        public sealed class ActionStepDefinition
+        public sealed class AttackStepDefinition
         {
             [SerializeField, Tooltip("Animancer transition played for this action step")]
             TransitionAsset m_Animation;
@@ -36,8 +36,8 @@ namespace MotionCore.Gameplay.Character
             [SerializeField] EventBinding[] m_EventBindings = Array.Empty<EventBinding>();
             public EventBinding[] EventBindings => m_EventBindings;
 
-            [SerializeField] ActionEndStepDefinition m_EndStep;
-            public ActionEndStepDefinition EndStep => m_EndStep;
+            [SerializeField] AttackEndStepDefinition m_EndStep;
+            public AttackEndStepDefinition EndStep => m_EndStep;
             public bool HasEndStep => m_EndStep != null && m_EndStep.Animation != null;
 
             [SerializeField, Min(0f)] float m_ComboGraceSeconds = 0.35f;
@@ -58,19 +58,20 @@ namespace MotionCore.Gameplay.Character
         }
 
         [Serializable]
-        public sealed class ActionEndStepDefinition
+        public sealed class AttackEndStepDefinition
         {
             [SerializeField, Tooltip("Animancer transition played for this end step")]
             TransitionAsset m_Animation;
             public TransitionAsset Animation => m_Animation;
 
-            [SerializeField] ActionStepDefinition.EventBinding[] m_EventBindings = Array.Empty<ActionStepDefinition.EventBinding>();
-            public ActionStepDefinition.EventBinding[] EventBindings => m_EventBindings;
+            [SerializeField] AttackStepDefinition.EventBinding[] m_EventBindings = Array.Empty<AttackStepDefinition.EventBinding>();
+            public AttackStepDefinition.EventBinding[] EventBindings => m_EventBindings;
         }
 
         public enum EventType
         {
             CanCancel,
+            CanAttack,
             HitStart,
             HitEnd,
             BranchOpen,

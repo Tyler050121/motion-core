@@ -9,18 +9,18 @@ namespace MotionCore.Gameplay.Character
         [SerializeField] TransitionAsset m_EvadeBack;
         [SerializeField] StringAsset m_CanCancelEvent;
 
-        protected override bool CanInterruptSelf => ExitPhase == CharacterStateExitPhase.CanCancel;
+        protected override bool CanInterruptSelf => (ExitOptions & CharacterStateExitOptions.Evade) != 0;
         public override CharacterStateType Type => CharacterStateType.Evade;
 
         void OnEnable()
         {
             TransitionAsset evade = Character.Parameters.HasMoveInput ? m_EvadeFront : m_EvadeBack;
-            ExitPhase = CharacterStateExitPhase.Locked;
+            ExitOptions = CharacterStateExitOptions.Default;
 
             AnimancerState state = Character.Animancer.Play(evade);
             AnimancerEvent.Sequence events = state.Events(this);
             events.SetCallback(m_CanCancelEvent, OpenCanCancel);
-            events.OnEnd = () => { ExitPhase = CharacterStateExitPhase.Finished; Character.StateMachine.TrySetDefaultState(); };
+            events.OnEnd = () => { ExitOptions |= CharacterStateExitOptions.Idle; Character.StateMachine.TrySetDefaultState(); };
         }
     }
 }
