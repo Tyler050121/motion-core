@@ -15,7 +15,9 @@ namespace MotionCore.Gameplay.Character
         int m_ComboStepIndex;
         int m_ComboLastStepIndexExclusive;
         float m_CurrentStepStartTime;
+        float m_PerfectWindowAnchorTime;
         float m_ComboExpireTime;
+        bool m_IsPerfectVariant;
         bool m_IsPlayingEndStep;
 
         protected override bool CanInterruptSelf => (ExitOptions & CharacterStateExitOptions.Attack) != 0;
@@ -60,7 +62,8 @@ namespace MotionCore.Gameplay.Character
                 AttackRequest nextRequest = new(
                     definition,
                     nextStepIndex,
-                    m_LastStepIndexExclusive - nextStepIndex);
+                    m_LastStepIndexExclusive - nextStepIndex,
+                    ShouldUsePerfectVariant(definition, nextStepIndex));
 
                 if (canAttack)
                     PlayAttack(nextRequest);
@@ -87,6 +90,8 @@ namespace MotionCore.Gameplay.Character
             m_CurrentStep = null;
             m_PendingRequest = default;
             m_LastStepIndexExclusive = 0;
+            m_PerfectWindowAnchorTime = 0f;
+            m_IsPerfectVariant = false;
             m_IsPlayingEndStep = false;
         }
 
@@ -104,13 +109,23 @@ namespace MotionCore.Gameplay.Character
             m_PendingRequest = default;
             m_IsPlayingEndStep = false;
             m_CurrentStepStartTime = Time.time;
+            m_PerfectWindowAnchorTime = 0f;
 
             OpenComboGrace(AttackDefinition.ComboGraceStartType.Start);
-            PlayStep(m_CurrentStep);
+            PlayStep(m_CurrentStep, attackRequest.UsePerfectVariant);
         }
 
-        void PlayStep(AttackDefinition.AttackStepDefinition step)
+        void PlayStep(AttackDefinition.AttackStepDefinition step, bool usePerfectVariant)
         {
+            if (usePerfectVariant && step.HasPerfectVariant)
+            {
+                AttackDefinition.AttackStepVariantDefinition variant = step.PerfectVariant;
+                m_IsPerfectVariant = true;
+                PlayStep(variant.Animation, variant.EventBindings);
+                return;
+            }
+
+            m_IsPerfectVariant = false;
             PlayStep(step.Animation, step.EventBindings);
         }
 
@@ -164,12 +179,14 @@ namespace MotionCore.Gameplay.Character
             if ((ExitOptions & CharacterStateExitOptions.Attack) == 0)
                 return;
 
+            m_PerfectWindowAnchorTime = Time.time;
             if (m_PendingRequest.Definition != null)
                 PlayAttack(m_PendingRequest);
         }
 
         void OpenAttack()
         {
+            m_PerfectWindowAnchorTime = Time.time;
             ExitOptions |= CharacterStateExitOptions.Attack;
             if (m_PendingRequest.Definition != null)
                 PlayAttack(m_PendingRequest);
@@ -184,6 +201,13 @@ namespace MotionCore.Gameplay.Character
             {
                 OpenComboGrace(AttackDefinition.ComboGraceStartType.End);
 
+                if (m_IsPerfectVariant && m_CurrentStep.PerfectVariant.HasEndStep)
+                {
+                    m_IsPlayingEndStep = true;
+                    PlayStep(m_CurrentStep.PerfectVariant.EndStep);
+                    return;
+                }
+
                 if (m_CurrentStep.HasEndStep)
                 {
                     m_IsPlayingEndStep = true;
@@ -195,6 +219,27 @@ namespace MotionCore.Gameplay.Character
             m_PendingRequest = default;
             ExitOptions |= CharacterStateExitOptions.Idle;
             Character.StateMachine.TrySetDefaultState();
+        }
+
+        #endregion
+
+        #region Perfect窗口
+
+        bool ShouldUsePerfectVariant(AttackDefinition definition, int stepIndex)
+        {
+            return IsInPerfectWindow()
+                && definition.TryGetStep(stepIndex, out AttackDefinition.AttackStepDefinition step)
+                && step.HasPerfectVariant;
+        }
+
+        bool IsInPerfectWindow()
+        {
+            if (m_PerfectWindowAnchorTime <= 0f)
+                return false;
+            
+            float startTime = m_PerfectWindowAnchorTime + m_CurrentStep.PerfectWindowOffset;
+            float endTime = startTime + m_CurrentStep.PerfectWindowDuration;
+            return Time.time >= startTime && Time.time <= endTime;
         }
 
         #endregion
@@ -230,7 +275,10 @@ namespace MotionCore.Gameplay.Character
 
             if (m_CurrentStep.ComboGraceStartType == AttackDefinition.ComboGraceStartType.End)
             {
-                ITransition transition = m_CurrentStep.Animation.GetTransition();
+                TransitionAsset animation = m_IsPerfectVariant && m_CurrentStep.HasPerfectVariant
+                    ? m_CurrentStep.PerfectVariant.Animation
+                    : m_CurrentStep.Animation;
+                ITransition transition = animation.GetTransition();
                 float speed = Mathf.Abs(transition.Speed);
                 float duration = speed > 0f ? transition.MaximumLength / speed : transition.MaximumLength;
                 return m_CurrentStepStartTime + duration;
@@ -276,14 +324,21 @@ namespace MotionCore.Gameplay.Character
         }
 
         public AttackRequest(AttackDefinition definition, int startStepIndex, int stepCount)
+            : this(definition, startStepIndex, stepCount, false)
+        {
+        }
+
+        public AttackRequest(AttackDefinition definition, int startStepIndex, int stepCount, bool usePerfectVariant)
         {
             Definition = definition;
             StartStepIndex = startStepIndex;
             StepCount = stepCount;
+            UsePerfectVariant = usePerfectVariant;
         }
 
         public AttackDefinition Definition { get; }
         public int StartStepIndex { get; }
         public int StepCount { get; }
+        public bool UsePerfectVariant { get; }
     }
 }

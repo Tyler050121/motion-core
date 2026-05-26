@@ -29,7 +29,7 @@ namespace MotionCore.Gameplay.Character
         [Serializable]
         public sealed class AttackStepDefinition
         {
-            [SerializeField, Tooltip("Animancer transition played for this action step")]
+            [SerializeField, Tooltip("动作动画")]
             TransitionAsset m_Animation;
             public TransitionAsset Animation => m_Animation;
 
@@ -39,6 +39,16 @@ namespace MotionCore.Gameplay.Character
             [SerializeField] AttackEndStepDefinition m_EndStep;
             public AttackEndStepDefinition EndStep => m_EndStep;
             public bool HasEndStep => m_EndStep != null && m_EndStep.Animation != null;
+
+            [SerializeField] AttackStepVariantDefinition m_PerfectVariant;
+            public AttackStepVariantDefinition PerfectVariant => m_PerfectVariant;
+            public bool HasPerfectVariant => m_PerfectVariant != null && m_PerfectVariant.Animation != null;
+
+            [SerializeField, Min(0f)] float m_PerfectWindowOffset;
+            public float PerfectWindowOffset => m_PerfectWindowOffset;
+
+            [SerializeField, Min(0f)] float m_PerfectWindowDuration;
+            public float PerfectWindowDuration => m_PerfectWindowDuration;
 
             [SerializeField, Min(0f)] float m_ComboGraceSeconds = 0.35f;
             public float ComboGraceSeconds => m_ComboGraceSeconds;
@@ -58,14 +68,27 @@ namespace MotionCore.Gameplay.Character
         }
 
         [Serializable]
-        public sealed class AttackEndStepDefinition
+        public class AttackStepAnimationDefinition
         {
-            [SerializeField, Tooltip("Animancer transition played for this end step")]
+            [SerializeField, Tooltip("播放动画")]
             TransitionAsset m_Animation;
             public TransitionAsset Animation => m_Animation;
 
             [SerializeField] AttackStepDefinition.EventBinding[] m_EventBindings = Array.Empty<AttackStepDefinition.EventBinding>();
             public AttackStepDefinition.EventBinding[] EventBindings => m_EventBindings;
+        }
+
+        [Serializable]
+        public sealed class AttackStepVariantDefinition : AttackStepAnimationDefinition
+        {
+            [SerializeField] AttackEndStepDefinition m_EndStep;
+            public AttackEndStepDefinition EndStep => m_EndStep;
+            public bool HasEndStep => m_EndStep != null && m_EndStep.Animation != null;
+        }
+
+        [Serializable]
+        public sealed class AttackEndStepDefinition : AttackStepAnimationDefinition
+        {
         }
 
         public enum EventType
