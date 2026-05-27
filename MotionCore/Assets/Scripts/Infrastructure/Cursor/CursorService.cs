@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace MotionCore.Gameplay
+namespace MotionCore.Infrastructure
 {
     public sealed class CursorService : ICursorService
     {

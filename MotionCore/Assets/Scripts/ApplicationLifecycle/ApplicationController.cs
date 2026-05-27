@@ -1,5 +1,3 @@
-using MotionCore.Bootstrap;
-using MotionCore.Gameplay;
 using MotionCore.Infrastructure;
 using UnityEngine;
 
@@ -14,6 +12,7 @@ namespace MotionCore.ApplicationLifecycle
     {
         ICursorService m_Cursor;
         ITimerService m_Timer;
+        IAssetProvider m_Assets;
         bool m_RuntimeStarted;
 
         void Awake()
@@ -21,8 +20,10 @@ namespace MotionCore.ApplicationLifecycle
             Application.runInBackground = GlobalConfig.Application.RunInBackground;
             m_Cursor = new CursorService();
             m_Timer = new TimerService();
+            m_Assets = new ResourcesAssetProvider();
             ServiceLocator.Register(m_Cursor);
             ServiceLocator.Register(m_Timer);
+            ServiceLocator.Register(m_Assets);
         }
 
         void Start()
@@ -52,6 +53,7 @@ namespace MotionCore.ApplicationLifecycle
         {
             ServiceLocator.Unregister(m_Cursor);
             ServiceLocator.Unregister(m_Timer);
+            ServiceLocator.Unregister(m_Assets);
         }
     }
 }

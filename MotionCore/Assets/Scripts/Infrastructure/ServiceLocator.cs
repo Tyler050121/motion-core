@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace MotionCore.Bootstrap
+namespace MotionCore.Infrastructure
 {
     /// <summary>
     /// 轻量服务定位器：用于运行时服务注册与解析。

@@ -1,4 +1,4 @@
-using MotionCore.Bootstrap;
+using MotionCore;
 
 namespace MotionCore.Infrastructure
 {

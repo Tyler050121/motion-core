@@ -1,4 +1,4 @@
-namespace MotionCore.Bootstrap
+namespace MotionCore
 {
     /// <summary>
     /// 全局常量配置入口。

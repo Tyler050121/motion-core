@@ -1,4 +1,4 @@
-namespace MotionCore.Gameplay
+namespace MotionCore.Infrastructure
 {
     public interface ICursorService
     {
