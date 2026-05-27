@@ -14,14 +14,14 @@ namespace MotionCore.Gameplay.Character
 
         LinearMixerState m_CurrentMixerState;
         ITimerService m_Timer;
-        MoveConfig m_MoveConfig;
+        MovementConfig m_MoveConfig;
         readonly TimerHandle m_RunTurnBackTimer = new();
         bool m_IsExitingToIdle;
         bool m_IsTurningBack;
 
         public override CharacterStateType Type => CharacterStateType.Move;
 
-        public void SetContext(ITimerService timer, MoveConfig moveConfig)
+        public void SetContext(ITimerService timer, MovementConfig moveConfig)
         {
             m_Timer = timer;
             m_MoveConfig = moveConfig;

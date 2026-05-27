@@ -15,7 +15,7 @@ namespace MotionCore.Gameplay.Character
         [SerializeField] MoveState m_MoveState;
         [SerializeField] EvadeState m_EvadeState;
         [SerializeField] AttackState m_AttackState;
-        [SerializeField] MoveConfig m_MoveConfig;
+        [SerializeField] MovementConfig m_MoveConfig;
         [SerializeField, Seconds] float m_InputTimeOut = 0.35f;
         [SerializeField] CinemachineFreeLook m_FreeLookCamera;
 

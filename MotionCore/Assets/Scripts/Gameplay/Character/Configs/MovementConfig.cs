@@ -3,8 +3,8 @@ using UnityEngine;
 
 namespace MotionCore.Gameplay.Character
 {
-    [CreateAssetMenu(menuName = "MotionCore/Character/Move Config")]
-    public sealed class MoveConfig : ScriptableObject
+    [CreateAssetMenu(menuName = "MotionCore/Character/Movement Config")]
+    public sealed class MovementConfig : ScriptableObject
     {
         [SerializeField] float m_WalkSpeed = 1f;
         public float WalkSpeed => m_WalkSpeed;

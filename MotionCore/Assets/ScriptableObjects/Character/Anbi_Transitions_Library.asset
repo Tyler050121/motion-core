@@ -482,7 +482,7 @@ MonoBehaviour:
       _NormalizedStartTime: NaN
     - _From: 3
       _To: 8
-      _Fade: 0.35
+      _Fade: 0.1
       _NormalizedStartTime: NaN
     - _From: 2
       _To: 3

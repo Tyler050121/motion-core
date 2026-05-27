@@ -1,10 +1,14 @@
 using Animancer;
+using MotionCore.Gameplay;
 using UnityEngine;
 
 namespace MotionCore.Gameplay.Character
 {
     public sealed class AttackState : CharacterState
     {
+        // 攻击变体固定为 45% 概率触发。
+        const float PerfectVariantChance = 0.45f;
+
         AttackRequest m_PendingRequest;
         AttackDefinition m_CurrentAttack;
         AttackDefinition.AttackStepDefinition m_CurrentStep;
@@ -15,7 +19,6 @@ namespace MotionCore.Gameplay.Character
         int m_ComboStepIndex;
         int m_ComboLastStepIndexExclusive;
         float m_CurrentStepStartTime;
-        float m_PerfectWindowAnchorTime;
         float m_ComboExpireTime;
         bool m_IsPerfectVariant;
         bool m_IsPlayingEndStep;
@@ -90,7 +93,6 @@ namespace MotionCore.Gameplay.Character
             m_CurrentStep = null;
             m_PendingRequest = default;
             m_LastStepIndexExclusive = 0;
-            m_PerfectWindowAnchorTime = 0f;
             m_IsPerfectVariant = false;
             m_IsPlayingEndStep = false;
         }
@@ -109,7 +111,6 @@ namespace MotionCore.Gameplay.Character
             m_PendingRequest = default;
             m_IsPlayingEndStep = false;
             m_CurrentStepStartTime = Time.time;
-            m_PerfectWindowAnchorTime = 0f;
 
             OpenComboGrace(AttackDefinition.ComboGraceStartType.Start);
             PlayStep(m_CurrentStep, attackRequest.UsePerfectVariant);
@@ -121,26 +122,21 @@ namespace MotionCore.Gameplay.Character
             {
                 AttackDefinition.AttackStepVariantDefinition variant = step.PerfectVariant;
                 m_IsPerfectVariant = true;
-                PlayStep(variant.Animation, variant.EventBindings);
+                PlayTrack(variant.Track);
                 return;
             }
 
             m_IsPerfectVariant = false;
-            PlayStep(step.Animation, step.EventBindings);
+            PlayTrack(step.Track);
         }
 
-        void PlayStep(AttackDefinition.AttackEndStepDefinition step)
+        void PlayTrack(AnimationTrackAsset track)
         {
-            PlayStep(step.Animation, step.EventBindings);
-        }
-
-        void PlayStep(TransitionAsset animation, AttackDefinition.AttackStepDefinition.EventBinding[] eventBindings)
-        {
-            AnimancerState state = Character.Animancer.Play(animation);
+            AnimancerState state = Character.Animancer.Play(track.Animation);
             AnimancerEvent.Sequence events = state.Events(this);
 
             AttackStepEventOptions stepEventOptions = AttackStepEventOptions.None;
-            foreach (AttackDefinition.AttackStepDefinition.EventBinding binding in eventBindings)
+            foreach (AnimationTrackAsset.EventBinding binding in track.EventBindings)
             {
                 stepEventOptions |= GetStepEventOptions(binding.Type);
             }
@@ -156,12 +152,12 @@ namespace MotionCore.Gameplay.Character
                 cancelOptions &= ~CharacterStateExitOptions.Attack;
             }
 
-            foreach (AttackDefinition.AttackStepDefinition.EventBinding binding in eventBindings)
+            foreach (AnimationTrackAsset.EventBinding binding in track.EventBindings)
             {
-                AttackDefinition.EventType eventType = binding.Type;
-                if (eventType == AttackDefinition.EventType.CanCancel)
+                AnimationTrackAsset.EventType eventType = binding.Type;
+                if (eventType == AnimationTrackAsset.EventType.CanCancel)
                     events.SetCallback(binding.Event, () => OpenCancel(cancelOptions));
-                else if (eventType == AttackDefinition.EventType.CanAttack)
+                else if (eventType == AnimationTrackAsset.EventType.CanAttack)
                     events.SetCallback(binding.Event, OpenAttack);
             }
 
@@ -179,14 +175,12 @@ namespace MotionCore.Gameplay.Character
             if ((ExitOptions & CharacterStateExitOptions.Attack) == 0)
                 return;
 
-            m_PerfectWindowAnchorTime = Time.time;
             if (m_PendingRequest.Definition != null)
                 PlayAttack(m_PendingRequest);
         }
 
         void OpenAttack()
         {
-            m_PerfectWindowAnchorTime = Time.time;
             ExitOptions |= CharacterStateExitOptions.Attack;
             if (m_PendingRequest.Definition != null)
                 PlayAttack(m_PendingRequest);
@@ -204,14 +198,14 @@ namespace MotionCore.Gameplay.Character
                 if (m_IsPerfectVariant && m_CurrentStep.PerfectVariant.HasEndStep)
                 {
                     m_IsPlayingEndStep = true;
-                    PlayStep(m_CurrentStep.PerfectVariant.EndStep);
+                    PlayTrack(m_CurrentStep.PerfectVariant.EndStep.Track);
                     return;
                 }
 
                 if (m_CurrentStep.HasEndStep)
                 {
                     m_IsPlayingEndStep = true;
-                    PlayStep(m_CurrentStep.EndStep);
+                    PlayTrack(m_CurrentStep.EndStep.Track);
                     return;
                 }
             }
@@ -223,23 +217,13 @@ namespace MotionCore.Gameplay.Character
 
         #endregion
 
-        #region Perfect窗口
+        #region 攻击变体概率
 
         bool ShouldUsePerfectVariant(AttackDefinition definition, int stepIndex)
         {
-            return IsInPerfectWindow()
-                && definition.TryGetStep(stepIndex, out AttackDefinition.AttackStepDefinition step)
-                && step.HasPerfectVariant;
-        }
-
-        bool IsInPerfectWindow()
-        {
-            if (m_PerfectWindowAnchorTime <= 0f)
-                return false;
-            
-            float startTime = m_PerfectWindowAnchorTime + m_CurrentStep.PerfectWindowOffset;
-            float endTime = startTime + m_CurrentStep.PerfectWindowDuration;
-            return Time.time >= startTime && Time.time <= endTime;
+            return definition.TryGetStep(stepIndex, out AttackDefinition.AttackStepDefinition step)
+                && step.HasPerfectVariant
+                && Random.value < PerfectVariantChance;
         }
 
         #endregion
@@ -276,8 +260,8 @@ namespace MotionCore.Gameplay.Character
             if (m_CurrentStep.ComboGraceStartType == AttackDefinition.ComboGraceStartType.End)
             {
                 TransitionAsset animation = m_IsPerfectVariant && m_CurrentStep.HasPerfectVariant
-                    ? m_CurrentStep.PerfectVariant.Animation
-                    : m_CurrentStep.Animation;
+                    ? m_CurrentStep.PerfectVariant.Track.Animation
+                    : m_CurrentStep.Track.Animation;
                 ITransition transition = animation.GetTransition();
                 float speed = Mathf.Abs(transition.Speed);
                 float duration = speed > 0f ? transition.MaximumLength / speed : transition.MaximumLength;
@@ -295,12 +279,12 @@ namespace MotionCore.Gameplay.Character
             m_ComboExpireTime = 0f;
         }
 
-        static AttackStepEventOptions GetStepEventOptions(AttackDefinition.EventType eventType)
+        static AttackStepEventOptions GetStepEventOptions(AnimationTrackAsset.EventType eventType)
         {
             return eventType switch
             {
-                AttackDefinition.EventType.CanCancel => AttackStepEventOptions.CanCancel,
-                AttackDefinition.EventType.CanAttack => AttackStepEventOptions.CanAttack,
+                AnimationTrackAsset.EventType.CanCancel => AttackStepEventOptions.CanCancel,
+                AnimationTrackAsset.EventType.CanAttack => AttackStepEventOptions.CanAttack,
                 _ => AttackStepEventOptions.None
             };
         }

@@ -1,5 +1,5 @@
 using System;
-using Animancer;
+using MotionCore.Gameplay;
 using UnityEngine;
 
 namespace MotionCore.Gameplay.Character
@@ -29,77 +29,40 @@ namespace MotionCore.Gameplay.Character
         [Serializable]
         public sealed class AttackStepDefinition
         {
-            [SerializeField, Tooltip("动作动画")]
-            TransitionAsset m_Animation;
-            public TransitionAsset Animation => m_Animation;
-
-            [SerializeField] EventBinding[] m_EventBindings = Array.Empty<EventBinding>();
-            public EventBinding[] EventBindings => m_EventBindings;
+            [SerializeField] AnimationTrackAsset m_Track;
+            public AnimationTrackAsset Track => m_Track;
 
             [SerializeField] AttackEndStepDefinition m_EndStep;
             public AttackEndStepDefinition EndStep => m_EndStep;
-            public bool HasEndStep => m_EndStep != null && m_EndStep.Animation != null;
+            public bool HasEndStep => m_EndStep != null && m_EndStep.Track != null;
 
             [SerializeField] AttackStepVariantDefinition m_PerfectVariant;
             public AttackStepVariantDefinition PerfectVariant => m_PerfectVariant;
-            public bool HasPerfectVariant => m_PerfectVariant != null && m_PerfectVariant.Animation != null;
-
-            [SerializeField, Min(0f)] float m_PerfectWindowOffset;
-            public float PerfectWindowOffset => m_PerfectWindowOffset;
-
-            [SerializeField, Min(0f)] float m_PerfectWindowDuration;
-            public float PerfectWindowDuration => m_PerfectWindowDuration;
+            public bool HasPerfectVariant => m_PerfectVariant != null && m_PerfectVariant.Track != null;
 
             [SerializeField, Min(0f)] float m_ComboGraceSeconds = 0.35f;
             public float ComboGraceSeconds => m_ComboGraceSeconds;
 
             [SerializeField] ComboGraceStartType m_ComboGraceStartType = ComboGraceStartType.End;
             public ComboGraceStartType ComboGraceStartType => m_ComboGraceStartType;
-
-            [Serializable]
-            public sealed class EventBinding
-            {
-                [SerializeField] StringAsset m_Event;
-                public StringAsset Event => m_Event;
-
-                [SerializeField] EventType m_Type;
-                public EventType Type => m_Type;
-            }
         }
 
         [Serializable]
-        public class AttackStepAnimationDefinition
+        public sealed class AttackStepVariantDefinition
         {
-            [SerializeField, Tooltip("播放动画")]
-            TransitionAsset m_Animation;
-            public TransitionAsset Animation => m_Animation;
+            [SerializeField] AnimationTrackAsset m_Track;
+            public AnimationTrackAsset Track => m_Track;
 
-            [SerializeField] AttackStepDefinition.EventBinding[] m_EventBindings = Array.Empty<AttackStepDefinition.EventBinding>();
-            public AttackStepDefinition.EventBinding[] EventBindings => m_EventBindings;
-        }
-
-        [Serializable]
-        public sealed class AttackStepVariantDefinition : AttackStepAnimationDefinition
-        {
             [SerializeField] AttackEndStepDefinition m_EndStep;
             public AttackEndStepDefinition EndStep => m_EndStep;
-            public bool HasEndStep => m_EndStep != null && m_EndStep.Animation != null;
+            public bool HasEndStep => m_EndStep != null && m_EndStep.Track != null;
         }
 
         [Serializable]
-        public sealed class AttackEndStepDefinition : AttackStepAnimationDefinition
+        public sealed class AttackEndStepDefinition
         {
-        }
-
-        public enum EventType
-        {
-            CanCancel,
-            CanAttack,
-            HitStart,
-            HitEnd,
-            BranchOpen,
-            BranchClose,
-            Feedback
+            [SerializeField] AnimationTrackAsset m_Track;
+            public AnimationTrackAsset Track => m_Track;
         }
 
         public enum ComboGraceStartType
