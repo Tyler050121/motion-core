@@ -14,17 +14,17 @@ namespace MotionCore.Gameplay.Character
 
         LinearMixerState m_CurrentMixerState;
         ITimerService m_Timer;
-        MovementConfig m_MoveConfig;
+        MotorConfig m_MotorConfig;
         readonly TimerHandle m_RunTurnBackTimer = new();
         bool m_IsExitingToIdle;
         bool m_IsTurningBack;
 
         public override CharacterStateType Type => CharacterStateType.Move;
 
-        public void SetContext(ITimerService timer, MovementConfig moveConfig)
+        public void SetContext(ITimerService timer, MotorConfig motorConfig)
         {
             m_Timer = timer;
-            m_MoveConfig = moveConfig;
+            m_MotorConfig = motorConfig;
         }
 
         public override bool CanExitState
@@ -74,13 +74,13 @@ namespace MotionCore.Gameplay.Character
 
             if (m_IsTurningBack)
             {
-                Character.Parameters.SetFacing(Character.Parameters.MoveDirection, m_MoveConfig.TurnSpeed);
+                Character.Parameters.SetFacing(Character.Parameters.MoveDirection);
                 return;
             }
 
             m_CurrentMixerState.Parameter = Character.Parameters.MoveSpeed;
 
-            Character.Parameters.SetFacing(Character.Parameters.MoveDirection, m_MoveConfig.TurnSpeed);
+            Character.Parameters.SetFacing(Character.Parameters.MoveDirection);
         }
 
         void OnDisable()
@@ -134,13 +134,13 @@ namespace MotionCore.Gameplay.Character
             facingDirection.y = 0f;
 
             float angle = Vector3.Angle(facingDirection, moveDirection);
-            return angle >= m_MoveConfig.RunTurnBackAngle;
+            return angle >= m_MotorConfig.RunTurnBackAngle;
         }
 
         void PlayRunTurnBack()
         {
             m_IsTurningBack = true;
-            m_Timer.Delay(this, m_MoveConfig.RunTurnBackCooldown, m_RunTurnBackTimer);
+            m_Timer.Delay(this, m_MotorConfig.RunTurnBackCooldown, m_RunTurnBackTimer);
             AnimancerState state = Character.Animancer.Play(m_RunTurnBack);
             state.Events(this).OnEnd = PlayMoveMixer;
         }

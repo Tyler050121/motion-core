@@ -125,7 +125,7 @@ MonoBehaviour:
         _Speed: 1
         _Events:
           _NormalizedTimes:
-          - 0.34157303
+          - 0.3816092
           _Callbacks: []
           _Names: []
         _Clip: {fileID: 4594870571005924645, guid: 41515f121fabd40bd9c1ce03d4d0ccdd,
@@ -155,16 +155,30 @@ MonoBehaviour:
         _Speed: 1
         _Events:
           _NormalizedTimes:
+          - 0.2876668
+          - 0.49918643
           - 0.6162591
           - 0.7174531
           - NaN
-          _Callbacks: []
+          _Callbacks:
+          - rid: 1834261975633231944
+          - rid: 1834261975633231943
           _Names:
+          - {fileID: 11400000, guid: ea075a32c5b64350915583e7f695aacc, type: 2}
+          - {fileID: 11400000, guid: ea075a32c5b64350915583e7f695aacc, type: 2}
           - {fileID: 11400000, guid: 6e5b9143ae79d47aaa31880fa29889d5, type: 2}
           - {fileID: 11400000, guid: bdd8c6e6f24cd471182f6663dea679b7, type: 2}
         _Clip: {fileID: 8686776615663047457, guid: 5ee3048383fd441d5864e3d2ed3aaf00,
           type: 3}
         _NormalizedStartTime: NaN
+    - rid: 1834261975633231943
+      type: {class: AnimancerEvent/ParameterInt, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _Value: 1
+    - rid: 1834261975633231944
+      type: {class: AnimancerEvent/ParameterInt, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _Value: 0
 --- !u!114 &-4463977917762178393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,16 +272,23 @@ MonoBehaviour:
         _Speed: 1
         _Events:
           _NormalizedTimes:
+          - 0.301
           - 0.4864865
           - 0.8508809
           - NaN
-          _Callbacks: []
+          _Callbacks:
+          - rid: 1834261975633231946
           _Names:
+          - {fileID: 11400000, guid: ea075a32c5b64350915583e7f695aacc, type: 2}
           - {fileID: 11400000, guid: 6e5b9143ae79d47aaa31880fa29889d5, type: 2}
           - {fileID: 11400000, guid: bdd8c6e6f24cd471182f6663dea679b7, type: 2}
         _Clip: {fileID: -848500581256942332, guid: 5ee3048383fd441d5864e3d2ed3aaf00,
           type: 3}
         _NormalizedStartTime: 0
+    - rid: 1834261975633231946
+      type: {class: AnimancerEvent/ParameterInt, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _Value: 0
 --- !u!114 &-3357782011662745360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -388,16 +409,37 @@ MonoBehaviour:
         _Speed: 1
         _Events:
           _NormalizedTimes:
+          - 0.17220956
+          - 0.31435078
+          - 0.5986332
           - 0.772973
           - 0.8793686
           - NaN
-          _Callbacks: []
+          _Callbacks:
+          - rid: 1834261975633231951
+          - rid: 1834261975633231952
+          - rid: 1834261975633231948
           _Names:
+          - {fileID: 11400000, guid: ea075a32c5b64350915583e7f695aacc, type: 2}
+          - {fileID: 11400000, guid: ea075a32c5b64350915583e7f695aacc, type: 2}
+          - {fileID: 11400000, guid: ea075a32c5b64350915583e7f695aacc, type: 2}
           - {fileID: 11400000, guid: 6e5b9143ae79d47aaa31880fa29889d5, type: 2}
           - {fileID: 11400000, guid: bdd8c6e6f24cd471182f6663dea679b7, type: 2}
         _Clip: {fileID: -2245363434863794660, guid: 5ee3048383fd441d5864e3d2ed3aaf00,
           type: 3}
         _NormalizedStartTime: NaN
+    - rid: 1834261975633231948
+      type: {class: AnimancerEvent/ParameterInt, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _Value: 2
+    - rid: 1834261975633231951
+      type: {class: AnimancerEvent/ParameterInt, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _Value: 0
+    - rid: 1834261975633231952
+      type: {class: AnimancerEvent/ParameterInt, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _Value: 1
 --- !u!114 &-220197204913222620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -490,7 +532,7 @@ MonoBehaviour:
       _NormalizedStartTime: 0
     - _From: 5
       _To: 3
-      _Fade: 0.2
+      _Fade: NaN
       _NormalizedStartTime: 0
     - _From: 12
       _To: 8
@@ -720,26 +762,19 @@ MonoBehaviour:
         _Speed: 1
         _Events:
           _NormalizedTimes:
-          - 0.34635144
-          - 0.36847574
+          - 0.35157508
           - 0.5260382
           - 0.6960156
           - NaN
           _Callbacks:
-          - rid: 1834261975633231900
           - rid: 1834261975633231901
           _Names:
-          - {fileID: 11400000, guid: db474a7d5dc1439b9c611867f9f9f67a, type: 2}
-          - {fileID: 11400000, guid: 3a1d529c8c244662b3edfc0bd08a8073, type: 2}
+          - {fileID: 11400000, guid: ea075a32c5b64350915583e7f695aacc, type: 2}
           - {fileID: 11400000, guid: 6e5b9143ae79d47aaa31880fa29889d5, type: 2}
           - {fileID: 11400000, guid: bdd8c6e6f24cd471182f6663dea679b7, type: 2}
         _Clip: {fileID: 6275484585089794339, guid: 5ee3048383fd441d5864e3d2ed3aaf00,
           type: 3}
         _NormalizedStartTime: 0
-    - rid: 1834261975633231900
-      type: {class: AnimancerEvent/ParameterInt, ns: Animancer, asm: Kybernetik.Animancer}
-      data:
-        _Value: 0
     - rid: 1834261975633231901
       type: {class: AnimancerEvent/ParameterInt, ns: Animancer, asm: Kybernetik.Animancer}
       data:
@@ -884,16 +919,23 @@ MonoBehaviour:
         _Speed: 1
         _Events:
           _NormalizedTimes:
+          - 0.35191754
           - 0.6379979
           - 0.80652565
           - NaN
-          _Callbacks: []
+          _Callbacks:
+          - rid: 1834261975633231950
           _Names:
+          - {fileID: 11400000, guid: ea075a32c5b64350915583e7f695aacc, type: 2}
           - {fileID: 11400000, guid: 6e5b9143ae79d47aaa31880fa29889d5, type: 2}
           - {fileID: 11400000, guid: bdd8c6e6f24cd471182f6663dea679b7, type: 2}
         _Clip: {fileID: -6078921812650038246, guid: 5ee3048383fd441d5864e3d2ed3aaf00,
           type: 3}
         _NormalizedStartTime: NaN
+    - rid: 1834261975633231950
+      type: {class: AnimancerEvent/ParameterInt, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _Value: 0
 --- !u!114 &6986902627772474996
 MonoBehaviour:
   m_ObjectHideFlags: 0

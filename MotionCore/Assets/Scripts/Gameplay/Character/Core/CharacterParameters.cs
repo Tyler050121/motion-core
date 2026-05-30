@@ -4,10 +4,6 @@ namespace MotionCore.Gameplay.Character
 {
     public sealed class CharacterParameters
     {
-        float m_CurrentHealth;
-        public float CurrentHealth => m_CurrentHealth;
-        public bool IsDead { get; private set; }
-
         Vector2 m_MoveInput;
         public Vector2 MoveInput => m_MoveInput;
 
@@ -20,25 +16,10 @@ namespace MotionCore.Gameplay.Character
         Vector3 m_FacingDirection;
         public Vector3 FacingDirection => m_FacingDirection;
 
-        float m_FacingTurnSpeed;
-        public float FacingTurnSpeed => m_FacingTurnSpeed;
-
         public bool HasFacingDirection => m_FacingDirection.sqrMagnitude > 0.0001f;
 
         public bool HasMoveInput => m_MoveInput.sqrMagnitude > 0.0001f;
         public bool IsRunning { get; private set; }
-
-        public void ResetHealth(float maxHealth)
-        {
-            m_CurrentHealth = maxHealth;
-            IsDead = false;
-        }
-
-        public void ApplyDamage(float damage)
-        {
-            m_CurrentHealth = Mathf.Max(0f, m_CurrentHealth - damage);
-            IsDead = m_CurrentHealth <= 0f;
-        }
 
         public void SetMove(Vector2 moveInput, Vector3 moveDirection, float moveSpeed, bool isRunning)
         {
@@ -48,7 +29,7 @@ namespace MotionCore.Gameplay.Character
             IsRunning = isRunning;
         }
 
-        public void SetFacing(Vector3 facingDirection, float turnSpeed)
+        public void SetFacing(Vector3 facingDirection)
         {
             facingDirection.y = 0f;
             if (facingDirection.sqrMagnitude <= 0.0001f)
@@ -58,13 +39,11 @@ namespace MotionCore.Gameplay.Character
             }
 
             m_FacingDirection = facingDirection.normalized;
-            m_FacingTurnSpeed = turnSpeed;
         }
 
         public void ClearFacing()
         {
             m_FacingDirection = Vector3.zero;
-            m_FacingTurnSpeed = 0f;
         }
     }
 }

@@ -1,4 +1,4 @@
-namespace MotionCore.Gameplay
+namespace MotionCore.Gameplay.Common
 {
     /// <summary>
     /// 可被伤害影响的目标接口。

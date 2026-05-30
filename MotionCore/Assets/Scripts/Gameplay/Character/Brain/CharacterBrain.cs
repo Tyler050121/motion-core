@@ -2,32 +2,38 @@ using Animancer;
 using Animancer.FSM;
 using Animancer.Units;
 using Cinemachine;
+using MotionCore.Gameplay.Common;
 using MotionCore.Infrastructure;
 using UnityEngine;
 
 namespace MotionCore.Gameplay.Character
 {
     [DisallowMultipleComponent]
-    public sealed class CharacterBrain : MonoBehaviour, ICommandReceiver
+    public sealed class CharacterBrain : MonoBehaviour, ICommandReceiver, IConfigReceiver<CharacterDefinition>
     {
         [SerializeField] Character m_Character;
         [SerializeField] MoveState m_MoveState;
         [SerializeField] EvadeState m_EvadeState;
         [SerializeField] AttackState m_AttackState;
-        [SerializeField] MovementConfig m_MoveConfig;
         [SerializeField, Seconds] float m_InputTimeOut = 0.35f;
         [SerializeField] CinemachineFreeLook m_FreeLookCamera;
 
         StateMachine<CharacterState>.InputBuffer m_InputBuffer;
-
-        // public float MoveSpeed => m_Character.Parameters.MoveSpeed;
-        // public CharacterStateType CurrentStateType => m_Character.StateMachine.CurrentState.Type;
+        MotorConfig m_MotorConfig;
+        AttackDefinition m_NormalAttack;
 
         void Awake()
         {
-            ITimerService timer = ServiceLocator.Resolve<ITimerService>();
-            m_MoveState.SetContext(timer, m_MoveConfig);
+            m_AttackState.SetAttackFacingResolver(GetCameraPlanarForward);
             m_InputBuffer = new StateMachine<CharacterState>.InputBuffer(m_Character.StateMachine);
+        }
+
+        public void Initialize(CharacterDefinition definition)
+        {
+            m_MotorConfig = definition.Motor;
+            m_NormalAttack = definition.BasicAttack;
+            ITimerService timer = ServiceLocator.Resolve<ITimerService>();
+            m_MoveState.SetContext(timer, m_MotorConfig);
         }
 
         void Update()
@@ -40,36 +46,25 @@ namespace MotionCore.Gameplay.Character
             if (!m_Character.Parameters.HasFacingDirection)
                 return;
 
-            float targetAngle = Mathf.Atan2(
-                m_Character.Parameters.FacingDirection.x,
-                m_Character.Parameters.FacingDirection.z) * Mathf.Rad2Deg;
-
-            Vector3 eulerAngles = m_Character.FacingRoot.eulerAngles;
-            eulerAngles.y = Mathf.MoveTowardsAngle(
-                eulerAngles.y,
-                targetAngle,
-                m_Character.Parameters.FacingTurnSpeed * Time.deltaTime);
-            m_Character.FacingRoot.eulerAngles = eulerAngles;
-            m_Character.Parameters.ClearFacing();
+            TurnFacingToward(m_Character.Parameters.FacingDirection);
         }
 
         public void SetMoveInput(Vector2 moveInput, bool wantsRun)
         {
             bool hasMoveInput = moveInput.sqrMagnitude > 0.0001f;
             Vector2 clampedInput = moveInput.sqrMagnitude > 1f ? moveInput.normalized : moveInput;
-            float targetSpeed = hasMoveInput ? (wantsRun ? m_MoveConfig.RunSpeed : m_MoveConfig.WalkSpeed) : 0f;
-            float speedChangeRate = targetSpeed <= m_MoveConfig.WalkSpeed ? m_MoveConfig.WalkSpeedChangeRate : m_MoveConfig.RunSpeedChangeRate;
+            float targetSpeed = hasMoveInput ? (wantsRun ? m_MotorConfig.RunSpeed : m_MotorConfig.WalkSpeed) : 0f;
+            float speedChangeRate = targetSpeed <= m_MotorConfig.WalkSpeed ? m_MotorConfig.WalkSpeedChangeRate : m_MotorConfig.RunSpeedChangeRate;
             float moveSpeed = Mathf.MoveTowards(m_Character.Parameters.MoveSpeed, targetSpeed, speedChangeRate * Time.deltaTime);
 
-            Quaternion cameraYaw = Quaternion.Euler(0f, m_FreeLookCamera.m_XAxis.Value, 0f);
-            Vector3 forward = cameraYaw * Vector3.forward;
-            Vector3 right = cameraYaw * Vector3.right;
+            Vector3 forward = GetCameraPlanarForward();
+            Vector3 right = Vector3.Cross(Vector3.up, forward).normalized;
 
             Vector3 moveDirection = hasMoveInput
                 ? right.normalized * clampedInput.x + forward.normalized * clampedInput.y
                 : Vector3.zero;
 
-            m_Character.Parameters.SetMove(clampedInput, moveDirection, moveSpeed, moveSpeed > m_MoveConfig.RunThresholdSpeed);
+            m_Character.Parameters.SetMove(clampedInput, moveDirection, moveSpeed, moveSpeed > m_MotorConfig.RunThresholdSpeed);
 
             if (hasMoveInput)
                 m_Character.StateMachine.TrySetState(m_MoveState);
@@ -83,7 +78,12 @@ namespace MotionCore.Gameplay.Character
             return m_InputBuffer.Update(0f);
         }
 
-        public bool TryAttack(AttackDefinition definition)
+        public bool TryNormalAttack()
+        {
+            return TryAttack(m_NormalAttack);
+        }
+
+        bool TryAttack(AttackDefinition definition)
         {
             if (!m_AttackState.QueueAttack(definition))
                 return false;
@@ -93,6 +93,34 @@ namespace MotionCore.Gameplay.Character
 
             m_InputBuffer.Buffer(m_AttackState, m_InputTimeOut);
             return m_InputBuffer.Update(0f);
+        }
+
+        Vector3 GetCameraPlanarForward()
+        {
+            Quaternion cameraYaw = Quaternion.Euler(0f, m_FreeLookCamera.m_XAxis.Value, 0f);
+            Vector3 forward = cameraYaw * Vector3.forward;
+            forward.y = 0f;
+            return forward.normalized;
+        }
+
+        void TurnFacingToward(Vector3 facingDirection)
+        {
+            facingDirection.y = 0f;
+            Transform facingRoot = m_Character.FacingRoot;
+            Quaternion targetRotation = Quaternion.LookRotation(facingDirection.normalized, Vector3.up);
+
+            if (m_MotorConfig.FacingTurnDuration <= 0f)
+            {
+                facingRoot.rotation = targetRotation;
+                m_Character.Parameters.ClearFacing();
+                return;
+            }
+
+            float maxDegreesDelta = 180f / m_MotorConfig.FacingTurnDuration * Time.deltaTime;
+            facingRoot.rotation = Quaternion.RotateTowards(facingRoot.rotation, targetRotation, maxDegreesDelta);
+
+            if (Quaternion.Angle(facingRoot.rotation, targetRotation) <= 0.1f)
+                m_Character.Parameters.ClearFacing();
         }
     }
 }

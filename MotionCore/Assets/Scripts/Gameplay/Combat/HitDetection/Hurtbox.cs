@@ -1,4 +1,4 @@
-using MotionCore.Gameplay;
+using MotionCore.Gameplay.Common;
 using UnityEngine;
 
 namespace MotionCore.Gameplay.Combat

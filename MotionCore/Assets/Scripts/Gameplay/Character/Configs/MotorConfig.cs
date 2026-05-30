@@ -3,8 +3,8 @@ using UnityEngine;
 
 namespace MotionCore.Gameplay.Character
 {
-    [CreateAssetMenu(menuName = "MotionCore/Character/Movement Config")]
-    public sealed class MovementConfig : ScriptableObject
+    [CreateAssetMenu(menuName = "MotionCore/Character/Motor Config")]
+    public sealed class MotorConfig : ScriptableObject
     {
         [SerializeField] float m_WalkSpeed = 1f;
         public float WalkSpeed => m_WalkSpeed;
@@ -18,14 +18,15 @@ namespace MotionCore.Gameplay.Character
         [SerializeField] float m_RunSpeedChangeRate = 3f;
         public float RunSpeedChangeRate => m_RunSpeedChangeRate;
 
-        [SerializeField] float m_TurnSpeed = 540f;
-        public float TurnSpeed => m_TurnSpeed;
-
         [SerializeField] float m_RunTurnBackAngle = 135f;
         public float RunTurnBackAngle => m_RunTurnBackAngle;
 
         [SerializeField, Seconds] float m_RunTurnBackCooldown = 1f;
         public float RunTurnBackCooldown => m_RunTurnBackCooldown;
+
+        [SerializeField, Seconds, Min(0f), Tooltip("180 度转身秒数")]
+        float m_FacingTurnDuration = 0.2f;
+        public float FacingTurnDuration => m_FacingTurnDuration;
 
         public float RunThresholdSpeed => (m_WalkSpeed + m_RunSpeed) * 0.5f;
     }

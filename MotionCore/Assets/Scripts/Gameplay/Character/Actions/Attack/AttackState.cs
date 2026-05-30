@@ -1,5 +1,4 @@
 using Animancer;
-using MotionCore.Gameplay;
 using MotionCore.Gameplay.Combat;
 using UnityEngine;
 
@@ -23,11 +22,17 @@ namespace MotionCore.Gameplay.Character
         float m_ComboExpireTime;
         bool m_IsPerfectVariant;
         bool m_IsPlayingEndStep;
+        System.Func<Vector3> m_AttackFacingResolver;
 
         [SerializeField] MeleeHitbox m_MeleeHitbox;
 
         protected override bool CanInterruptSelf => (ExitOptions & CharacterStateExitOptions.Attack) != 0;
         public override CharacterStateType Type => m_ActionType;
+
+        public void SetAttackFacingResolver(System.Func<Vector3> resolver)
+        {
+            m_AttackFacingResolver = resolver;
+        }
 
         /// <summary>
         /// 排队一次动作输入。状态未启用时会尝试恢复连段窗口；
@@ -116,6 +121,7 @@ namespace MotionCore.Gameplay.Character
             m_IsPlayingEndStep = false;
             m_CurrentStepStartTime = Time.time;
 
+            FaceAttackDirection();
             OpenComboGrace(AttackDefinition.ComboGraceStartType.Start);
             PlayStep(m_CurrentStep, attackRequest.UsePerfectVariant);
         }
@@ -178,6 +184,11 @@ namespace MotionCore.Gameplay.Character
             }
 
             events.OnEnd = OnStepEnded;
+        }
+
+        void FaceAttackDirection()
+        {
+            Character.Parameters.SetFacing(m_AttackFacingResolver());
         }
 
         /// <summary>
