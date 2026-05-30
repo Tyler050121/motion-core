@@ -74,7 +74,6 @@ namespace MotionCore.Gameplay.Character
 
             if (m_IsTurningBack)
             {
-                Character.Parameters.SetFacing(Character.Parameters.MoveDirection);
                 return;
             }
 
@@ -140,6 +139,7 @@ namespace MotionCore.Gameplay.Character
         void PlayRunTurnBack()
         {
             m_IsTurningBack = true;
+            Character.Parameters.ClearFacing();
             m_Timer.Delay(this, m_MotorConfig.RunTurnBackCooldown, m_RunTurnBackTimer);
             AnimancerState state = Character.Animancer.Play(m_RunTurnBack);
             state.Events(this).OnEnd = PlayMoveMixer;
