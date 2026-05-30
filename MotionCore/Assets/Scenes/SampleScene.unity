@@ -209,8 +209,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.018745923, y: 0.000000020159678, z: 3.779782e-10, w: 0.9998243}
-  m_LocalPosition: {x: 0, y: 1.401, z: -3.6}
+  m_LocalRotation: {x: 0.20577292, y: 0.000000029391508, z: -0.000000006180235, w: 0.9785998}
+  m_LocalPosition: {x: 0, y: 3.401, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -421,6 +421,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 767838264}
+  - component: {fileID: 536267450584945765}
   m_Layer: 0
   m_Name: CameraRig
   m_TagString: Untagged
@@ -693,6 +694,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &536267450584945765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 767838263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e517f7360bf8431db8813917c0e1afcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ViewCamera: {fileID: 330585545}
+  m_FreeLookCamera: {fileID: 780597588}
+  m_LockYawSpeed: 280
+  m_LockYawDeadZone: 8
+  m_LockYawSmoothTime: 0.14
+  m_CloseLockDistance: 2.5
+  m_FarLockDistance: 7
+  m_CloseLockYawSpeedScale: 0.35
 --- !u!1001 &3046052419273580057
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -704,27 +725,7 @@ PrefabInstance:
     - target: {fileID: 1700821899760079026, guid: 0b42bfcdcb7dc4533880cb74d9736140,
         type: 3}
       propertyPath: m_Name
-      value: VCam_Exploration_FreeLook
-      objectReference: {fileID: 0}
-    - target: {fileID: 2715005693877034788, guid: 0b42bfcdcb7dc4533880cb74d9736140,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2715005693877034788, guid: 0b42bfcdcb7dc4533880cb74d9736140,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2715005693877034788, guid: 0b42bfcdcb7dc4533880cb74d9736140,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.9996151
-      objectReference: {fileID: 0}
-    - target: {fileID: 2715005693877034788, guid: 0b42bfcdcb7dc4533880cb74d9736140,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.0277457
+      value: VCam_PlayerFreeLook
       objectReference: {fileID: 0}
     - target: {fileID: 2774912290598002276, guid: 0b42bfcdcb7dc4533880cb74d9736140,
         type: 3}
@@ -744,12 +745,12 @@ PrefabInstance:
     - target: {fileID: 3288274925413935780, guid: 0b42bfcdcb7dc4533880cb74d9736140,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.401
+      value: 3.401
       objectReference: {fileID: 0}
     - target: {fileID: 3288274925413935780, guid: 0b42bfcdcb7dc4533880cb74d9736140,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.6
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 3288274925413935780, guid: 0b42bfcdcb7dc4533880cb74d9736140,
         type: 3}
@@ -785,6 +786,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8646860052285325150, guid: 0b42bfcdcb7dc4533880cb74d9736140,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9871064
+      objectReference: {fileID: 0}
+    - target: {fileID: 8646860052285325150, guid: 0b42bfcdcb7dc4533880cb74d9736140,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.16006564
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -849,11 +860,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2501418995336163100, guid: 8cb0328f13fff4f13838ec034ad9e985,
-        type: 3}
-      propertyPath: m_FreeLookCamera
-      value: 
-      objectReference: {fileID: 780597588}
     - target: {fileID: 7778320943819192780, guid: 8cb0328f13fff4f13838ec034ad9e985,
         type: 3}
       propertyPath: m_Name

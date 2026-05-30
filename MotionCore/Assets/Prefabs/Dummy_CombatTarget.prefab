@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8281669804640349346}
   - component: {fileID: 5789416337036434025}
+  - component: {fileID: 94999494827869240}
   - component: {fileID: 7771431953369132130}
   m_Layer: 0
   m_Name: Dummy_CombatTarget
@@ -45,9 +46,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 382efa1e954f4a02bca03328d20cf2b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_MaxHealth: 100
+  m_Name:
+  m_EditorClassIdentifier:
+  m_MaxHealth: 100000
+--- !u!114 &94999494827869240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 909835721837698576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d58218467d6c4e8092ded93bbc459032, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  m_LockPoint: {fileID: 6904033352630018368}
+  m_Health: {fileID: 5789416337036434025}
 --- !u!65 &7771431953369132130
 BoxCollider:
   m_ObjectHideFlags: 0

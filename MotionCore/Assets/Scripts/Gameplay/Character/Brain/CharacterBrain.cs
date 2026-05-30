@@ -1,7 +1,8 @@
 using Animancer;
 using Animancer.FSM;
 using Animancer.Units;
-using Cinemachine;
+using MotionCore.Gameplay.Cameras;
+using MotionCore.Gameplay.Targeting;
 using MotionCore.Gameplay.Common;
 using MotionCore.Infrastructure;
 using UnityEngine;
@@ -15,21 +16,23 @@ namespace MotionCore.Gameplay.Character
         [SerializeField] MoveState m_MoveState;
         [SerializeField] EvadeState m_EvadeState;
         [SerializeField] AttackState m_AttackState;
+        [SerializeField] TargetLockController m_TargetLockController;
         [SerializeField, Seconds] float m_InputTimeOut = 0.35f;
-        [SerializeField] CinemachineFreeLook m_FreeLookCamera;
 
         StateMachine<CharacterState>.InputBuffer m_InputBuffer;
+        ICameraService m_Camera;
         MotorConfig m_MotorConfig;
         AttackDefinition m_NormalAttack;
 
         void Awake()
         {
-            m_AttackState.SetAttackFacingResolver(GetCameraPlanarForward);
+            m_AttackState.SetAttackFacingResolver(GetAttackFacingDirection);
             m_InputBuffer = new StateMachine<CharacterState>.InputBuffer(m_Character.StateMachine);
         }
 
         public void Initialize(CharacterDefinition definition)
         {
+            m_Camera = ServiceLocator.Resolve<ICameraService>();
             m_MotorConfig = definition.Motor;
             m_NormalAttack = definition.BasicAttack;
             ITimerService timer = ServiceLocator.Resolve<ITimerService>();
@@ -57,8 +60,8 @@ namespace MotionCore.Gameplay.Character
             float speedChangeRate = targetSpeed <= m_MotorConfig.WalkSpeed ? m_MotorConfig.WalkSpeedChangeRate : m_MotorConfig.RunSpeedChangeRate;
             float moveSpeed = Mathf.MoveTowards(m_Character.Parameters.MoveSpeed, targetSpeed, speedChangeRate * Time.deltaTime);
 
-            Vector3 forward = GetCameraPlanarForward();
-            Vector3 right = Vector3.Cross(Vector3.up, forward).normalized;
+            Vector3 forward = m_Camera.PlanarForward;
+            Vector3 right = m_Camera.PlanarRight;
 
             Vector3 moveDirection = hasMoveInput
                 ? right.normalized * clampedInput.x + forward.normalized * clampedInput.y
@@ -83,6 +86,11 @@ namespace MotionCore.Gameplay.Character
             return TryAttack(m_NormalAttack);
         }
 
+        public void ToggleTargetLock()
+        {
+            m_TargetLockController.ToggleLock();
+        }
+
         bool TryAttack(AttackDefinition definition)
         {
             if (!m_AttackState.QueueAttack(definition))
@@ -95,12 +103,11 @@ namespace MotionCore.Gameplay.Character
             return m_InputBuffer.Update(0f);
         }
 
-        Vector3 GetCameraPlanarForward()
+        Vector3 GetAttackFacingDirection()
         {
-            Quaternion cameraYaw = Quaternion.Euler(0f, m_FreeLookCamera.m_XAxis.Value, 0f);
-            Vector3 forward = cameraYaw * Vector3.forward;
-            forward.y = 0f;
-            return forward.normalized;
+            return m_TargetLockController.HasTarget
+                ? m_TargetLockController.GetDirectionFrom(m_Character.FacingRoot.position)
+                : m_Camera.PlanarForward;
         }
 
         void TurnFacingToward(Vector3 facingDirection)

@@ -8,6 +8,7 @@ namespace MotionCore.Gameplay.Character
         [SerializeField] CharacterBrain m_Brain;
         [SerializeField] KeyCode m_EvadeKey = KeyCode.LeftShift;
         [SerializeField] KeyCode m_BasicAttackKey = KeyCode.Mouse0;
+        [SerializeField] KeyCode m_LockKey = KeyCode.Mouse2;
         [SerializeField] KeyCode m_RunKey = KeyCode.LeftShift;
 
         void Update()
@@ -39,11 +40,14 @@ namespace MotionCore.Gameplay.Character
 
             if (Input.GetKeyDown(m_BasicAttackKey))
                 m_Brain.TryNormalAttack();
+
+            if (Input.GetKeyDown(m_LockKey))
+                m_Brain.ToggleTargetLock();
         }
 
         void OnGUI()
         {
-            GUILayout.BeginArea(new Rect(12f, 12f, 300f, 112f), GUI.skin.box);
+            GUILayout.BeginArea(new Rect(12f, 12f, 300f, 132f), GUI.skin.box);
             // GUILayout.Label($"Current State: {m_Brain.CurrentStateType}");
             // GUILayout.Label($"Move Speed: {m_Brain.MoveSpeed:0.00}");
             GUILayout.Space(4f);
@@ -51,6 +55,7 @@ namespace MotionCore.Gameplay.Character
             GUILayout.Label("Hold Shift Run");
             GUILayout.Label("Press Shift Evade");
             GUILayout.Label("Mouse0 Basic Action");
+            GUILayout.Label("Mouse2 Lock Target");
             GUILayout.EndArea();
         }
     }

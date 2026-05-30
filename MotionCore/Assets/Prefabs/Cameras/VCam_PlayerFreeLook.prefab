@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 868343916818770718}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.0277457, y: 0, z: 0, w: 0.9996151}
+  m_LocalRotation: {x: 0.20577289, y: 0, z: 0, w: 0.9785998}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -138,7 +138,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 4
-  m_FollowOffset: {x: 0, y: 0.2, z: -3.6}
+  m_FollowOffset: {x: 0, y: 2.2, z: -5}
   m_XDamping: 0.1
   m_YDamping: 0.1
   m_ZDamping: 0.1
@@ -217,7 +217,7 @@ GameObject:
   - component: {fileID: 3288274925413935780}
   - component: {fileID: 2774912290598002276}
   m_Layer: 0
-  m_Name: VCam_Exploration_FreeLook
+  m_Name: VCam_PlayerFreeLook
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -281,7 +281,7 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_YAxis:
-    Value: 0
+    Value: 1
     m_SpeedMode: 0
     m_MaxSpeed: 2
     m_AccelTime: 0.2
@@ -371,7 +371,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5186365912538106249}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.018745936, y: 0, z: 0, w: 0.9998243}
+  m_LocalRotation: {x: 0.16006564, y: 0, z: 0, w: 0.9871064}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -484,7 +484,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 4
-  m_FollowOffset: {x: 0, y: 0.2, z: -3.6}
+  m_FollowOffset: {x: 0, y: 2.2, z: -5}
   m_XDamping: 0.12
   m_YDamping: 0.12
   m_ZDamping: 0.12
@@ -611,7 +611,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 4
-  m_FollowOffset: {x: 0, y: 0.2, z: -3.6}
+  m_FollowOffset: {x: 0, y: 2.2, z: -5}
   m_XDamping: 0.15
   m_YDamping: 0.15
   m_ZDamping: 0.15
@@ -704,7 +704,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7577932402912241121}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.0277457, y: 0, z: 0, w: 0.9996151}
+  m_LocalRotation: {x: 0.20577289, y: 0, z: 0, w: 0.9785998}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
