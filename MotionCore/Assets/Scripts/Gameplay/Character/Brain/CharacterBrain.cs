@@ -105,9 +105,13 @@ namespace MotionCore.Gameplay.Character
 
         Vector3 GetAttackFacingDirection()
         {
-            return m_TargetLockController.HasTarget
-                ? m_TargetLockController.GetDirectionFrom(m_Character.FacingRoot.position)
-                : m_Camera.PlanarForward;
+            if (m_TargetLockController.HasTarget)
+                return m_TargetLockController.GetDirectionFrom(m_Character.FacingRoot.position);
+
+            if (m_Character.Parameters.HasMoveInput)
+                return m_Character.Parameters.MoveDirection;
+
+            return m_Character.FacingRoot.forward;
         }
 
         void TurnFacingToward(Vector3 facingDirection)
