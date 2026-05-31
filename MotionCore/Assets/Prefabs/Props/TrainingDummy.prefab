@@ -178,6 +178,7 @@ GameObject:
   - component: {fileID: 5072977080560090750}
   - component: {fileID: 3103926484834840477}
   - component: {fileID: 5276140659852895888}
+  - component: {fileID: 3266243511475220147}
   m_Layer: 0
   m_Name: HurtboxRoot
   m_TagString: Untagged
@@ -233,3 +234,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 323b6ef52b2c48a195e9b3450505b1d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3266243511475220147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1443048074924569116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f895a85cfa194ef381cca2746ee444fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_DamageNumber: {fileID: 5889442285189687167, guid: c56659474db274ba68fcb65aa282f75b,
+    type: 3}
+  m_WorldOffset: {x: 0, y: 1, z: 0}
+  m_FollowTarget: 1

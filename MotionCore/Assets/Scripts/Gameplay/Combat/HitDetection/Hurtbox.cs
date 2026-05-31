@@ -1,3 +1,4 @@
+using System;
 using MotionCore.Gameplay.Common;
 using UnityEngine;
 
@@ -9,16 +10,19 @@ namespace MotionCore.Gameplay.Combat
         IDamageable m_Damageable;
 
         public IDamageable Damageable => m_Damageable;
+        public event Action<HitResult> HitReceived;
 
         public HitResult ReceiveHit(HitProfile profile, Vector3 point)
         {
             m_Damageable.ApplyDamage(profile.Damage);
-            return new HitResult(
+            HitResult result = new(
                 this,
                 profile.Damage,
                 m_Damageable.CurrentHealth,
                 m_Damageable.IsDepleted,
                 point);
+            HitReceived?.Invoke(result);
+            return result;
         }
 
         void Awake()
