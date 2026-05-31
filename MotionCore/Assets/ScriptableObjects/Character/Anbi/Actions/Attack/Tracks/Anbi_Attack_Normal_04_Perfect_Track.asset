@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: Anbi_Attack_Normal_04_Perfect_Track
   m_EditorClassIdentifier: 
   m_Animation: {fileID: 6513248463849673564, guid: 19f7276f66a284cbfa65e2726e1fd573, type: 2}
-  m_HitProfiles:
-  - {fileID: 11400000, guid: c29aed11bb684b2a9d2d0dfde73dc55e, type: 2}
+  m_Hits:
+  - m_Profile: {fileID: 11400000, guid: c29aed11bb684b2a9d2d0dfde73dc55e, type: 2}
+    m_Anchor: 0
+    m_LocalOffset: {x: 0, y: 1, z: 1.05}

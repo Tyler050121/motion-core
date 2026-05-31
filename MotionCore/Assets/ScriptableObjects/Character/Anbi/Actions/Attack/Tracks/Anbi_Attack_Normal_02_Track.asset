@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 272e3bd31ff5482fbad71281de2fc1d0, type: 3}
   m_Name: Anbi_Attack_Normal_02_Track
   m_EditorClassIdentifier: 
-  m_Animation: {fileID: -3499097093145020315, guid: 19f7276f66a284cbfa65e2726e1fd573, type: 2}
-  m_HitProfiles:
-  - {fileID: 11400000, guid: c29aed11bb684b2a9d2d0dfde73dc55e, type: 2}
+  m_Animation: {fileID: -3499097093145020315, guid: 19f7276f66a284cbfa65e2726e1fd573,
+    type: 2}
+  m_Hits:
+  - m_Profile: {fileID: 11400000, guid: c29aed11bb684b2a9d2d0dfde73dc55e, type: 2}
+    m_Anchor: 1
+    m_LocalOffset: {x: 0, y: 0, z: 0}

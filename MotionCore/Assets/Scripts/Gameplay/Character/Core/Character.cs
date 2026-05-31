@@ -1,3 +1,4 @@
+using System;
 using Animancer;
 using Animancer.FSM;
 using MotionCore.Gameplay.Common;
@@ -17,6 +18,9 @@ namespace MotionCore.Gameplay.Character
 
         [SerializeField] Transform m_FacingRoot;
         public Transform FacingRoot => m_FacingRoot;
+
+        [SerializeField, Tooltip("角色挂点绑定")]
+        AnchorBinding[] m_Anchors = Array.Empty<AnchorBinding>();
 
         [SerializeField] StateMachine<CharacterState>.WithDefault m_StateMachine = new();
         public StateMachine<CharacterState>.WithDefault StateMachine => m_StateMachine;
@@ -46,6 +50,27 @@ namespace MotionCore.Gameplay.Character
             }
         }
 
+        public bool TryGetAnchor(CharacterAnchor anchor, out Transform source)
+        {
+            for (int i = 0; i < m_Anchors.Length; i++)
+            {
+                AnchorBinding binding = m_Anchors[i];
+                if (binding.Anchor != anchor)
+                    continue;
+
+                source = binding.Source;
+                if (source != null)
+                    return true;
+
+                Debug.LogError($"角色挂点 {anchor} 未绑定 Transform。", this);
+                return false;
+            }
+
+            source = null;
+            Debug.LogError($"角色挂点 {anchor} 未配置。", this);
+            return false;
+        }
+
 #if UNITY_EDITOR
         void OnValidate()
         {
@@ -63,5 +88,15 @@ namespace MotionCore.Gameplay.Character
             m_ConfigReceivers = new List<MonoBehaviour>(receivers).ToArray();
         }
 #endif
+
+        [Serializable]
+        struct AnchorBinding
+        {
+            [SerializeField] CharacterAnchor m_Anchor;
+            public CharacterAnchor Anchor => m_Anchor;
+
+            [SerializeField] Transform m_Source;
+            public Transform Source => m_Source;
+        }
     }
 }

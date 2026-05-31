@@ -11,9 +11,6 @@ namespace MotionCore.Gameplay.Combat
         [SerializeField, Min(0.01f)] float m_Radius = 0.75f;
         public float Radius => m_Radius;
 
-        [SerializeField] Vector3 m_LocalOffset = new(0f, 1f, 1f);
-        public Vector3 LocalOffset => m_LocalOffset;
-
         [SerializeField] LayerMask m_TargetLayers = ~0;
         public LayerMask TargetLayers => m_TargetLayers;
 

@@ -14,7 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Animation: {fileID: -440235273159886873, guid: 19f7276f66a284cbfa65e2726e1fd573,
     type: 2}
-  m_HitProfiles:
-  - {fileID: 11400000, guid: c29aed11bb684b2a9d2d0dfde73dc55e, type: 2}
-  - {fileID: 11400000, guid: c29aed11bb684b2a9d2d0dfde73dc55e, type: 2}
-  - {fileID: 11400000, guid: c29aed11bb684b2a9d2d0dfde73dc55e, type: 2}
+  m_Hits:
+  - m_Profile: {fileID: 11400000, guid: c29aed11bb684b2a9d2d0dfde73dc55e, type: 2}
+    m_Anchor: 1
+    m_LocalOffset: {x: 0, y: 0, z: 0}
+  - m_Profile: {fileID: 11400000, guid: c29aed11bb684b2a9d2d0dfde73dc55e, type: 2}
+    m_Anchor: 1
+    m_LocalOffset: {x: 0, y: 0, z: 0}
+  - m_Profile: {fileID: 11400000, guid: c29aed11bb684b2a9d2d0dfde73dc55e, type: 2}
+    m_Anchor: 1
+    m_LocalOffset: {x: 0, y: 0, z: 0}

@@ -20,7 +20,7 @@ namespace MotionCore.Gameplay.Combat
         /// <summary>
         /// 打开一个持续命中窗口，同一个窗口在关闭前只会命中同一目标一次。
         /// </summary>
-        public void Open(int id, HitProfile profile, Transform source)
+        public void Open(int id, HitProfile profile, Transform source, Vector3 localOffset)
         {
             if (FindWindowIndex(id) >= 0)
             {
@@ -32,6 +32,7 @@ namespace MotionCore.Gameplay.Combat
             window.Id = id;
             window.Profile = profile;
             window.Source = source;
+            window.LocalOffset = localOffset;
             window.HitTargets.Clear();
             m_ActiveWindows.Add(window);
         }
@@ -39,10 +40,10 @@ namespace MotionCore.Gameplay.Combat
         /// <summary>
         /// 执行一次瞬时命中检测。
         /// </summary>
-        public void Hit(int id, HitProfile profile, Transform source)
+        public void Hit(int id, HitProfile profile, Transform source, Vector3 localOffset)
         {
             m_InstantHitTargets.Clear();
-            Sample(id, profile, source, m_InstantHitTargets);
+            Sample(id, profile, source, localOffset, m_InstantHitTargets);
             m_InstantHitTargets.Clear();
         }
 
@@ -77,7 +78,7 @@ namespace MotionCore.Gameplay.Combat
             for (int i = 0; i < m_ActiveWindows.Count; i++)
             {
                 HitWindow window = m_ActiveWindows[i];
-                Sample(window.Id, window.Profile, window.Source, window.HitTargets);
+                Sample(window.Id, window.Profile, window.Source, window.LocalOffset, window.HitTargets);
             }
         }
 
@@ -98,6 +99,7 @@ namespace MotionCore.Gameplay.Combat
             m_ActiveWindows.RemoveAt(index);
             window.Profile = null;
             window.Source = null;
+            window.LocalOffset = default;
             window.HitTargets.Clear();
             m_WindowPool.Add(window);
         }
@@ -117,9 +119,10 @@ namespace MotionCore.Gameplay.Combat
             int id,
             HitProfile profile,
             Transform source,
+            Vector3 localOffset,
             HashSet<Hurtbox> hitTargets)
         {
-            Vector3 center = source.TransformPoint(profile.LocalOffset);
+            Vector3 center = source.TransformPoint(localOffset);
             m_GizmoSamples.Add(new GizmoSample(center, profile.Radius, Time.time + GizmoHoldSeconds));
 
             int count = Physics.OverlapSphereNonAlloc(
@@ -158,7 +161,7 @@ namespace MotionCore.Gameplay.Combat
             {
                 HitWindow window = m_ActiveWindows[i];
                 Gizmos.DrawWireSphere(
-                    window.Source.TransformPoint(window.Profile.LocalOffset),
+                    window.Source.TransformPoint(window.LocalOffset),
                     window.Profile.Radius);
             }
 
@@ -181,6 +184,7 @@ namespace MotionCore.Gameplay.Combat
             public int Id;
             public HitProfile Profile;
             public Transform Source;
+            public Vector3 LocalOffset;
             public readonly HashSet<Hurtbox> HitTargets = new();
         }
 

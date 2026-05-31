@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Anbi_Attack_Normal_02_End_Track
   m_EditorClassIdentifier: 
   m_Animation: {fileID: 2360240572361095127, guid: 19f7276f66a284cbfa65e2726e1fd573, type: 2}
-  m_HitProfiles: []
+  m_Hits: []

@@ -1,5 +1,4 @@
 using System;
-using MotionCore.Gameplay.Combat;
 using UnityEngine;
 
 namespace MotionCore.Gameplay.Character
@@ -29,11 +28,11 @@ namespace MotionCore.Gameplay.Character
         [Serializable]
         public sealed class AttackStepDefinition
         {
-            [SerializeField] AttackAnimTrackAsset m_Track;
-            public AttackAnimTrackAsset Track => m_Track;
+            [SerializeField] AttackAnimationTrack m_Track;
+            public AttackAnimationTrack Track => m_Track;
 
-            [SerializeField] AttackAnimTrackAsset m_EndStep;
-            public AttackAnimTrackAsset EndStep => m_EndStep;
+            [SerializeField] AttackAnimationTrack m_EndStep;
+            public AttackAnimationTrack EndStep => m_EndStep;
             public bool HasEndStep => m_EndStep != null;
 
             [SerializeField] AttackStepVariantDefinition m_PerfectVariant;
@@ -50,11 +49,11 @@ namespace MotionCore.Gameplay.Character
         [Serializable]
         public sealed class AttackStepVariantDefinition
         {
-            [SerializeField] AttackAnimTrackAsset m_Track;
-            public AttackAnimTrackAsset Track => m_Track;
+            [SerializeField] AttackAnimationTrack m_Track;
+            public AttackAnimationTrack Track => m_Track;
 
-            [SerializeField] AttackAnimTrackAsset m_EndStep;
-            public AttackAnimTrackAsset EndStep => m_EndStep;
+            [SerializeField] AttackAnimationTrack m_EndStep;
+            public AttackAnimationTrack EndStep => m_EndStep;
             public bool HasEndStep => m_EndStep != null;
         }
 

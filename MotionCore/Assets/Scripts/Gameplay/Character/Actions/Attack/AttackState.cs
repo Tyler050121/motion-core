@@ -140,7 +140,7 @@ namespace MotionCore.Gameplay.Character
             PlayTrack(step.Track);
         }
 
-        void PlayTrack(AttackAnimTrackAsset track)
+        void PlayTrack(AttackAnimationTrack track)
         {
             m_MeleeHitbox.CloseAll();
             AnimancerState state = Character.Animancer.Play(track.Animation);
@@ -173,17 +173,33 @@ namespace MotionCore.Gameplay.Character
                     else if (eventName == GlobalConfig.AnimationEventNames.CanAttack)
                         events.SetCallback(i, OpenAttack);
                     else if (eventName == GlobalConfig.AnimationEventNames.Hit)
-                        events.AddCallback<int>(i, index =>
-                            m_MeleeHitbox.Hit(index, track.GetHitProfile(index), Character.FacingRoot));
+                        events.AddCallback<int>(i, index => Hit(index, track));
                     else if (eventName == GlobalConfig.AnimationEventNames.HitStart)
-                        events.AddCallback<int>(i, index =>
-                            m_MeleeHitbox.Open(index, track.GetHitProfile(index), Character.FacingRoot));
+                        events.AddCallback<int>(i, index => OpenHit(index, track));
                     else if (eventName == GlobalConfig.AnimationEventNames.HitEnd)
                         events.AddCallback<int>(i, m_MeleeHitbox.Close);
                 }
             }
 
             events.OnEnd = OnStepEnded;
+        }
+
+        void Hit(int index, AttackAnimationTrack track)
+        {
+            AttackHitDefinition hit = track.GetHitDefinition(index);
+            if (!Character.TryGetAnchor(hit.Anchor, out Transform source))
+                return;
+
+            m_MeleeHitbox.Hit(index, hit.Profile, source, hit.LocalOffset);
+        }
+
+        void OpenHit(int index, AttackAnimationTrack track)
+        {
+            AttackHitDefinition hit = track.GetHitDefinition(index);
+            if (!Character.TryGetAnchor(hit.Anchor, out Transform source))
+                return;
+
+            m_MeleeHitbox.Open(index, hit.Profile, source, hit.LocalOffset);
         }
 
         void FaceAttackDirection()
