@@ -141,11 +141,11 @@ namespace MotionCore.Gameplay.Combat
                 if (!hitTargets.Add(hurtbox))
                     continue;
 
+                Vector3 direction = center - source.position;
+                direction.y = 0f;
+
                 // 执行攻击
-                HitResult result = hurtbox.ReceiveHit(profile, m_Results[i].ClosestPoint(center));
-                Debug.Log(
-                    $"Hit {id} {result.Hurtbox.name} for {result.Damage:0.##}. Health: {result.RemainingHealth:0.##}",
-                    result.Hurtbox);
+                hurtbox.ReceiveHit(profile, m_Results[i].ClosestPoint(center), direction);
             }
         }
 

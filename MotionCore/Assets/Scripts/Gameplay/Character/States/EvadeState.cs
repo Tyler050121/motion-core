@@ -1,4 +1,5 @@
 using Animancer;
+using MotionCore.Infrastructure;
 using UnityEngine;
 
 namespace MotionCore.Gameplay.Character
@@ -7,7 +8,6 @@ namespace MotionCore.Gameplay.Character
     {
         [SerializeField] TransitionAsset m_EvadeFront;
         [SerializeField] TransitionAsset m_EvadeBack;
-        [SerializeField] StringAsset m_CanCancelEvent;
 
         protected override bool CanInterruptSelf => (ExitOptions & CharacterStateExitOptions.Evade) != 0;
         public override CharacterStateType Type => CharacterStateType.Evade;
@@ -18,9 +18,18 @@ namespace MotionCore.Gameplay.Character
             ExitOptions = CharacterStateExitOptions.Default;
 
             AnimancerState state = Character.Animancer.Play(evade);
-            AnimancerEvent.Sequence events = state.Events(this);
-            events.SetCallback(m_CanCancelEvent, OpenCanCancel);
-            events.OnEnd = () => { ExitOptions |= CharacterStateExitOptions.Idle; Character.StateMachine.TrySetDefaultState(); };
+            bool isNewEventSequence = state.Events(this, out AnimancerEvent.Sequence events);
+
+            if (isNewEventSequence)
+            {
+                for (int i = 0; i < events.Count; i++)
+                {
+                    if (events.GetName(i) == GlobalConfig.AnimationEventNames.CanCancel)
+                        events.SetCallback(i, OpenCancel);
+                }
+            }
+
+            events.OnEnd = ReturnToDefaultState;
         }
     }
 }

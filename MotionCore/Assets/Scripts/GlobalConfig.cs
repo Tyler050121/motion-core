@@ -18,6 +18,7 @@ namespace MotionCore
         public static class AnimationEventNames
         {
             public const string CanCancel = "CanCancel";
+            public const string CanInterrupt = "CanInterrupt";
             public const string CanAttack = "CanAttack";
             public const string Hit = "Hit";
             public const string HitStart = "HitStart";

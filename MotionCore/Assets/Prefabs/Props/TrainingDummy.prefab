@@ -250,3 +250,4 @@ MonoBehaviour:
     type: 3}
   m_WorldOffset: {x: 0, y: 1, z: 0}
   m_FollowTarget: 1
+  m_ReactionHandler: {fileID: 0}

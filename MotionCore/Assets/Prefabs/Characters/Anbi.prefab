@@ -229,7 +229,6 @@ MonoBehaviour:
     type: 2}
   m_EvadeBack: {fileID: -3357782011662745360, guid: 19f7276f66a284cbfa65e2726e1fd573,
     type: 2}
-  m_CanCancelEvent: {fileID: 11400000, guid: bdd8c6e6f24cd471182f6663dea679b7, type: 2}
 --- !u!114 &6383220402655325866
 MonoBehaviour:
   m_ObjectHideFlags: 0

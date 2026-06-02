@@ -4,18 +4,20 @@ using Animancer.Units;
 using MotionCore.Gameplay.Cameras;
 using MotionCore.Gameplay.Targeting;
 using MotionCore.Gameplay.Common;
+using MotionCore.Gameplay.Combat;
 using MotionCore.Infrastructure;
 using UnityEngine;
 
 namespace MotionCore.Gameplay.Character
 {
     [DisallowMultipleComponent]
-    public sealed class CharacterBrain : MonoBehaviour, ICommandReceiver, IConfigReceiver<CharacterDefinition>
+    public sealed class CharacterBrain : MonoBehaviour, ICommandReceiver, IConfigReceiver<CharacterDefinition>, IHitReactionHandler
     {
         [SerializeField] Character m_Character;
         [SerializeField] MoveState m_MoveState;
         [SerializeField] EvadeState m_EvadeState;
         [SerializeField] AttackState m_AttackState;
+        [SerializeField] HitState m_HitState;
         [SerializeField] TargetLockController m_TargetLockController;
         [SerializeField, Seconds] float m_InputTimeOut = 0.35f;
 
@@ -84,6 +86,15 @@ namespace MotionCore.Gameplay.Character
         public bool TryNormalAttack()
         {
             return TryAttack(m_NormalAttack);
+        }
+
+        public void ReceiveHit(float knockbackPower)
+        {
+            m_HitState.SetContext(knockbackPower);
+            if (m_Character.StateMachine.CurrentState == m_HitState)
+                m_Character.StateMachine.TryResetState(m_HitState);
+            else
+                m_Character.StateMachine.TrySetState(m_HitState);
         }
 
         public void ToggleTargetLock()

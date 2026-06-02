@@ -14,10 +14,13 @@ namespace MotionCore.Gameplay.Combat
         [SerializeField] LayerMask m_TargetLayers = ~0;
         public LayerMask TargetLayers => m_TargetLayers;
 
+        [SerializeField, Min(0f), Tooltip("受击僵直强度")] float m_StaggerPower = 0.18f;
+        public float StaggerPower => m_StaggerPower;
+
+        [SerializeField, Min(0f), Tooltip("击退力度")] float m_KnockbackPower;
+        public float KnockbackPower => m_KnockbackPower;
+
         // [SerializeField, Min(0f)] float m_HitStopSeconds;
         // public float HitStopSeconds => m_HitStopSeconds;
-
-        // [SerializeField, Min(0f)] float m_StaggerSeconds;
-        // public float StaggerSeconds => m_StaggerSeconds;
     }
 }

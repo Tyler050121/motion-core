@@ -46,7 +46,12 @@ namespace MotionCore.Gameplay.Character
 
         public abstract CharacterStateType Type { get; }
 
-        protected void OpenCanCancel() => ExitOptions |= CharacterStateExitOptions.Cancel;
+        protected void OpenCancel() => ExitOptions |= CharacterStateExitOptions.Cancel;
+        protected void ReturnToDefaultState()
+        {
+            ExitOptions |= CharacterStateExitOptions.Idle;
+            Character.StateMachine.TrySetDefaultState();
+        }
 
 #if UNITY_EDITOR
         protected override void OnValidate()

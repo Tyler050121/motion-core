@@ -379,9 +379,9 @@ MonoBehaviour:
     - _Name: Combat
       _Index: 0
       _IsExpanded: 1
-      _TransitionIndices: 0c0000000f0000000e0000000d000000130000001200000011000000100000001500000014000000
+      _TransitionIndices: 0c0000000f0000000e0000000d00000013000000120000001100000010000000150000001400000016000000
     - _Name: Motion
-      _Index: 4
+      _Index: 1
       _IsExpanded: 1
       _TransitionIndices: 000000000100000002000000030000000700000005000000080000000400000006000000090000000a0000000b000000
     _TransitionSortMode: 0
@@ -505,6 +505,7 @@ MonoBehaviour:
     - {fileID: -4506043261380770619}
     - {fileID: 8520251411256990169}
     - {fileID: 6513248463849673564}
+    - {fileID: 5907832677288363921}
     _Modifiers:
     - _From: 0
       _To: 2
@@ -864,6 +865,40 @@ MonoBehaviour:
           _Callbacks: []
           _Names: []
         _Clip: {fileID: 5706987417504702118, guid: 41515f121fabd40bd9c1ce03d4d0ccdd,
+          type: 3}
+        _NormalizedStartTime: 0
+--- !u!114 &5907832677288363921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
+  m_Name: Anbi_Hit_H_Front
+  m_EditorClassIdentifier: 
+  _Transition:
+    rid: 1834261975633231956
+  references:
+    version: 2
+    RefIds:
+    - rid: 1834261975633231956
+      type: {class: ClipTransition, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _FadeDuration: 0.25
+        _Speed: 1
+        _Events:
+          _NormalizedTimes:
+          - 0.2034554
+          - 0.44776118
+          - NaN
+          _Callbacks: []
+          _Names:
+          - {fileID: 11400000, guid: 6491e0006b6034848a20cdeb9c21e399, type: 2}
+          - {fileID: 11400000, guid: bdd8c6e6f24cd471182f6663dea679b7, type: 2}
+        _Clip: {fileID: -7280725154738314632, guid: 5ee3048383fd441d5864e3d2ed3aaf00,
           type: 3}
         _NormalizedStartTime: 0
 --- !u!114 &6003744553862008256
