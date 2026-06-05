@@ -1,3 +1,4 @@
+using MotionCore.Gameplay.Combat;
 using UnityEngine;
 
 namespace MotionCore.Gameplay.Character

@@ -1,4 +1,5 @@
 using DamageNumbersPro;
+using MotionCore.Infrastructure;
 using UnityEngine;
 
 namespace MotionCore.Gameplay.Combat
@@ -13,11 +14,13 @@ namespace MotionCore.Gameplay.Combat
 
         Hurtbox m_Hurtbox;
         IHitReactionHandler m_ReactionHandler; // 受击反应处理器
+        IHitVfxService m_HitVfx;
 
         void Awake()
         {
             m_Hurtbox = GetComponent<Hurtbox>();
             m_ReactionHandler = transform.parent.GetComponentInChildren<IHitReactionHandler>();
+            m_HitVfx = ServiceLocator.Resolve<IHitVfxService>();
         }
 
         void OnEnable()
@@ -30,17 +33,20 @@ namespace MotionCore.Gameplay.Combat
             m_Hurtbox.HitReceived -= Receive;
         }
 
-        void Receive(HitResult result)
+        void Receive(HitEvent hitEvent)
         {
-            ShowDamageNumber(result);
+            HitResult result = hitEvent.Result;
+            HitFeedbackContext feedback = hitEvent.Feedback;
+            ShowDamageNumber(feedback.Point, result.Damage, result.Hurtbox.transform);
+            m_HitVfx.Play(feedback);
             m_ReactionHandler?.ReceiveHit(result.KnockbackPower);
         }
 
-        void ShowDamageNumber(HitResult result)
+        void ShowDamageNumber(Vector3 point, float damage, Transform target)
         {
-            DamageNumber popup = m_DamageNumber.Spawn(result.Point + m_WorldOffset, result.Damage);
+            DamageNumber popup = m_DamageNumber.Spawn(point + m_WorldOffset, damage);
             if (m_FollowTarget)
-                popup.SetFollowedTarget(result.Hurtbox.transform);
+                popup.SetFollowedTarget(target);
         }
     }
 }

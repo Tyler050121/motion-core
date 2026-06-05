@@ -1,4 +1,7 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace MotionCore.Gameplay.Combat
 {
@@ -19,6 +22,9 @@ namespace MotionCore.Gameplay.Combat
 
         [SerializeField, Min(0f), Tooltip("击退力度")] float m_KnockbackPower;
         public float KnockbackPower => m_KnockbackPower;
+
+        [SerializeField, FormerlySerializedAs("m_Vfx")] HitVfxDefinition[] m_Vfx = Array.Empty<HitVfxDefinition>();
+        public IReadOnlyList<HitVfxDefinition> Vfx => m_Vfx;
 
         // [SerializeField, Min(0f)] float m_HitStopSeconds;
         // public float HitStopSeconds => m_HitStopSeconds;

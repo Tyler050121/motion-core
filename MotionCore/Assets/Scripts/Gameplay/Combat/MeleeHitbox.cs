@@ -20,7 +20,7 @@ namespace MotionCore.Gameplay.Combat
         /// <summary>
         /// 打开一个持续命中窗口，同一个窗口在关闭前只会命中同一目标一次。
         /// </summary>
-        public void Open(int id, HitProfile profile, Transform source, Vector3 localOffset)
+        public void Open(int id, HitProfile profile, Transform source, Vector3 localOffset, Transform rayOrigin)
         {
             if (FindWindowIndex(id) >= 0)
             {
@@ -33,6 +33,7 @@ namespace MotionCore.Gameplay.Combat
             window.Profile = profile;
             window.Source = source;
             window.LocalOffset = localOffset;
+            window.RayOrigin = rayOrigin;
             window.HitTargets.Clear();
             m_ActiveWindows.Add(window);
         }
@@ -40,10 +41,10 @@ namespace MotionCore.Gameplay.Combat
         /// <summary>
         /// 执行一次瞬时命中检测。
         /// </summary>
-        public void Hit(int id, HitProfile profile, Transform source, Vector3 localOffset)
+        public void Hit(int id, HitProfile profile, Transform source, Vector3 localOffset, Transform rayOrigin)
         {
             m_InstantHitTargets.Clear();
-            Sample(id, profile, source, localOffset, m_InstantHitTargets);
+            Sample(id, profile, source, localOffset, rayOrigin, m_InstantHitTargets);
             m_InstantHitTargets.Clear();
         }
 
@@ -78,7 +79,7 @@ namespace MotionCore.Gameplay.Combat
             for (int i = 0; i < m_ActiveWindows.Count; i++)
             {
                 HitWindow window = m_ActiveWindows[i];
-                Sample(window.Id, window.Profile, window.Source, window.LocalOffset, window.HitTargets);
+                Sample(window.Id, window.Profile, window.Source, window.LocalOffset, window.RayOrigin, window.HitTargets);
             }
         }
 
@@ -100,6 +101,7 @@ namespace MotionCore.Gameplay.Combat
             window.Profile = null;
             window.Source = null;
             window.LocalOffset = default;
+            window.RayOrigin = null;
             window.HitTargets.Clear();
             m_WindowPool.Add(window);
         }
@@ -120,6 +122,7 @@ namespace MotionCore.Gameplay.Combat
             HitProfile profile,
             Transform source,
             Vector3 localOffset,
+            Transform rayOrigin,
             HashSet<Hurtbox> hitTargets)
         {
             Vector3 center = source.TransformPoint(localOffset);
@@ -143,10 +146,29 @@ namespace MotionCore.Gameplay.Combat
 
                 Vector3 direction = center - source.position;
                 direction.y = 0f;
+                Vector3 impactPoint = m_Results[i].ClosestPoint(center);
 
                 // 执行攻击
-                hurtbox.ReceiveHit(profile, m_Results[i].ClosestPoint(center), direction);
+                hurtbox.ReceiveHit(
+                    profile,
+                    ResolveHitPoint(m_Results[i], impactPoint, rayOrigin),
+                    hurtbox.ResolveVisualPoint(source),
+                    direction);
             }
+        }
+
+        Vector3 ResolveHitPoint(Collider target, Vector3 impactPoint, Transform rayOrigin)
+        {
+            Vector3 rayDirection = impactPoint - rayOrigin.position;
+            float rayDistance = rayDirection.magnitude;
+            if (rayDistance <= 0.0001f)
+                return impactPoint;
+
+            Ray ray = new(rayOrigin.position, rayDirection / rayDistance);
+            if (!target.Raycast(ray, out RaycastHit hit, rayDistance + 0.05f))
+                return impactPoint;
+
+            return hit.point;
         }
 
         void OnDrawGizmos()
@@ -185,6 +207,7 @@ namespace MotionCore.Gameplay.Combat
             public HitProfile Profile;
             public Transform Source;
             public Vector3 LocalOffset;
+            public Transform RayOrigin;
             public readonly HashSet<Hurtbox> HitTargets = new();
         }
 

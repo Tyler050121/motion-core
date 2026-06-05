@@ -234,6 +234,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 323b6ef52b2c48a195e9b3450505b1d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_VisualForwardOffset: 0.8
+  m_VisualHeightOffset: 1
 --- !u!114 &3266243511475220147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -250,4 +252,3 @@ MonoBehaviour:
     type: 3}
   m_WorldOffset: {x: 0, y: 1, z: 0}
   m_FollowTarget: 1
-  m_ReactionHandler: {fileID: 0}

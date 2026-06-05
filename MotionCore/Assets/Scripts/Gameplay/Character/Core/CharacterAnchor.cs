@@ -7,6 +7,7 @@ namespace MotionCore.Gameplay.Character
         RightHand,
         LeftHand,
         RightFoot,
-        LeftFoot
+        LeftFoot,
+        CameraTarget
     }
 }

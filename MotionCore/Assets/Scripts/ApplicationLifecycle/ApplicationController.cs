@@ -10,9 +10,13 @@ namespace MotionCore.ApplicationLifecycle
     [DisallowMultipleComponent]
     public sealed class ApplicationController : MonoBehaviour
     {
+        [SerializeField, Tooltip("VFX 根节点")]
+        Transform m_VfxRoot;
+
         ICursorService m_Cursor;
         ITimerService m_Timer;
         IAssetProvider m_Assets;
+        VfxService m_Vfx;
         bool m_RuntimeStarted;
 
         void Awake()
@@ -21,9 +25,11 @@ namespace MotionCore.ApplicationLifecycle
             m_Cursor = new CursorService();
             m_Timer = new TimerService();
             m_Assets = new ResourcesAssetProvider();
+            m_Vfx = new VfxService(m_Assets, m_Timer, m_VfxRoot);
             ServiceLocator.Register(m_Cursor);
             ServiceLocator.Register(m_Timer);
             ServiceLocator.Register(m_Assets);
+            ServiceLocator.Register<IVfxService>(m_Vfx);
         }
 
         void Start()
@@ -54,6 +60,8 @@ namespace MotionCore.ApplicationLifecycle
             ServiceLocator.Unregister(m_Cursor);
             ServiceLocator.Unregister(m_Timer);
             ServiceLocator.Unregister(m_Assets);
+            ServiceLocator.Unregister<IVfxService>(m_Vfx);
+            m_Vfx.Dispose();
         }
     }
 }

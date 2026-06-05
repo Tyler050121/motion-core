@@ -701,6 +701,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1846869884}
   - component: {fileID: 1846869883}
+  - component: {fileID: 1846869885}
   m_Layer: 0
   m_Name: GameRoot
   m_TagString: Untagged
@@ -720,6 +721,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49b54fafdde2455897370cfad1b966b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_VfxRoot: {fileID: 1846869884}
 --- !u!4 &1846869884
 Transform:
   m_ObjectHideFlags: 0
@@ -735,6 +737,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1846869885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1846869882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92ae416fc6854c3aaf6919dab9214a1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1967158831
 GameObject:
   m_ObjectHideFlags: 0
@@ -797,6 +811,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 323b6ef52b2c48a195e9b3450505b1d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_VisualForwardOffset: 0.8
+  m_VisualHeightOffset: 1
 --- !u!65 &1967158835
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1002,6 +1018,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 202777672028910151, guid: 8cb0328f13fff4f13838ec034ad9e985,
+        type: 3}
+      propertyPath: m_AttackBlockProbeDistance
+      value: 0.7
+      objectReference: {fileID: 0}
     - target: {fileID: 1495825638448751318, guid: 8cb0328f13fff4f13838ec034ad9e985,
         type: 3}
       propertyPath: m_LocalPosition.x
