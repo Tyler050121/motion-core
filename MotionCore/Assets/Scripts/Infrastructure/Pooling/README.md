@@ -89,3 +89,4 @@ public sealed class PooledProjectile : MonoBehaviour, IPoolLifecycle
 - `initialCapacity` 决定 `Prewarm` 会提前创建多少个实例。
 - `minCachedCount` 决定压力下降后至少保留多少个空闲实例。
 - 压力变高时，池会临时提高缓存目标；实例归还时会按时间间隔逐步裁掉多余缓存。
+- 对于 VFX 这类共享播放入口，池参数应来自预设而不是每次播放请求；请求只携带这一次的运行时位姿与临时覆盖值。

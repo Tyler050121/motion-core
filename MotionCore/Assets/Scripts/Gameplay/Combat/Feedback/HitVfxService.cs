@@ -33,17 +33,12 @@ namespace MotionCore.Gameplay.Combat
 
         void Play(in HitFeedbackContext feedback, in HitVfxDefinition definition)
         {
-            m_Vfx.Play(new VfxSpawnRequest(
-                definition.AssetKey,
-                definition.ReuseMode,
+            m_Vfx.Play(definition.Preset, new VfxSpawnRequest(
                 ResolvePosition(feedback, definition) + definition.LocalOffset,
                 ResolveRotation(feedback, definition),
                 definition.Scale,
                 definition.Speed,
-                null,
-                definition.ReleaseDelay,
-                definition.InitialCapacity,
-                definition.MinCachedCount));
+                null));
         }
 
         static Vector3 ResolvePosition(in HitFeedbackContext feedback, in HitVfxDefinition definition)

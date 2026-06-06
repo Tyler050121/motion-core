@@ -19,13 +19,16 @@ namespace MotionCore.Infrastructure
             m_PoolRoot = poolRoot;
         }
 
-        public PooledVfx Play(in VfxSpawnRequest request)
+        public PooledVfx Play(VfxPreset preset, in VfxSpawnRequest request)
         {
-            Transform parent = request.Parent ? request.Parent : m_PoolRoot;
-            if (request.ReuseMode == VfxReuseMode.OneShot)
-                return PlayOneShot(request, parent);
+            if (preset == null || !preset.IsValid)
+                return null;
 
-            return PlayPooled(request, parent);
+            Transform parent = request.Parent ? request.Parent : m_PoolRoot;
+            if (preset.ReuseMode == VfxReuseMode.OneShot)
+                return PlayOneShot(preset, request, parent);
+
+            return PlayPooled(preset, request, parent);
         }
 
         public void Dispose()
@@ -37,21 +40,19 @@ namespace MotionCore.Infrastructure
             m_ReleaseTimers.Clear();
         }
 
-        PooledVfx PlayPooled(in VfxSpawnRequest request, Transform parent)
+        PooledVfx PlayPooled(VfxPreset preset, in VfxSpawnRequest request, Transform parent)
         {
-            PrefabPool<PooledVfx> pool = GetOrCreatePool(request);
+            PrefabPool<PooledVfx> pool = GetOrCreatePool(preset);
             PooledVfx instance = pool.Get(parent);
 
             ApplyRequest(instance, request);
-
-            TimerHandle timer = GetTimerHandle(instance);
-            m_Timer.Delay(instance, request.ReleaseDelay, timer, () => pool.Release(instance));
+            ScheduleRelease(instance, preset.ReleaseDelay, () => pool.Release(instance));
             return instance;
         }
 
-        PooledVfx PlayOneShot(in VfxSpawnRequest request, Transform parent)
+        PooledVfx PlayOneShot(VfxPreset preset, in VfxSpawnRequest request, Transform parent)
         {
-            PooledVfx prefab = m_Assets.LoadComponent<PooledVfx>(request.AssetKey);
+            PooledVfx prefab = m_Assets.LoadComponent<PooledVfx>(preset.AssetKey);
             PooledVfx instance = UnityEngine.Object.Instantiate(prefab, parent, false);
 
             instance.gameObject.SetActive(false);
@@ -59,8 +60,7 @@ namespace MotionCore.Infrastructure
             instance.gameObject.SetActive(true);
             instance.OnPoolRent();
 
-            TimerHandle timer = new TimerHandle();
-            m_Timer.Delay(instance, request.ReleaseDelay, timer, () => DestroyOneShot(instance));
+            ScheduleRelease(instance, preset.ReleaseDelay, () => DestroyOneShot(instance));
             return instance;
         }
 
@@ -76,19 +76,39 @@ namespace MotionCore.Infrastructure
             UnityEngine.Object.Destroy(instance.gameObject);
         }
 
-        PrefabPool<PooledVfx> GetOrCreatePool(in VfxSpawnRequest request)
+        void ScheduleRelease(PooledVfx instance, float releaseDelay, Action release)
         {
-            if (m_Pools.TryGetValue(request.AssetKey, out PrefabPool<PooledVfx> pool))
+            TimerHandle timer = GetTimerHandle(instance);
+            m_Timer.Every(instance, 0.05f, timer, () =>
+            {
+                if (instance && instance.IsAlive())
+                    return;
+
+                m_Timer.Remove(timer);
+                if (releaseDelay <= 0f)
+                {
+                    release();
+                    return;
+                }
+
+                m_Timer.Delay(instance, releaseDelay, timer, release);
+            });
+        }
+
+        PrefabPool<PooledVfx> GetOrCreatePool(VfxPreset preset)
+        {
+            string assetKey = preset.AssetKey;
+            if (m_Pools.TryGetValue(assetKey, out PrefabPool<PooledVfx> pool))
                 return pool;
 
             pool = new PrefabPool<PooledVfx>(
                 m_Assets,
-                request.AssetKey,
+                assetKey,
                 m_PoolRoot,
-                request.InitialCapacity,
-                request.MinCachedCount);
+                preset.InitialCapacity,
+                preset.MinCachedCount);
             pool.Prewarm();
-            m_Pools.Add(request.AssetKey, pool);
+            m_Pools.Add(assetKey, pool);
             return pool;
         }
 

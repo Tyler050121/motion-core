@@ -13,6 +13,7 @@ namespace MotionCore.Infrastructure
             if (string.IsNullOrWhiteSpace(key))
                 throw new ArgumentException("资源 key 不能为空。", nameof(key));
 
+            key = key.Replace('\\', '/');
             T asset = Resources.Load<T>(key);
             if (!asset)
                 throw new InvalidOperationException($"Resources 未找到资源：{key} ({typeof(T).Name})");

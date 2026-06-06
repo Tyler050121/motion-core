@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Animancer;
 using UnityEngine;
 
@@ -15,6 +16,7 @@ namespace MotionCore.Gameplay.Combat
         public TransitionAsset Animation => m_Animation;
 
         [SerializeField] AttackHitDefinition[] m_Hits = Array.Empty<AttackHitDefinition>();
+        public IReadOnlyList<AttackHitDefinition> Hits => m_Hits;
 
         /// <summary>
         /// 按动画事件参数读取对应的命中定义。

@@ -32,6 +32,18 @@ namespace MotionCore.Infrastructure
             }
         }
 
+        public bool IsAlive()
+        {
+            for (int i = 0; i < m_ParticleSystems.Length; i++)
+            {
+                ParticleSystem particle = m_ParticleSystems[i];
+                if (particle && particle.IsAlive(true))
+                    return true;
+            }
+
+            return false;
+        }
+
         public void OnPoolReturn()
         {
             for (int i = 0; i < m_ParticleSystems.Length; i++)

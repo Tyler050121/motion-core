@@ -15,5 +15,9 @@ namespace MotionCore.Gameplay.Combat
 
         [SerializeField] Vector3 m_LocalOffset;
         public Vector3 LocalOffset => m_LocalOffset;
+
+        [SerializeField, Tooltip("该段攻击附带的特效")]
+        AttackVfxDefinition m_Vfx;
+        public AttackVfxDefinition Vfx => m_Vfx;
     }
 }

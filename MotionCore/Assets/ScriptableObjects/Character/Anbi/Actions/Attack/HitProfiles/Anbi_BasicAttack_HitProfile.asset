@@ -19,14 +19,10 @@ MonoBehaviour:
     m_Bits: 4294967295
   m_StaggerPower: 0.18
   m_KnockbackPower: 0
-  m_VisualForwardOffset: 0.8
-  m_VisualHeightOffset: 1
   m_Vfx:
-  - m_AssetKey: VFX/VFX_Hit_01
+  - m_Preset: {fileID: 11400000, guid: 13d5d8c4f2d2847cfa1a00ba8f0431ec, type: 2}
+    m_Scale: 0.5
+    m_Speed: 1.2
     m_SpawnPoint: 1
     m_LocalOffset: {x: 0, y: 0, z: 0}
-    m_Scale: 0.5
     m_AlignToHitDirection: 1
-    m_ReleaseDelay: 1.2
-    m_InitialCapacity: 4
-    m_MinCachedCount: 2

@@ -1,4 +1,5 @@
 using Animancer;
+using MotionCore.Infrastructure;
 using MotionCore.Gameplay.Combat;
 using UnityEngine;
 
@@ -23,6 +24,7 @@ namespace MotionCore.Gameplay.Character
         bool m_IsPerfectVariant;
         bool m_IsPlayingEndStep;
         System.Func<Vector3> m_AttackFacingResolver;
+        IVfxService m_Vfx;
 
         [SerializeField] MeleeHitbox m_MeleeHitbox;
 
@@ -32,6 +34,11 @@ namespace MotionCore.Gameplay.Character
         public void SetAttackFacingResolver(System.Func<Vector3> resolver)
         {
             m_AttackFacingResolver = resolver;
+        }
+
+        void Awake()
+        {
+            m_Vfx = ServiceLocator.Resolve<IVfxService>();
         }
 
         /// <summary>
@@ -191,6 +198,7 @@ namespace MotionCore.Gameplay.Character
                 return;
 
             m_MeleeHitbox.Hit(index, hit.Profile, source, hit.LocalOffset, ResolveImpactRayOrigin(source));
+            PlayVfx(source, hit.Vfx);
         }
 
         void OpenHit(int index, AttackAnimationTrack track)
@@ -200,6 +208,25 @@ namespace MotionCore.Gameplay.Character
                 return;
 
             m_MeleeHitbox.Open(index, hit.Profile, source, hit.LocalOffset, ResolveImpactRayOrigin(source));
+        }
+
+        void PlayVfx(Transform source, AttackVfxDefinition definition)
+        {
+            if (!definition.IsValid)
+                return;
+
+            Transform spawnSource = definition.SpawnPoint == AttackVfxSpawnPoint.Anchor
+                ? source
+                : Character.FacingRoot;
+
+            Vector3 worldPosition = spawnSource.TransformPoint(definition.LocalOffset);
+            Quaternion worldRotation = Character.FacingRoot.rotation * Quaternion.Euler(definition.LocalEulerAngles);
+            m_Vfx.Play(definition.Preset, new VfxSpawnRequest(
+                worldPosition,
+                worldRotation,
+                definition.Scale,
+                definition.Speed,
+                definition.FollowSource ? spawnSource : null));
         }
 
         Transform ResolveImpactRayOrigin(Transform source)

@@ -6,6 +6,7 @@ namespace MotionCore.Gameplay.Character
     public sealed class CharacterInputController : MonoBehaviour
     {
         [SerializeField] CharacterBrain m_Brain;
+        [SerializeField] KeyCode m_PauseKey = KeyCode.P;
         [SerializeField] KeyCode m_EvadeKey = KeyCode.LeftShift;
         [SerializeField] KeyCode m_BasicAttackKey = KeyCode.Mouse0;
         [SerializeField] KeyCode m_LockKey = KeyCode.Mouse2;
@@ -14,11 +15,25 @@ namespace MotionCore.Gameplay.Character
         [SerializeField] KeyCode m_KnockbackHitTestKey = KeyCode.Alpha2;
         [SerializeField, Min(0f)] float m_HitTestKnockbackPower;
         [SerializeField, Min(0f)] float m_KnockbackHitTestPower = 2f;
+        bool m_IsPaused;
 
         void Update()
         {
+            UpdatePause();
+            if (m_IsPaused)
+                return;
+
             UpdateMovement();
             UpdateAction();
+        }
+
+        void UpdatePause()
+        {
+            if (!Input.GetKeyDown(m_PauseKey))
+                return;
+
+            m_IsPaused = !m_IsPaused;
+            Time.timeScale = m_IsPaused ? 0f : 1f;
         }
 
         void UpdateMovement()
@@ -66,6 +81,7 @@ namespace MotionCore.Gameplay.Character
             GUILayout.Label("Press Shift Evade");
             GUILayout.Label("Mouse0 Basic Action");
             GUILayout.Label("Mouse2 Lock Target");
+            GUILayout.Label("P Pause/Resume");
             GUILayout.Label("Alpha1 Hit Test");
             GUILayout.Label("Alpha2 Knockback Hit Test");
             GUILayout.EndArea();
