@@ -9,6 +9,9 @@ namespace MotionCore.Gameplay.Character
         [SerializeField] MotorConfig m_Motor;
         public MotorConfig Motor => m_Motor;
 
+        [SerializeField] LocomotionAnimationProfile m_LocomotionAnimation;
+        public LocomotionAnimationProfile LocomotionAnimation => m_LocomotionAnimation;
+
         [SerializeField] AttackDefinition m_BasicAttack;
         public AttackDefinition BasicAttack => m_BasicAttack;
     }

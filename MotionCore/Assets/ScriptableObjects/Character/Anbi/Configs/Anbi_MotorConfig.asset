@@ -19,3 +19,4 @@ MonoBehaviour:
   m_RunTurnBackAngle: 135
   m_RunTurnBackCooldown: 1
   m_FacingTurnDuration: 0.25
+  m_LocomotionTurnDuration: 0.25

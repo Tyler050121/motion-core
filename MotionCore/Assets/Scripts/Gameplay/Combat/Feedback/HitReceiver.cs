@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using DamageNumbersPro;
 using MotionCore.Infrastructure;
 using UnityEngine;
@@ -15,6 +16,7 @@ namespace MotionCore.Gameplay.Combat
         Hurtbox m_Hurtbox;
         IHitReactionHandler m_ReactionHandler; // 受击反应处理器
         IHitVfxService m_HitVfx;
+        readonly List<float> m_PendingKnockbackPowers = new();
 
         void Awake()
         {
@@ -31,6 +33,21 @@ namespace MotionCore.Gameplay.Combat
         void OnDisable()
         {
             m_Hurtbox.HitReceived -= Receive;
+            m_PendingKnockbackPowers.Clear();
+        }
+
+        void LateUpdate()
+        {
+            if (m_PendingKnockbackPowers.Count == 0)
+                return;
+
+            float knockbackPower = m_PendingKnockbackPowers[0];
+            for (int i = 1; i < m_PendingKnockbackPowers.Count; i++)
+                knockbackPower = Mathf.Max(knockbackPower, m_PendingKnockbackPowers[i]);
+
+            m_ReactionHandler?.ReceiveHit(knockbackPower);
+
+            m_PendingKnockbackPowers.Clear();
         }
 
         void Receive(HitEvent hitEvent)
@@ -39,7 +56,7 @@ namespace MotionCore.Gameplay.Combat
             HitFeedbackContext feedback = hitEvent.Feedback;
             ShowDamageNumber(feedback.Point, result.Damage, result.Hurtbox.transform);
             m_HitVfx.Play(feedback);
-            m_ReactionHandler?.ReceiveHit(result.KnockbackPower);
+            m_PendingKnockbackPowers.Add(result.KnockbackPower);
         }
 
         void ShowDamageNumber(Vector3 point, float damage, Transform target)

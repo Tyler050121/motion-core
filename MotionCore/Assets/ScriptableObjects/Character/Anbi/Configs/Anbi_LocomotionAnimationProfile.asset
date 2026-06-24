@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8ad89db77b14181b8b1926391961908, type: 3}
+  m_Name: Anbi_LocomotionAnimationProfile
+  m_EditorClassIdentifier: 
+  m_MoveStart:
+    m_RouteMode: 0
+    m_SingleTransition: {fileID: -4463977917762178393, guid: 19f7276f66a284cbfa65e2726e1fd573,
+      type: 2}
+    m_WalkTransition: {fileID: 0}
+    m_RunTransition: {fileID: 0}
+  m_MoveLoop:
+    m_RouteMode: 0
+    m_SingleTransition: {fileID: -2616511909702927223, guid: 19f7276f66a284cbfa65e2726e1fd573,
+      type: 2}
+    m_WalkTransition: {fileID: 0}
+    m_RunTransition: {fileID: 0}
+  m_MoveEnd:
+    m_RouteMode: 1
+    m_SingleTransition: {fileID: 0}
+    m_WalkTransition: {fileID: 0}
+    m_RunTransition: {fileID: 1429764955580758925, guid: 19f7276f66a284cbfa65e2726e1fd573,
+      type: 2}
+  m_RunTurnBack: {fileID: -5282911611355088514, guid: 19f7276f66a284cbfa65e2726e1fd573,
+    type: 2}

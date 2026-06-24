@@ -1,0 +1,1177 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-9154752883435742002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
+  m_Name: Goblin_Born
+  m_EditorClassIdentifier: 
+  _Transition:
+    rid: 7242315265358168078
+  references:
+    version: 2
+    RefIds:
+    - rid: 7242315265358168078
+      type: {class: ClipTransition, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _FadeDuration: 0.25
+        _Speed: 1
+        _Events:
+          _NormalizedTimes: []
+          _Callbacks: []
+          _Names: []
+        _Clip: {fileID: -6677452333279547328, guid: f5255da99f6af944b907e552b710ca49,
+          type: 3}
+        _NormalizedStartTime: NaN
+--- !u!114 &-9145636079243747089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
+  m_Name: Goblin_Death_Walk_F
+  m_EditorClassIdentifier: 
+  _Transition:
+    rid: 7242315265358168065
+  references:
+    version: 2
+    RefIds:
+    - rid: 7242315265358168065
+      type: {class: ClipTransition, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _FadeDuration: 0.25
+        _Speed: 1
+        _Events:
+          _NormalizedTimes: []
+          _Callbacks: []
+          _Names: []
+        _Clip: {fileID: -5965443725665176441, guid: f5255da99f6af944b907e552b710ca49,
+          type: 3}
+        _NormalizedStartTime: NaN
+--- !u!114 &-8720987831801387965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
+  m_Name: Goblin_Run_Start
+  m_EditorClassIdentifier: 
+  _Transition:
+    rid: 7242315265358168092
+  references:
+    version: 2
+    RefIds:
+    - rid: 7242315265358168092
+      type: {class: ClipTransition, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _FadeDuration: 0.25
+        _Speed: 1
+        _Events:
+          _NormalizedTimes: []
+          _Callbacks: []
+          _Names: []
+        _Clip: {fileID: 2602183277397786733, guid: f5255da99f6af944b907e552b710ca49,
+          type: 3}
+        _NormalizedStartTime: NaN
+--- !u!114 &-8073297082184590703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
+  m_Name: Goblin_Idle
+  m_EditorClassIdentifier: 
+  _Transition:
+    rid: 7242315265358168089
+  references:
+    version: 2
+    RefIds:
+    - rid: 7242315265358168089
+      type: {class: ClipTransition, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _FadeDuration: 0.25
+        _Speed: 1
+        _Events:
+          _NormalizedTimes: []
+          _Callbacks: []
+          _Names: []
+        _Clip: {fileID: -6197149268509949104, guid: f5255da99f6af944b907e552b710ca49,
+          type: 3}
+        _NormalizedStartTime: NaN
+--- !u!114 &-6902580308057703111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
+  m_Name: Goblin_Attack_05_Full
+  m_EditorClassIdentifier: 
+  _Transition:
+    rid: 7242315265358168073
+  references:
+    version: 2
+    RefIds:
+    - rid: 7242315265358168073
+      type: {class: ClipTransition, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _FadeDuration: 0.25
+        _Speed: 1
+        _Events:
+          _NormalizedTimes: []
+          _Callbacks: []
+          _Names: []
+        _Clip: {fileID: -8653875885114101551, guid: f5255da99f6af944b907e552b710ca49,
+          type: 3}
+        _NormalizedStartTime: NaN
+--- !u!114 &-6623173619618263089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
+  m_Name: Goblin_Attack_03
+  m_EditorClassIdentifier: 
+  _Transition:
+    rid: 7242315265358168069
+  references:
+    version: 2
+    RefIds:
+    - rid: 7242315265358168069
+      type: {class: ClipTransition, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _FadeDuration: 0.25
+        _Speed: 1
+        _Events:
+          _NormalizedTimes: []
+          _Callbacks: []
+          _Names: []
+        _Clip: {fileID: 12983523418525675, guid: f5255da99f6af944b907e552b710ca49,
+          type: 3}
+        _NormalizedStartTime: NaN
+--- !u!114 &-6534499130791372759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
+  m_Name: Goblin_Hit_L_Back
+  m_EditorClassIdentifier: 
+  _Transition:
+    rid: 7242315265358168086
+  references:
+    version: 2
+    RefIds:
+    - rid: 7242315265358168086
+      type: {class: ClipTransition, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _FadeDuration: 0.25
+        _Speed: 1
+        _Events:
+          _NormalizedTimes: []
+          _Callbacks: []
+          _Names: []
+        _Clip: {fileID: 1595277625356204253, guid: f5255da99f6af944b907e552b710ca49,
+          type: 3}
+        _NormalizedStartTime: NaN
+--- !u!114 &-5980725779870571574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
+  m_Name: Goblin_Attack_05_Start
+  m_EditorClassIdentifier: 
+  _Transition:
+    rid: 7242315265358168075
+  references:
+    version: 2
+    RefIds:
+    - rid: 7242315265358168075
+      type: {class: ClipTransition, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _FadeDuration: 0.25
+        _Speed: 1
+        _Events:
+          _NormalizedTimes: []
+          _Callbacks: []
+          _Names: []
+        _Clip: {fileID: -7625310122096358266, guid: f5255da99f6af944b907e552b710ca49,
+          type: 3}
+        _NormalizedStartTime: NaN
+--- !u!114 &-5770629933140316180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
+  m_Name: Goblin_Death_Hit_Back
+  m_EditorClassIdentifier: 
+  _Transition:
+    rid: 7242315265358168079
+  references:
+    version: 2
+    RefIds:
+    - rid: 7242315265358168079
+      type: {class: ClipTransition, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _FadeDuration: 0.25
+        _Speed: 1
+        _Events:
+          _NormalizedTimes: []
+          _Callbacks: []
+          _Names: []
+        _Clip: {fileID: 4262689594016058279, guid: f5255da99f6af944b907e552b710ca49,
+          type: 3}
+        _NormalizedStartTime: NaN
+--- !u!114 &-4293777405178846241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
+  m_Name: Goblin_Attack_07
+  m_EditorClassIdentifier: 
+  _Transition:
+    rid: 7242315265358168077
+  references:
+    version: 2
+    RefIds:
+    - rid: 7242315265358168077
+      type: {class: ClipTransition, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _FadeDuration: 0.25
+        _Speed: 1
+        _Events:
+          _NormalizedTimes: []
+          _Callbacks: []
+          _Names: []
+        _Clip: {fileID: -7765459740144276260, guid: f5255da99f6af944b907e552b710ca49,
+          type: 3}
+        _NormalizedStartTime: NaN
+--- !u!114 &-4175654180960057339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
+  m_Name: Goblin_Attack_04_01
+  m_EditorClassIdentifier: 
+  _Transition:
+    rid: 7242315265358168071
+  references:
+    version: 2
+    RefIds:
+    - rid: 7242315265358168071
+      type: {class: ClipTransition, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _FadeDuration: 0.25
+        _Speed: 1
+        _Events:
+          _NormalizedTimes: []
+          _Callbacks: []
+          _Names: []
+        _Clip: {fileID: 502101898023932757, guid: f5255da99f6af944b907e552b710ca49,
+          type: 3}
+        _NormalizedStartTime: NaN
+--- !u!114 &-3971632937131586614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
+  m_Name: Goblin_Attack_06
+  m_EditorClassIdentifier: 
+  _Transition:
+    rid: 7242315265358168076
+  references:
+    version: 2
+    RefIds:
+    - rid: 7242315265358168076
+      type: {class: ClipTransition, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _FadeDuration: 0.25
+        _Speed: 1
+        _Events:
+          _NormalizedTimes: []
+          _Callbacks: []
+          _Names: []
+        _Clip: {fileID: -7878026066155401312, guid: f5255da99f6af944b907e552b710ca49,
+          type: 3}
+        _NormalizedStartTime: NaN
+--- !u!114 &-3518389555644605094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
+  m_Name: Goblin_Hit_Stay
+  m_EditorClassIdentifier: 
+  _Transition:
+    rid: 7242315265358168088
+  references:
+    version: 2
+    RefIds:
+    - rid: 7242315265358168088
+      type: {class: ClipTransition, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _FadeDuration: 0.25
+        _Speed: 1
+        _Events:
+          _NormalizedTimes: []
+          _Callbacks: []
+          _Names: []
+        _Clip: {fileID: 4337259651633663158, guid: f5255da99f6af944b907e552b710ca49,
+          type: 3}
+        _NormalizedStartTime: NaN
+--- !u!114 &-3340797495705950157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
+  m_Name: Goblin_Dodge
+  m_EditorClassIdentifier: 
+  _Transition:
+    rid: 7242315265358168085
+  references:
+    version: 2
+    RefIds:
+    - rid: 7242315265358168085
+      type: {class: ClipTransition, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _FadeDuration: 0.25
+        _Speed: 1
+        _Events:
+          _NormalizedTimes: []
+          _Callbacks: []
+          _Names: []
+        _Clip: {fileID: 8742447364452139131, guid: f5255da99f6af944b907e552b710ca49,
+          type: 3}
+        _NormalizedStartTime: NaN
+--- !u!114 &-2683234302220949559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
+  m_Name: Goblin_Stun_Hit_H_Front
+  m_EditorClassIdentifier: 
+  _Transition:
+    rid: 7242315265358168094
+  references:
+    version: 2
+    RefIds:
+    - rid: 7242315265358168094
+      type: {class: ClipTransition, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _FadeDuration: 0.25
+        _Speed: 1
+        _Events:
+          _NormalizedTimes: []
+          _Callbacks: []
+          _Names: []
+        _Clip: {fileID: -263664931086917705, guid: f5255da99f6af944b907e552b710ca49,
+          type: 3}
+        _NormalizedStartTime: NaN
+--- !u!114 &-2097506956207612799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
+  m_Name: Goblin_Death_Walk_B
+  m_EditorClassIdentifier: 
+  _Transition:
+    rid: 7242315265358168064
+  references:
+    version: 2
+    RefIds:
+    - rid: 7242315265358168064
+      type: {class: ClipTransition, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _FadeDuration: 0.25
+        _Speed: 1
+        _Events:
+          _NormalizedTimes: []
+          _Callbacks: []
+          _Names: []
+        _Clip: {fileID: 1813632546023220297, guid: f5255da99f6af944b907e552b710ca49,
+          type: 3}
+        _NormalizedStartTime: NaN
+--- !u!114 &-1919699462739222564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
+  m_Name: Goblin_Attack_05
+  m_EditorClassIdentifier: 
+  _Transition:
+    rid: 7242315265358168072
+  references:
+    version: 2
+    RefIds:
+    - rid: 7242315265358168072
+      type: {class: ClipTransition, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _FadeDuration: 0.25
+        _Speed: 1
+        _Events:
+          _NormalizedTimes: []
+          _Callbacks: []
+          _Names: []
+        _Clip: {fileID: 4141581912768169984, guid: f5255da99f6af944b907e552b710ca49,
+          type: 3}
+        _NormalizedStartTime: NaN
+--- !u!114 &-1557943228805642406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
+  m_Name: Goblin_Attack_02_Stamp
+  m_EditorClassIdentifier: 
+  _Transition:
+    rid: 7242315265358168068
+  references:
+    version: 2
+    RefIds:
+    - rid: 7242315265358168068
+      type: {class: ClipTransition, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _FadeDuration: 0.25
+        _Speed: 1
+        _Events:
+          _NormalizedTimes: []
+          _Callbacks: []
+          _Names: []
+        _Clip: {fileID: -8791453557880034616, guid: f5255da99f6af944b907e552b710ca49,
+          type: 3}
+        _NormalizedStartTime: NaN
+--- !u!114 &-1151296240604274727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
+  m_Name: Goblin_Death_Stay
+  m_EditorClassIdentifier: 
+  _Transition:
+    rid: 7242315265358168081
+  references:
+    version: 2
+    RefIds:
+    - rid: 7242315265358168081
+      type: {class: ClipTransition, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _FadeDuration: 0.25
+        _Speed: 1
+        _Events:
+          _NormalizedTimes: []
+          _Callbacks: []
+          _Names: []
+        _Clip: {fileID: -398616934780067719, guid: f5255da99f6af944b907e552b710ca49,
+          type: 3}
+        _NormalizedStartTime: NaN
+--- !u!114 &-1063611261029982892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
+  m_Name: Goblin_Death_Hit_Front
+  m_EditorClassIdentifier: 
+  _Transition:
+    rid: 7242315265358168080
+  references:
+    version: 2
+    RefIds:
+    - rid: 7242315265358168080
+      type: {class: ClipTransition, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _FadeDuration: 0.25
+        _Speed: 1
+        _Events:
+          _NormalizedTimes: []
+          _Callbacks: []
+          _Names: []
+        _Clip: {fileID: 7753710542118689880, guid: f5255da99f6af944b907e552b710ca49,
+          type: 3}
+        _NormalizedStartTime: NaN
+--- !u!114 &-165007453579725969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
+  m_Name: Goblin_Hit_L_Front
+  m_EditorClassIdentifier: 
+  _Transition:
+    rid: 7242315265358168087
+  references:
+    version: 2
+    RefIds:
+    - rid: 7242315265358168087
+      type: {class: ClipTransition, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _FadeDuration: 0.25
+        _Speed: 1
+        _Events:
+          _NormalizedTimes: []
+          _Callbacks: []
+          _Names: []
+        _Clip: {fileID: 3301660742571461909, guid: f5255da99f6af944b907e552b710ca49,
+          type: 3}
+        _NormalizedStartTime: NaN
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f08fdd50e79d0c4bb235a5c2696516d, type: 3}
+  m_Name: Goblin_Transitions_Library
+  m_EditorClassIdentifier: 
+  _Definition:
+    _Transitions:
+    - {fileID: -8073297082184590703}
+    - {fileID: 8804102000000000001}
+    - {fileID: 8804102000000000002}
+    - {fileID: 6405473748255136928}
+    - {fileID: 8492008623868158741}
+    - {fileID: 2149228185438819724}
+    - {fileID: 525040169755455988}
+    - {fileID: -2683234302220949559}
+    - {fileID: 2720657754082848801}
+    - {fileID: -8720987831801387965}
+    - {fileID: 5085275336434984029}
+    - {fileID: 5157596022104591802}
+    - {fileID: -3518389555644605094}
+    - {fileID: -165007453579725969}
+    - {fileID: -6534499130791372759}
+    - {fileID: -3340797495705950157}
+    - {fileID: 74997106901310455}
+    - {fileID: 937665103021942447}
+    - {fileID: 1520160928384320597}
+    - {fileID: -1151296240604274727}
+    - {fileID: -1063611261029982892}
+    - {fileID: -5770629933140316180}
+    - {fileID: -9154752883435742002}
+    - {fileID: -4293777405178846241}
+    - {fileID: -3971632937131586614}
+    - {fileID: -5980725779870571574}
+    - {fileID: 8025610072333556794}
+    - {fileID: -6902580308057703111}
+    - {fileID: -1919699462739222564}
+    - {fileID: -4175654180960057339}
+    - {fileID: 5791976804359543580}
+    - {fileID: -6623173619618263089}
+    - {fileID: -1557943228805642406}
+    - {fileID: 1924558366518460212}
+    - {fileID: 5995068774859539913}
+    - {fileID: -9145636079243747089}
+    - {fileID: -2097506956207612799}
+    _Modifiers:
+    - _From: 1
+      _To: 0
+      _Fade: 0.5
+      _NormalizedStartTime: NaN
+    _Aliases: []
+    _AliasAllTransitions: 0
+--- !u!114 &74997106901310455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
+  m_Name: Goblin_Debuff_Stun_Start
+  m_EditorClassIdentifier: 
+  _Transition:
+    rid: 7242315265358168084
+  references:
+    version: 2
+    RefIds:
+    - rid: 7242315265358168084
+      type: {class: ClipTransition, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _FadeDuration: 0.25
+        _Speed: 1
+        _Events:
+          _NormalizedTimes: []
+          _Callbacks: []
+          _Names: []
+        _Clip: {fileID: -3804751593570551859, guid: f5255da99f6af944b907e552b710ca49,
+          type: 3}
+        _NormalizedStartTime: NaN
+--- !u!114 &525040169755455988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
+  m_Name: Goblin_Stun_Hit_L_Back
+  m_EditorClassIdentifier: 
+  _Transition:
+    rid: 7242315265358168095
+  references:
+    version: 2
+    RefIds:
+    - rid: 7242315265358168095
+      type: {class: ClipTransition, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _FadeDuration: 0.25
+        _Speed: 1
+        _Events:
+          _NormalizedTimes: []
+          _Callbacks: []
+          _Names: []
+        _Clip: {fileID: -8517309220019642180, guid: f5255da99f6af944b907e552b710ca49,
+          type: 3}
+        _NormalizedStartTime: NaN
+--- !u!114 &937665103021942447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
+  m_Name: Goblin_Debuff_Stun_Loop
+  m_EditorClassIdentifier: 
+  _Transition:
+    rid: 7242315265358168083
+  references:
+    version: 2
+    RefIds:
+    - rid: 7242315265358168083
+      type: {class: ClipTransition, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _FadeDuration: 0.25
+        _Speed: 1
+        _Events:
+          _NormalizedTimes: []
+          _Callbacks: []
+          _Names: []
+        _Clip: {fileID: -3418896938200717279, guid: f5255da99f6af944b907e552b710ca49,
+          type: 3}
+        _NormalizedStartTime: NaN
+--- !u!114 &944457414380895887
+MonoBehaviour:
+  m_ObjectHideFlags: 17
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f04d4a67566152e40aaa01b8b745ff6b, type: 3}
+  m_Name: Editor Data
+  m_EditorClassIdentifier: 
+  _Library: {fileID: 11400000}
+  _Data:
+    _TransitionGroups: []
+    _TransitionSortMode: 0
+--- !u!114 &1520160928384320597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
+  m_Name: Goblin_Debuff_Stun_End
+  m_EditorClassIdentifier: 
+  _Transition:
+    rid: 7242315265358168082
+  references:
+    version: 2
+    RefIds:
+    - rid: 7242315265358168082
+      type: {class: ClipTransition, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _FadeDuration: 0.25
+        _Speed: 1
+        _Events:
+          _NormalizedTimes: []
+          _Callbacks: []
+          _Names: []
+        _Clip: {fileID: -3252624744545793878, guid: f5255da99f6af944b907e552b710ca49,
+          type: 3}
+        _NormalizedStartTime: NaN
+--- !u!114 &1924558366518460212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
+  m_Name: Goblin_Attack_02
+  m_EditorClassIdentifier: 
+  _Transition:
+    rid: 7242315265358168067
+  references:
+    version: 2
+    RefIds:
+    - rid: 7242315265358168067
+      type: {class: ClipTransition, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _FadeDuration: 0.25
+        _Speed: 1
+        _Events:
+          _NormalizedTimes: []
+          _Callbacks: []
+          _Names: []
+        _Clip: {fileID: -8010443721694757569, guid: f5255da99f6af944b907e552b710ca49,
+          type: 3}
+        _NormalizedStartTime: NaN
+--- !u!114 &2149228185438819724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
+  m_Name: Goblin_Stun_Hit_L_Front
+  m_EditorClassIdentifier: 
+  _Transition:
+    rid: 7242315265358168096
+  references:
+    version: 2
+    RefIds:
+    - rid: 7242315265358168096
+      type: {class: ClipTransition, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _FadeDuration: 0.25
+        _Speed: 1
+        _Events:
+          _NormalizedTimes: []
+          _Callbacks: []
+          _Names: []
+        _Clip: {fileID: -777874509372367948, guid: f5255da99f6af944b907e552b710ca49,
+          type: 3}
+        _NormalizedStartTime: NaN
+--- !u!114 &2720657754082848801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
+  m_Name: Goblin_Stun_Hit_H_Back
+  m_EditorClassIdentifier: 
+  _Transition:
+    rid: 7242315265358168093
+  references:
+    version: 2
+    RefIds:
+    - rid: 7242315265358168093
+      type: {class: ClipTransition, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _FadeDuration: 0.25
+        _Speed: 1
+        _Events:
+          _NormalizedTimes: []
+          _Callbacks: []
+          _Names: []
+        _Clip: {fileID: 6435010428011532180, guid: f5255da99f6af944b907e552b710ca49,
+          type: 3}
+        _NormalizedStartTime: NaN
+--- !u!114 &5085275336434984029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
+  m_Name: Goblin_Run_End
+  m_EditorClassIdentifier: 
+  _Transition:
+    rid: 7242315265358168091
+  references:
+    version: 2
+    RefIds:
+    - rid: 7242315265358168091
+      type: {class: ClipTransition, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _FadeDuration: 0.25
+        _Speed: 1
+        _Events:
+          _NormalizedTimes: []
+          _Callbacks: []
+          _Names: []
+        _Clip: {fileID: 556536183868401645, guid: f5255da99f6af944b907e552b710ca49,
+          type: 3}
+        _NormalizedStartTime: NaN
+--- !u!114 &5157596022104591802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
+  m_Name: Goblin_Run
+  m_EditorClassIdentifier: 
+  _Transition:
+    rid: 7242315265358168090
+  references:
+    version: 2
+    RefIds:
+    - rid: 7242315265358168090
+      type: {class: ClipTransition, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _FadeDuration: 0.25
+        _Speed: 1
+        _Events:
+          _NormalizedTimes: []
+          _Callbacks: []
+          _Names: []
+        _Clip: {fileID: 1275926326739213637, guid: f5255da99f6af944b907e552b710ca49,
+          type: 3}
+        _NormalizedStartTime: NaN
+--- !u!114 &5791976804359543580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
+  m_Name: Goblin_Attack_04
+  m_EditorClassIdentifier: 
+  _Transition:
+    rid: 7242315265358168070
+  references:
+    version: 2
+    RefIds:
+    - rid: 7242315265358168070
+      type: {class: ClipTransition, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _FadeDuration: 0.25
+        _Speed: 1
+        _Events:
+          _NormalizedTimes: []
+          _Callbacks: []
+          _Names: []
+        _Clip: {fileID: -3735212492818192165, guid: f5255da99f6af944b907e552b710ca49,
+          type: 3}
+        _NormalizedStartTime: NaN
+--- !u!114 &5995068774859539913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
+  m_Name: Goblin_Attack_01
+  m_EditorClassIdentifier: 
+  _Transition:
+    rid: 7242315265358168066
+  references:
+    version: 2
+    RefIds:
+    - rid: 7242315265358168066
+      type: {class: ClipTransition, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _FadeDuration: 0.25
+        _Speed: 1
+        _Events:
+          _NormalizedTimes: []
+          _Callbacks: []
+          _Names: []
+        _Clip: {fileID: -3568453503579113454, guid: f5255da99f6af944b907e552b710ca49,
+          type: 3}
+        _NormalizedStartTime: NaN
+--- !u!114 &6405473748255136928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
+  m_Name: Goblin_Hit_Shake
+  m_EditorClassIdentifier: 
+  _Transition:
+    rid: 7242315265358168106
+  references:
+    version: 2
+    RefIds:
+    - rid: 7242315265358168106
+      type: {class: ClipTransition, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _FadeDuration: 0.25
+        _Speed: 1
+        _Events:
+          _NormalizedTimes: []
+          _Callbacks: []
+          _Names: []
+        _Clip: {fileID: -1837773511420484736, guid: f5255da99f6af944b907e552b710ca49,
+          type: 3}
+        _NormalizedStartTime: NaN
+--- !u!114 &8025610072333556794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
+  m_Name: Goblin_Attack_05_Miss_2
+  m_EditorClassIdentifier: 
+  _Transition:
+    rid: 7242315265358168074
+  references:
+    version: 2
+    RefIds:
+    - rid: 7242315265358168074
+      type: {class: ClipTransition, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _FadeDuration: 0.25
+        _Speed: 1
+        _Events:
+          _NormalizedTimes: []
+          _Callbacks: []
+          _Names: []
+        _Clip: {fileID: -3825524971311146892, guid: f5255da99f6af944b907e552b710ca49,
+          type: 3}
+        _NormalizedStartTime: NaN
+--- !u!114 &8492008623868158741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
+  m_Name: Goblin_Stun_Hit_Stay
+  m_EditorClassIdentifier: 
+  _Transition:
+    rid: 7242315265358168097
+  references:
+    version: 2
+    RefIds:
+    - rid: 7242315265358168097
+      type: {class: ClipTransition, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _FadeDuration: 0.25
+        _Speed: 1
+        _Events:
+          _NormalizedTimes: []
+          _Callbacks: []
+          _Names: []
+        _Clip: {fileID: 3879896132321488740, guid: f5255da99f6af944b907e552b710ca49,
+          type: 3}
+        _NormalizedStartTime: NaN
+--- !u!114 &8804102000000000001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
+  m_Name: Goblin_Walk_DirectionalMixer
+  m_EditorClassIdentifier: 
+  _Transition:
+    rid: 7242315265358169001
+  references:
+    version: 2
+    RefIds:
+    - rid: 7242315265358169001
+      type: {class: MixerTransition2D, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _FadeDuration: 0.25
+        _Speed: 1
+        _Events:
+          _NormalizedTimes: []
+          _Callbacks: []
+          _Names: []
+        _Animations:
+        - {fileID: 3562186347886755870, guid: f5255da99f6af944b907e552b710ca49, type: 3}
+        - {fileID: 6733344748642250728, guid: f5255da99f6af944b907e552b710ca49, type: 3}
+        - {fileID: 9160966505602295481, guid: f5255da99f6af944b907e552b710ca49, type: 3}
+        - {fileID: -5954985257845531946, guid: f5255da99f6af944b907e552b710ca49, type: 3}
+        - {fileID: -6197149268509949104, guid: f5255da99f6af944b907e552b710ca49, type: 3}
+        _Speeds: []
+        _SynchronizeChildren: 
+        _Thresholds:
+        - {x: 0, y: 1}
+        - {x: 0, y: -1}
+        - {x: 1, y: 0}
+        - {x: -1, y: 0}
+        - {x: 0, y: 0}
+        _DefaultParameter: {x: 0, y: 1}
+        _Type: 1
+        _ParameterNameX: {fileID: 0}
+        _ParameterNameY: {fileID: 0}
+--- !u!114 &8804102000000000002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
+  m_Name: Goblin_Walk_Start_DirectionalMixer
+  m_EditorClassIdentifier: 
+  _Transition:
+    rid: 7242315265358169002
+  references:
+    version: 2
+    RefIds:
+    - rid: 7242315265358169002
+      type: {class: MixerTransition2D, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _FadeDuration: 0.25
+        _Speed: 1
+        _Events:
+          _NormalizedTimes: []
+          _Callbacks: []
+          _Names: []
+        _Animations:
+        - {fileID: 8054114090722858692, guid: f5255da99f6af944b907e552b710ca49, type: 3}
+        - {fileID: -8074612405589502612, guid: f5255da99f6af944b907e552b710ca49, type: 3}
+        - {fileID: 5698375180565610465, guid: f5255da99f6af944b907e552b710ca49, type: 3}
+        - {fileID: -433123386122403151, guid: f5255da99f6af944b907e552b710ca49, type: 3}
+        _Speeds: []
+        _SynchronizeChildren: 
+        _Thresholds:
+        - {x: 0, y: 1}
+        - {x: 0, y: -1}
+        - {x: 1, y: 0}
+        - {x: -1, y: 0}
+        _DefaultParameter: {x: 0, y: 1}
+        _Type: 1
+        _ParameterNameX: {fileID: 0}
+        _ParameterNameY: {fileID: 0}

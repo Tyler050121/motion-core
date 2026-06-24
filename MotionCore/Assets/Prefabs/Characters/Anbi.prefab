@@ -123,6 +123,7 @@ GameObject:
   - component: {fileID: 7471838613926931105}
   - component: {fileID: 6383220402655325866}
   - component: {fileID: 6087151784755445272}
+  - component: {fileID: 1068605082628049589}
   m_Layer: 0
   m_Name: Brain&Actions
   m_TagString: Untagged
@@ -158,12 +159,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Character: {fileID: 5408090951713516069}
-  m_MoveState: {fileID: 4699053006546641189}
-  m_EvadeState: {fileID: 7471838613926931105}
-  m_AttackState: {fileID: 6383220402655325866}
-  m_HitState: {fileID: 6087151784755445272}
+  m_CommandController: {fileID: 1068605082628049589}
   m_TargetLockController: {fileID: 838387318756680902}
-  m_InputTimeOut: 0.35
 --- !u!114 &838387318756680902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,14 +203,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Character: {fileID: 5408090951713516069}
-  m_MoveStartMixer: {fileID: -4463977917762178393, guid: 19f7276f66a284cbfa65e2726e1fd573,
-    type: 2}
-  m_MoveMixer: {fileID: -2616511909702927223, guid: 19f7276f66a284cbfa65e2726e1fd573,
-    type: 2}
-  m_MoveEndMixer: {fileID: -5974484811468555479, guid: 19f7276f66a284cbfa65e2726e1fd573,
-    type: 2}
-  m_RunTurnBack: {fileID: -5282911611355088514, guid: 19f7276f66a284cbfa65e2726e1fd573,
-    type: 2}
 --- !u!114 &7471838613926931105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,6 +251,24 @@ MonoBehaviour:
     type: 2}
   m_KnockbackReaction: {fileID: 0}
   m_KnockbackResistance: 1
+--- !u!114 &1068605082628049589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7197192688399526562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5dae6982251b4ebd8371b75618639f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Character: {fileID: 5408090951713516069}
+  m_MoveState: {fileID: 4699053006546641189}
+  m_EvadeState: {fileID: 7471838613926931105}
+  m_AttackState: {fileID: 6383220402655325866}
+  m_HitState: {fileID: 6087151784755445272}
+  m_InputTimeOut: 0.35
 --- !u!1 &7778320943819192780
 GameObject:
   m_ObjectHideFlags: 0
@@ -273,9 +280,9 @@ GameObject:
   - component: {fileID: 1495825638448751318}
   - component: {fileID: 5408090951713516069}
   - component: {fileID: 4345843532071137959}
-  - component: {fileID: 2551420857530289585}
   - component: {fileID: 6808166811772849021}
   - component: {fileID: 3862269262689677338}
+  - component: {fileID: 4684523107543515566}
   m_Layer: 0
   m_Name: Anbi
   m_TagString: Untagged
@@ -332,7 +339,7 @@ MonoBehaviour:
   m_Health:
     m_MaxHealth: 100
   m_ConfigReceivers:
-  - {fileID: 2501418995336163100}
+  - {fileID: 1068605082628049589}
   - {fileID: 3862269262689677338}
 --- !u!114 &4345843532071137959
 MonoBehaviour:
@@ -348,27 +355,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Character: {fileID: 5408090951713516069}
   m_Idle: {fileID: 6003744553862008256, guid: 19f7276f66a284cbfa65e2726e1fd573, type: 2}
---- !u!114 &2551420857530289585
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7778320943819192780}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fed25dc83bbe462a8c492f35509f65b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Brain: {fileID: 2501418995336163100}
-  m_EvadeKey: 304
-  m_BasicAttackKey: 323
-  m_LockKey: 325
-  m_RunKey: 304
-  m_HitTestKey: 49
-  m_KnockbackHitTestKey: 50
-  m_HitTestKnockbackPower: 0
-  m_KnockbackHitTestPower: 2
 --- !u!143 &6808166811772849021
 CharacterController:
   m_ObjectHideFlags: 0
@@ -408,6 +394,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MaxHealth: 100
+--- !u!114 &4684523107543515566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7778320943819192780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d58218467d6c4e8092ded93bbc459032, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_LockPoint: {fileID: 826064935721159764}
+  m_Health: {fileID: 3862269262689677338}
 --- !u!1 &7822878106139067855
 GameObject:
   m_ObjectHideFlags: 0

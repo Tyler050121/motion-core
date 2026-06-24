@@ -24,9 +24,13 @@ namespace MotionCore.Gameplay.Character
         [SerializeField, Seconds] float m_RunTurnBackCooldown = 1f;
         public float RunTurnBackCooldown => m_RunTurnBackCooldown;
 
-        [SerializeField, Seconds, Min(0f), Tooltip("180 度转身秒数")]
+        [SerializeField, Seconds, Min(0f), Tooltip("默认 180 度转身秒数（战斗/通用朝向）")]
         float m_FacingTurnDuration = 0.2f;
         public float FacingTurnDuration => m_FacingTurnDuration;
+
+        [SerializeField, Seconds, Min(0f), Tooltip("移动时 180 度转身秒数；通常比默认更慢，让转身摊进走路循环、不显得在原地急转")]
+        float m_LocomotionTurnDuration = 0.8f;
+        public float LocomotionTurnDuration => m_LocomotionTurnDuration;
 
         public float RunThresholdSpeed => (m_WalkSpeed + m_RunSpeed) * 0.5f;
     }

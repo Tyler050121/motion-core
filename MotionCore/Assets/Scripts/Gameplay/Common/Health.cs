@@ -1,3 +1,4 @@
+using MotionCore.Infrastructure;
 using UnityEngine;
 
 namespace MotionCore.Gameplay.Common
@@ -5,7 +6,7 @@ namespace MotionCore.Gameplay.Common
     [DisallowMultipleComponent]
     public sealed class Health : MonoBehaviour, IDamageable, IConfigReceiver<HealthConfig>
     {
-        [SerializeField, Min(1f)] float m_MaxHealth = 100f;
+        [SerializeField, ReadOnly] float m_MaxHealth = 100f;
 
         float m_CurrentHealth;
 

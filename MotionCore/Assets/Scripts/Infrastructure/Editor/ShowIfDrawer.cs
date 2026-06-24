@@ -39,7 +39,10 @@ namespace MotionCore.Editor
             switch (source.propertyType)
             {
                 case SerializedPropertyType.Enum:
-                    return source.enumNames[source.enumValueIndex] == expectedValue.ToString();
+                    int enumIndex = source.enumValueIndex;
+                    if (enumIndex < 0 || enumIndex >= source.enumNames.Length)
+                        return true;
+                    return source.enumNames[enumIndex] == expectedValue.ToString();
                 case SerializedPropertyType.Integer:
                     return expectedValue is int expectedInt && source.intValue == expectedInt;
                 case SerializedPropertyType.Boolean:

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using MotionCore.Gameplay.Cameras;
 using MotionCore.Infrastructure;
 using UnityEngine;
@@ -49,13 +48,35 @@ namespace MotionCore.Gameplay.Targeting
 
         public bool TryLock()
         {
-            LockOnTarget target = FindLockTarget();
-            if (target == null)
+            bool foundTarget = LockOnTargetQuery.TryFindLockTarget(
+                LockOnTarget.Targets,
+                m_Character.FacingRoot.position,
+                m_Character.transform.root,
+                m_MaxLockDistance,
+                m_CenterLockRadius,
+                m_Camera,
+                out LockOnTarget target);
+            LockOnTarget lockTarget = foundTarget ? target : null;
+
+            return TryLockCurrentTarget(lockTarget);
+        }
+
+        public bool TryCycleLockTarget()
+        {
+            if (!HasTarget)
+                return TryLock();
+
+            if (!LockOnTargetQuery.TryFindNextTargetInRing(
+                    LockOnTarget.Targets,
+                    m_CurrentTarget,
+                    m_Character.FacingRoot.position,
+                    m_Character.transform.root,
+                    m_MaxLockDistance,
+                    m_Camera.PlanarForward,
+                    out LockOnTarget nextTarget))
                 return false;
 
-            m_CurrentTarget = target;
-            m_Camera.SetLockTarget(target.LockPoint);
-            return true;
+            return TryLockCurrentTarget(nextTarget);
         }
 
         public void ClearLock()
@@ -71,48 +92,6 @@ namespace MotionCore.Gameplay.Targeting
             return direction.normalized;
         }
 
-        LockOnTarget FindLockTarget()
-        {
-            Vector3 origin = m_Character.FacingRoot.position;
-            float maxDistanceSqr = m_MaxLockDistance * m_MaxLockDistance;
-            float centerRadiusSqr = m_CenterLockRadius * m_CenterLockRadius;
-
-            LockOnTarget centerTarget = null;
-            float centerTargetSqr = float.PositiveInfinity;
-            LockOnTarget nearestTarget = null;
-            float nearestTargetSqr = float.PositiveInfinity;
-
-            IReadOnlyCollection<LockOnTarget> targets = LockOnTarget.Targets;
-            foreach (LockOnTarget target in targets)
-            {
-                if (target == null || !target.IsAvailable)
-                    continue;
-
-                Vector3 toTarget = target.LockPoint.position - origin;
-                toTarget.y = 0f;
-                float distanceSqr = toTarget.sqrMagnitude;
-                if (distanceSqr > maxDistanceSqr)
-                    continue;
-
-                if (!TryGetViewportDistanceSqr(target, out float viewportDistanceSqr))
-                    continue;
-
-                if (viewportDistanceSqr <= centerRadiusSqr && viewportDistanceSqr < centerTargetSqr)
-                {
-                    centerTarget = target;
-                    centerTargetSqr = viewportDistanceSqr;
-                }
-
-                if (distanceSqr < nearestTargetSqr)
-                {
-                    nearestTarget = target;
-                    nearestTargetSqr = distanceSqr;
-                }
-            }
-
-            return centerTarget != null ? centerTarget : nearestTarget;
-        }
-
         bool IsTargetTooFar(LockOnTarget target)
         {
             Vector3 toTarget = target.LockPoint.position - m_Character.FacingRoot.position;
@@ -120,17 +99,13 @@ namespace MotionCore.Gameplay.Targeting
             return toTarget.sqrMagnitude > m_MaxLockDistance * m_MaxLockDistance;
         }
 
-        bool TryGetViewportDistanceSqr(LockOnTarget target, out float distanceSqr)
+        bool TryLockCurrentTarget(LockOnTarget target)
         {
-            Vector3 viewportPoint = m_Camera.WorldToViewportPoint(target.LockPoint.position);
-            if (viewportPoint.z <= 0f)
-            {
-                distanceSqr = 0f;
+            if (target == null)
                 return false;
-            }
 
-            Vector2 centerOffset = new(viewportPoint.x - 0.5f, viewportPoint.y - 0.5f);
-            distanceSqr = centerOffset.sqrMagnitude;
+            m_CurrentTarget = target;
+            m_Camera.SetLockTarget(target.LockPoint);
             return true;
         }
     }

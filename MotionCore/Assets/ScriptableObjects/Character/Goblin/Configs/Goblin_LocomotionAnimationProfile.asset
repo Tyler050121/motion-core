@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8ad89db77b14181b8b1926391961908, type: 3}
+  m_Name: Goblin_LocomotionAnimationProfile
+  m_EditorClassIdentifier: 
+  m_MoveStart:
+    m_RouteMode: 1
+    m_SingleTransition: {fileID: 0}
+    m_WalkTransition: {fileID: 8804102000000000002, guid: 9aa8e0e683dff4e20973fe30705d1d32,
+      type: 2}
+    m_RunTransition: {fileID: -8720987831801387965, guid: 9aa8e0e683dff4e20973fe30705d1d32,
+      type: 2}
+  m_MoveLoop:
+    m_RouteMode: 1
+    m_SingleTransition: {fileID: 0}
+    m_WalkTransition: {fileID: 8804102000000000001, guid: 9aa8e0e683dff4e20973fe30705d1d32,
+      type: 2}
+    m_RunTransition: {fileID: 5157596022104591802, guid: 9aa8e0e683dff4e20973fe30705d1d32,
+      type: 2}
+  m_MoveEnd:
+    m_RouteMode: 1
+    m_SingleTransition: {fileID: 0}
+    m_WalkTransition: {fileID: 0}
+    m_RunTransition: {fileID: 5085275336434984029, guid: 9aa8e0e683dff4e20973fe30705d1d32,
+      type: 2}
+  m_RunTurnBack: {fileID: 0}

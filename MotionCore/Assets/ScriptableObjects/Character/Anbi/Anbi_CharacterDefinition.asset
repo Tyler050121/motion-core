@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Anbi_CharacterDefinition
   m_EditorClassIdentifier: 
   m_Motor: {fileID: 11400000, guid: b7db31cf61c044b6804644cf98d66c31, type: 2}
+  m_LocomotionAnimation: {fileID: 11400000, guid: b3f2c49a7e21442d81ca6ad1bb0f7a3d, type: 2}
   m_BasicAttack: {fileID: 11400000, guid: 3716db54fdee3459ab4a98af8b5d4241, type: 2}

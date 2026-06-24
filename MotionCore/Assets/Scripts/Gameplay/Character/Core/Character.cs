@@ -3,6 +3,7 @@ using Animancer;
 using Animancer.FSM;
 using MotionCore.Gameplay.Common;
 using UnityEngine;
+using MotionCore.Infrastructure;
 #if UNITY_EDITOR
 using System.Collections.Generic;
 #endif
@@ -27,7 +28,7 @@ namespace MotionCore.Gameplay.Character
 
         [SerializeField] CharacterDefinition m_CharacterDefinition;
         [SerializeField] HealthConfig m_Health = new();
-        [SerializeField] MonoBehaviour[] m_ConfigReceivers = System.Array.Empty<MonoBehaviour>();
+        [SerializeField, ReadOnly] MonoBehaviour[] m_ConfigReceivers = System.Array.Empty<MonoBehaviour>();
 
         CharacterParameters m_Parameters;
         public CharacterParameters Parameters => m_Parameters;
