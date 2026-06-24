@@ -23,7 +23,7 @@ MonoBehaviour:
       m_Scale: 1
       m_Speed: 1
       m_SpawnPoint: 1
-      m_FollowSource: 1
+      m_FollowMode: 1
       m_LocalOffset: {x: 0, y: 0.8, z: 0}
       m_LocalEulerAngles: {x: 180, y: 49, z: 0}
   - m_Profile: {fileID: 11400000, guid: c29aed11bb684b2a9d2d0dfde73dc55e, type: 2}
@@ -34,7 +34,7 @@ MonoBehaviour:
       m_Scale: 1
       m_Speed: 1
       m_SpawnPoint: 1
-      m_FollowSource: 1
+      m_FollowMode: 1
       m_LocalOffset: {x: 0, y: 0.8, z: 0}
       m_LocalEulerAngles: {x: 22, y: -112, z: 0}
   - m_Profile: {fileID: 11400000, guid: c29aed11bb684b2a9d2d0dfde73dc55e, type: 2}
@@ -45,6 +45,6 @@ MonoBehaviour:
       m_Scale: 1
       m_Speed: 1
       m_SpawnPoint: 1
-      m_FollowSource: 1
+      m_FollowMode: 1
       m_LocalOffset: {x: 0, y: 0.8, z: 0}
       m_LocalEulerAngles: {x: 150, y: -70, z: 0}

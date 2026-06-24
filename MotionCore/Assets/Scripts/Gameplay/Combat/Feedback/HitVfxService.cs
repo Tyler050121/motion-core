@@ -38,7 +38,8 @@ namespace MotionCore.Gameplay.Combat
                 ResolveRotation(feedback, definition),
                 definition.Scale,
                 definition.Speed,
-                null));
+                null,
+                VfxFollowMode.None));
         }
 
         static Vector3 ResolvePosition(in HitFeedbackContext feedback, in HitVfxDefinition definition)

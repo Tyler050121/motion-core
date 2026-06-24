@@ -11,19 +11,22 @@ namespace MotionCore.Infrastructure
             Quaternion rotation,
             float scale,
             float speed,
-            Transform parent)
+            Transform followTarget,
+            VfxFollowMode followMode)
         {
             Position = position;
             Rotation = rotation;
             Scale = scale;
             Speed = speed;
-            Parent = parent;
+            FollowTarget = followTarget;
+            FollowMode = followMode;
         }
 
         public Vector3 Position { get; }
         public Quaternion Rotation { get; }
         public float Scale { get; }
         public float Speed { get; }
-        public Transform Parent { get; }
+        public Transform FollowTarget { get; }
+        public VfxFollowMode FollowMode { get; }
     }
 }

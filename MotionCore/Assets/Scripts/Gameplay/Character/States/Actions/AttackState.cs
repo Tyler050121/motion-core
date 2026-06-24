@@ -226,7 +226,8 @@ namespace MotionCore.Gameplay.Character
                 worldRotation,
                 definition.Scale,
                 definition.Speed,
-                definition.FollowSource ? spawnSource : null));
+                spawnSource,
+                definition.FollowMode));
         }
 
         Transform ResolveImpactRayOrigin(Transform source)

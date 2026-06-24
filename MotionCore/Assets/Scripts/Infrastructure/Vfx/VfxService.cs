@@ -24,11 +24,10 @@ namespace MotionCore.Infrastructure
             if (preset == null || !preset.IsValid)
                 return null;
 
-            Transform parent = request.Parent ? request.Parent : m_PoolRoot;
             if (preset.ReuseMode == VfxReuseMode.OneShot)
-                return PlayOneShot(preset, request, parent);
+                return PlayOneShot(preset, request);
 
-            return PlayPooled(preset, request, parent);
+            return PlayPooled(preset, request);
         }
 
         public void Dispose()
@@ -40,20 +39,20 @@ namespace MotionCore.Infrastructure
             m_ReleaseTimers.Clear();
         }
 
-        PooledVfx PlayPooled(VfxPreset preset, in VfxSpawnRequest request, Transform parent)
+        PooledVfx PlayPooled(VfxPreset preset, in VfxSpawnRequest request)
         {
             PrefabPool<PooledVfx> pool = GetOrCreatePool(preset);
-            PooledVfx instance = pool.Get(parent);
+            PooledVfx instance = pool.Get(m_PoolRoot);
 
             ApplyRequest(instance, request);
             ScheduleRelease(instance, preset.ReleaseDelay, () => pool.Release(instance));
             return instance;
         }
 
-        PooledVfx PlayOneShot(VfxPreset preset, in VfxSpawnRequest request, Transform parent)
+        PooledVfx PlayOneShot(VfxPreset preset, in VfxSpawnRequest request)
         {
             PooledVfx prefab = m_Assets.LoadComponent<PooledVfx>(preset.AssetKey);
-            PooledVfx instance = UnityEngine.Object.Instantiate(prefab, parent, false);
+            PooledVfx instance = UnityEngine.Object.Instantiate(prefab, m_PoolRoot, false);
 
             instance.gameObject.SetActive(false);
             ApplyRequest(instance, request);
@@ -69,6 +68,7 @@ namespace MotionCore.Infrastructure
             instance.transform.SetPositionAndRotation(request.Position, request.Rotation);
             instance.transform.localScale = Vector3.one * request.Scale;
             instance.SetSpeed(request.Speed);
+            instance.SetFollow(request.FollowTarget, request.FollowMode);
         }
 
         static void DestroyOneShot(PooledVfx instance)

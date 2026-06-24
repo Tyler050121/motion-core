@@ -17,9 +17,9 @@ namespace MotionCore.Gameplay.Combat
         AttackVfxSpawnPoint m_SpawnPoint = AttackVfxSpawnPoint.Self;
         public AttackVfxSpawnPoint SpawnPoint => m_SpawnPoint;
 
-        [SerializeField, Tooltip("是否跟随挂点")]
-        bool m_FollowSource = true;
-        public bool FollowSource => m_FollowSource;
+        [SerializeField, Tooltip("跟随挂点的方式")]
+        VfxFollowMode m_FollowMode = VfxFollowMode.Position;
+        public VfxFollowMode FollowMode => m_FollowMode;
 
         [SerializeField, Tooltip("相对挂点的本地偏移")]
         Vector3 m_LocalOffset;

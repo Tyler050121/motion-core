@@ -23,6 +23,6 @@ MonoBehaviour:
       m_Scale: 1
       m_Speed: 1
       m_SpawnPoint: 1
-      m_FollowSource: 1
+      m_FollowMode: 1
       m_LocalOffset: {x: 0, y: 0.6, z: 0}
       m_LocalEulerAngles: {x: 0, y: -180, z: 90}

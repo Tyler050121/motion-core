@@ -7,9 +7,51 @@ namespace MotionCore.Infrastructure
     {
         ParticleSystem[] m_ParticleSystems;
 
+        Transform m_FollowTarget;
+        bool m_FollowPosition;
+        bool m_FollowRotation;
+        Vector3 m_FollowLocalPosition;
+        Quaternion m_FollowLocalRotation;
+
         void Awake()
         {
             m_ParticleSystems = GetComponentsInChildren<ParticleSystem>(true);
+        }
+
+        /// <summary>
+        /// 让特效跟随目标。在当前世界位姿下采样相对偏移，
+        /// 因此挂点上的 LocalOffset 等微调会被保留。
+        /// </summary>
+        public void SetFollow(Transform target, VfxFollowMode mode)
+        {
+            if (!target || mode == VfxFollowMode.None)
+            {
+                m_FollowPosition = false;
+                m_FollowRotation = false;
+                m_FollowTarget = null;
+                return;
+            }
+
+            m_FollowTarget = target;
+            m_FollowPosition = mode is VfxFollowMode.Position or VfxFollowMode.Both;
+            m_FollowRotation = mode is VfxFollowMode.Rotation or VfxFollowMode.Both;
+            m_FollowLocalPosition = target.InverseTransformPoint(transform.position);
+            m_FollowLocalRotation = Quaternion.Inverse(target.rotation) * transform.rotation;
+        }
+
+        void LateUpdate()
+        {
+            if (!m_FollowPosition && !m_FollowRotation)
+                return;
+
+            // 挂点可能在特效存活期间被销毁，这里仍需一次 Unity 判空。
+            if (!m_FollowTarget)
+                return;
+
+            if (m_FollowPosition)
+                transform.position = m_FollowTarget.TransformPoint(m_FollowLocalPosition);
+            if (m_FollowRotation)
+                transform.rotation = m_FollowTarget.rotation * m_FollowLocalRotation;
         }
 
         public void OnPoolRent()
@@ -46,6 +88,9 @@ namespace MotionCore.Infrastructure
 
         public void OnPoolReturn()
         {
+            m_FollowTarget = null;
+            m_FollowPosition = false;
+            m_FollowRotation = false;
             for (int i = 0; i < m_ParticleSystems.Length; i++)
             {
                 ParticleSystem particle = m_ParticleSystems[i];
