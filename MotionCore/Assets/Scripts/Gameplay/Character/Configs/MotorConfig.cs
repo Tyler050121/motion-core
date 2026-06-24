@@ -6,20 +6,9 @@ namespace MotionCore.Gameplay.Character
     [CreateAssetMenu(menuName = "MotionCore/Character/Motor Config")]
     public sealed class MotorConfig : ScriptableObject
     {
-        [SerializeField] float m_WalkSpeed = 1f;
-        public float WalkSpeed => m_WalkSpeed;
-
-        [SerializeField] float m_RunSpeed = 3f;
-        public float RunSpeed => m_RunSpeed;
-
-        [SerializeField] float m_WalkSpeedChangeRate = 8f;
-        public float WalkSpeedChangeRate => m_WalkSpeedChangeRate;
-
-        [SerializeField] float m_RunSpeedChangeRate = 3f;
-        public float RunSpeedChangeRate => m_RunSpeedChangeRate;
-
-        [SerializeField] float m_RunTurnBackAngle = 135f;
-        public float RunTurnBackAngle => m_RunTurnBackAngle;
+        [SerializeField, Min(0f), Tooltip("移动位移缩放，1=动画原速")]
+        float m_MoveSpeedScale = 1f;
+        public float MoveSpeedScale => m_MoveSpeedScale;
 
         [SerializeField, Seconds] float m_RunTurnBackCooldown = 1f;
         public float RunTurnBackCooldown => m_RunTurnBackCooldown;
@@ -31,7 +20,5 @@ namespace MotionCore.Gameplay.Character
         [SerializeField, Seconds, Min(0f), Tooltip("移动时 180 度转身秒数；通常比默认更慢，让转身摊进走路循环、不显得在原地急转")]
         float m_LocomotionTurnDuration = 0.8f;
         public float LocomotionTurnDuration => m_LocomotionTurnDuration;
-
-        public float RunThresholdSpeed => (m_WalkSpeed + m_RunSpeed) * 0.5f;
     }
 }

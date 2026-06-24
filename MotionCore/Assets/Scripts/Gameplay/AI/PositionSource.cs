@@ -19,5 +19,10 @@ namespace MotionCore.Gameplay.AI
         /// 自定义共享变量。
         /// </summary>
         Variable,
+
+        /// <summary>
+        /// 当前索敌目标（实时跟踪，目标移动时位置随之更新）。
+        /// </summary>
+        Target,
     }
 }

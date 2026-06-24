@@ -408,6 +408,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_LockPoint: {fileID: 826064935721159764}
   m_Health: {fileID: 3862269262689677338}
+  m_Faction: 1
 --- !u!1 &7822878106139067855
 GameObject:
   m_ObjectHideFlags: 0

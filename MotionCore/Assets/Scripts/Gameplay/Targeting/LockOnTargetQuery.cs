@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using MotionCore.Gameplay.Cameras;
+using MotionCore.Gameplay.Common;
 using UnityEngine;
 
 namespace MotionCore.Gameplay.Targeting
@@ -19,14 +20,15 @@ namespace MotionCore.Gameplay.Targeting
         }
 
         /// <summary>
-        /// 在指定范围内找最近目标。
-        /// 供敌人索敌使用，只关心距离，不关心屏幕位置。
+        /// 在指定范围内找最近的指定阵营目标。
+        /// 供敌人索敌使用，只关心距离与阵营，不关心屏幕位置。
         /// </summary>
         public static bool TryFindNearestTarget(
             IReadOnlyCollection<LockOnTarget> targets,
             Vector3 origin,
             Transform ownerRoot,
             float maxDistance,
+            Faction targetFaction,
             out LockOnTarget bestTarget)
         {
             bestTarget = null;
@@ -36,6 +38,9 @@ namespace MotionCore.Gameplay.Targeting
             foreach (LockOnTarget candidate in targets)
             {
                 if (!IsSelectable(candidate, ownerRoot))
+                    continue;
+
+                if (candidate.Faction != targetFaction)
                     continue;
 
                 Vector3 offset = candidate.LockPoint.position - origin;

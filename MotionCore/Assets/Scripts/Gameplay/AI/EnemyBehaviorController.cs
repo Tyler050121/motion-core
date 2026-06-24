@@ -13,11 +13,10 @@ namespace MotionCore.Gameplay.AI
     {
         [SerializeField, Tooltip("敌人角色根")]
         CharacterContext m_Character;
-        [SerializeField, Tooltip("敌人行为参数")]
-        EnemyBehaviorConfig m_BehaviorConfig;
 
         ICharacterCommandExecutor m_CommandExecutor;
         Vector3 m_HomePosition;
+        Transform m_Target;
 
         /// <summary>
         /// 敌人当前世界坐标。
@@ -30,9 +29,14 @@ namespace MotionCore.Gameplay.AI
         public Vector3 HomePosition => m_HomePosition;
 
         /// <summary>
-        /// 行为参数配置。
+        /// 当前索敌得到的目标（如玩家的锁定点）；未锁定时为 null。
         /// </summary>
-        public EnemyBehaviorConfig Config => m_BehaviorConfig;
+        public Transform Target => m_Target;
+
+        /// <summary>
+        /// 是否已有有效目标。
+        /// </summary>
+        public bool HasTarget => m_Target != null;
 
         void Awake()
         {
@@ -43,14 +47,31 @@ namespace MotionCore.Gameplay.AI
         void OnDisable()
         {
             m_CommandExecutor.StopMove();
+            m_Target = null;
         }
 
         /// <summary>
-        /// 朝目标方向前进，身体边走边转向目标（走出弧线），无需额外设置朝向。
+        /// 记录当前索敌目标。
         /// </summary>
-        public void MoveSteerTo(Vector3 worldHeading, bool wantsRun)
+        public void SetTarget(Transform target)
         {
-            m_CommandExecutor.SetMoveSteer(worldHeading, wantsRun);
+            m_Target = target;
+        }
+
+        /// <summary>
+        /// 清除当前目标。
+        /// </summary>
+        public void ClearTarget()
+        {
+            m_Target = null;
+        }
+
+        /// <summary>
+        /// 朝目标方向前进，身体边走边转向目标（走出弧线）。turnSpeed 选择转身快慢。
+        /// </summary>
+        public void MoveSteerTo(Vector3 worldHeading, bool wantsRun, LocomotionTurnSpeed turnSpeed = LocomotionTurnSpeed.Locomotion)
+        {
+            m_CommandExecutor.SetMoveSteer(worldHeading, wantsRun, turnSpeed);
         }
 
         /// <summary>

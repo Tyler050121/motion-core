@@ -1,4 +1,5 @@
 #if GRAPH_DESIGNER
+using MotionCore.Gameplay.Character;
 using Opsive.BehaviorDesigner.Runtime.Tasks;
 using Opsive.GraphDesigner.Runtime.Variables;
 using Opsive.Shared.Utility;
@@ -17,23 +18,30 @@ namespace MotionCore.Gameplay.AI.BehaviorDesigner.Tasks.Actions
         [Tooltip("目标位置来源")]
         [SerializeField] PositionSource m_Source = PositionSource.Variable;
 
-        [Tooltip("来源为 Variable 时使用的目标位置")]
+        [Tooltip("来源为 Variable 时的目标位置")]
         [SerializeField] SharedVariable<Vector3> m_SourceVariable;
+
+        [Tooltip("到达判定距离")]
+        [SerializeField] float m_StoppingDistance = 0.35f;
+
+        [Tooltip("是否跑步")]
+        [SerializeField] bool m_WantsRun;
+
+        [Tooltip("转身快慢")]
+        [SerializeField] LocomotionTurnSpeed m_TurnSpeed = LocomotionTurnSpeed.Locomotion;
 
         public override TaskStatus OnUpdate()
         {
             Vector3 offset = ResolvePosition(m_Source, m_SourceVariable) - Controller.Position;
             offset.y = 0f;
 
-            float stoppingDistance = Controller.Config.PatrolStoppingDistance;
-            if (offset.sqrMagnitude <= stoppingDistance * stoppingDistance)
+            if (offset.sqrMagnitude <= m_StoppingDistance * m_StoppingDistance)
             {
                 Controller.StopMove();
                 return TaskStatus.Success;
             }
 
-            // 边走边转：始终前进，身体平滑转向目标，走出弧线（无原地停顿）。
-            Controller.MoveSteerTo(offset, Controller.Config.PatrolWantsRun);
+            Controller.MoveSteerTo(offset, m_WantsRun, m_TurnSpeed);
             return TaskStatus.Running;
         }
 

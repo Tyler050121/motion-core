@@ -23,6 +23,8 @@ namespace MotionCore.Gameplay.AI.BehaviorDesigner.Tasks
             {
                 PositionSource.CurrentPosition => Controller.Position,
                 PositionSource.Variable => variable.Value,
+                // 无目标时回落到自身位置（解析出零位移，调用方自然不移动）。
+                PositionSource.Target => Controller.HasTarget ? Controller.Target.position : Controller.Position,
                 _ => Controller.HomePosition,
             };
         }

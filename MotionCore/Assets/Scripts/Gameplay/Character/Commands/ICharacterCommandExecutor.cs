@@ -8,9 +8,9 @@ namespace MotionCore.Gameplay.Character
     {
         void SetAttackFacingResolver(Func<Vector3> resolver);
 
-        void SetMoveInput(Vector2 moveInput, Vector3 moveDirection, bool wantsRun);
+        void SetMoveInput(Vector2 moveInput, Vector3 moveDirection, bool wantsRun, float turnDuration = -1f);
 
-        void SetMoveSteer(Vector3 worldHeading, bool wantsRun);
+        void SetMoveSteer(Vector3 worldHeading, bool wantsRun, LocomotionTurnSpeed turnSpeed = LocomotionTurnSpeed.Locomotion);
 
         void StopMove();
 

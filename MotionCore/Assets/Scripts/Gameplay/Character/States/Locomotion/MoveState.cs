@@ -1,3 +1,4 @@
+using MotionCore;
 using Animancer;
 using Animancer.FSM;
 using MotionCore.Infrastructure;
@@ -82,8 +83,11 @@ namespace MotionCore.Gameplay.Character
             if (m_Phase == MovePhase.TurningBack)
                 return;
 
-            // 移动转身用更慢的 locomotion 速度，让转身摊进走路循环，避免起步时原地急转。
-            Character.Parameters.SetFacing(Character.Parameters.MoveDirection, m_MotorConfig.LocomotionTurnDuration);
+            // 转身时长优先用本次移动指定的（如追击更快），未指定才回落配置默认。
+            float turnDuration = Character.Parameters.LocomotionTurnDuration >= 0f
+                ? Character.Parameters.LocomotionTurnDuration
+                : m_MotorConfig.LocomotionTurnDuration;
+            Character.Parameters.SetFacing(Character.Parameters.MoveDirection, turnDuration);
         }
 
         /// <summary>
@@ -161,7 +165,7 @@ namespace MotionCore.Gameplay.Character
             Vector3 facingDirection = Character.FacingRoot.forward;
             facingDirection.y = 0f;
 
-            return Vector3.Angle(facingDirection, moveDirection) >= m_MotorConfig.RunTurnBackAngle;
+            return Vector3.Angle(facingDirection, moveDirection) >= GlobalConfig.Locomotion.RunTurnBackAngle;
         }
 
         /// <summary>

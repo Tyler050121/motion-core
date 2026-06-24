@@ -10,6 +10,16 @@ namespace MotionCore
             public const bool RunInBackground = true;
         }
 
+        public static class Locomotion
+        {
+            public const float WalkSpeed = 1f;
+            public const float RunSpeed = 3f;
+            public const float WalkSpeedChangeRate = 8f;
+            public const float RunSpeedChangeRate = 3f;
+            public const float RunTurnBackAngle = 135f;
+            public const float RunThresholdSpeed = (WalkSpeed + RunSpeed) * 0.5f;
+        }
+
         public static class Timer
         {
             public const int InvalidId = -1;

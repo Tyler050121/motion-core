@@ -13,6 +13,12 @@ namespace MotionCore.Gameplay.Character
         float m_MoveSpeed;
         public float MoveSpeed => m_MoveSpeed;
 
+        float m_LocomotionTurnDuration = -1f;
+        /// <summary>
+        /// 本次移动指定的转身时长（180° 秒数）。小于 0 表示沿用 MotorConfig 默认。
+        /// </summary>
+        public float LocomotionTurnDuration => m_LocomotionTurnDuration;
+
         Vector3 m_FacingDirection;
         public Vector3 FacingDirection => m_FacingDirection;
 
@@ -27,12 +33,13 @@ namespace MotionCore.Gameplay.Character
         public bool HasMoveInput => m_MoveInput.sqrMagnitude > 0.0001f;
         public bool IsRunning { get; private set; }
 
-        public void SetMove(Vector2 moveInput, Vector3 moveDirection, float moveSpeed, bool isRunning)
+        public void SetMove(Vector2 moveInput, Vector3 moveDirection, float moveSpeed, bool isRunning, float locomotionTurnDuration = -1f)
         {
             m_MoveInput = moveInput.sqrMagnitude > 1f ? moveInput.normalized : moveInput;
             m_MoveDirection = moveDirection.sqrMagnitude > 1f ? moveDirection.normalized : moveDirection;
             m_MoveSpeed = moveSpeed;
             IsRunning = isRunning;
+            m_LocomotionTurnDuration = locomotionTurnDuration;
         }
 
         /// <summary>

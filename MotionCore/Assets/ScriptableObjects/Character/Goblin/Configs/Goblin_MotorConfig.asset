@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_WalkSpeed: 1
   m_RunSpeed: 3
+  m_MoveSpeedScale: 0.8
   m_WalkSpeedChangeRate: 8
   m_RunSpeedChangeRate: 3
   m_RunTurnBackAngle: 135
   m_RunTurnBackCooldown: 1
   m_FacingTurnDuration: 0.2
-  m_LocomotionTurnDuration: 5
+  m_LocomotionTurnDuration: 4

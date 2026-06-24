@@ -1,4 +1,5 @@
 using MotionCore.Gameplay.Combat;
+using MotionCore.Gameplay.Common;
 using UnityEngine;
 
 namespace MotionCore.Gameplay.Character
@@ -8,7 +9,7 @@ namespace MotionCore.Gameplay.Character
     /// 并在攻击态按前探结果修正水平位移。
     /// </summary>
     [RequireComponent(typeof(Animator))]
-    public sealed class CharacterRootMotionMotor : MonoBehaviour
+    public sealed class CharacterRootMotionMotor : MonoBehaviour, IConfigReceiver<CharacterDefinition>
     {
         const int MaxAttackBlockers = 8;
 
@@ -20,10 +21,25 @@ namespace MotionCore.Gameplay.Character
         [SerializeField, Tooltip("应用动画根旋转")] bool m_ApplyRootRotation = true;
 
         readonly Collider[] m_AttackBlockers = new Collider[MaxAttackBlockers];
+        float m_MoveSpeedScale = 1f;
+
+        public void Initialize(CharacterDefinition definition)
+        {
+            m_MoveSpeedScale = definition.Motor.MoveSpeedScale;
+        }
 
         void OnAnimatorMove()
         {
-            m_Controller.Move(ResolveDisplacement(m_Animator.deltaPosition));
+            Vector3 displacement = ResolveDisplacement(m_Animator.deltaPosition);
+
+            // 仅移动态按系数缩放水平位移调整移动速度；保留竖直分量不影响重力，攻击/受击位移不缩放。
+            if (m_Character.StateMachine.CurrentState.Type == CharacterStateType.Move)
+            {
+                displacement.x *= m_MoveSpeedScale;
+                displacement.z *= m_MoveSpeedScale;
+            }
+
+            m_Controller.Move(displacement);
 
             if (m_ApplyRootRotation)
                 m_Controller.transform.rotation *= m_Animator.deltaRotation;

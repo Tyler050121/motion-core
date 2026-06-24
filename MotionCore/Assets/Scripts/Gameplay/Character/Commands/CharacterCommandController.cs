@@ -1,4 +1,5 @@
 using System;
+using MotionCore;
 using Animancer.FSM;
 using Animancer.Units;
 using MotionCore.Gameplay.Common;
@@ -75,7 +76,7 @@ namespace MotionCore.Gameplay.Character
         /// <summary>
         /// 接收并处理移动输入，包含速度插值以及移动/待机状态和黑板参数的切换。
         /// </summary>
-        public void SetMoveInput(Vector2 moveInput, Vector3 moveDirection, bool wantsRun)
+        public void SetMoveInput(Vector2 moveInput, Vector3 moveDirection, bool wantsRun, float turnDuration = -1f)
         {
             bool hasMoveInput = moveDirection.sqrMagnitude > 0.0001f;
             // 限制输入向量的长度避免对角线移动比直线快
@@ -83,16 +84,21 @@ namespace MotionCore.Gameplay.Character
             Vector3 planarDirection = NormalizePlanar(moveDirection);
             
             // 根据是否有输入以及是否想要奔跑，确定目标速度
-            float targetSpeed = hasMoveInput ? (wantsRun ? m_MotorConfig.RunSpeed : m_MotorConfig.WalkSpeed) : 0f;
-            
+            float targetSpeed = hasMoveInput ? (wantsRun ? GlobalConfig.Locomotion.RunSpeed : GlobalConfig.Locomotion.WalkSpeed) : 0f;
+
             // 根据当前目标速度判断采用何种加速度/减速度（WalkSpeedChangeRate 或 RunSpeedChangeRate）
-            float speedChangeRate = targetSpeed <= m_MotorConfig.WalkSpeed ? m_MotorConfig.WalkSpeedChangeRate : m_MotorConfig.RunSpeedChangeRate;
+            float speedChangeRate = targetSpeed <= GlobalConfig.Locomotion.WalkSpeed
+                ? GlobalConfig.Locomotion.WalkSpeedChangeRate
+                : GlobalConfig.Locomotion.RunSpeedChangeRate;
             
             // 平滑计算当前帧的移动速度
             float moveSpeed = Mathf.MoveTowards(m_Character.Parameters.MoveSpeed, targetSpeed, speedChangeRate * Time.deltaTime);
 
+            // IsRunning 取「想跑」意图，起步即按跑步选起步动画；松开后仍在跑速以上则保持跑步，平滑过渡回走。
+            bool isRunning = wantsRun || moveSpeed > GlobalConfig.Locomotion.RunThresholdSpeed;
+
             // 更新角色的共享参数（黑板），以供各动作状态查询
-            m_Character.Parameters.SetMove(clampedInput, planarDirection, moveSpeed, moveSpeed > m_MotorConfig.RunThresholdSpeed);
+            m_Character.Parameters.SetMove(clampedInput, planarDirection, moveSpeed, isRunning, turnDuration);
 
             // 如果有移动输入则尝试进入移动状态，否则切回到默认状态（通常是Idle）
             if (hasMoveInput)
@@ -105,7 +111,7 @@ namespace MotionCore.Gameplay.Character
         /// 朝向目标方向前进（orient-to-move）：混合动画固定播本地前进，身体转向 worldHeading，
         /// 配合 root motion 沿当前朝向位移，从而边走边转、走出弧线。适合巡逻/追击这种"面朝去向"的移动。
         /// </summary>
-        public void SetMoveSteer(Vector3 worldHeading, bool wantsRun)
+        public void SetMoveSteer(Vector3 worldHeading, bool wantsRun, LocomotionTurnSpeed turnSpeed = LocomotionTurnSpeed.Locomotion)
         {
             Vector3 planarHeading = NormalizePlanar(worldHeading);
             if (planarHeading.sqrMagnitude <= 0.0001f)
@@ -114,9 +120,13 @@ namespace MotionCore.Gameplay.Character
                 return;
             }
 
+            float turnDuration = turnSpeed == LocomotionTurnSpeed.General
+                ? m_MotorConfig.FacingTurnDuration
+                : m_MotorConfig.LocomotionTurnDuration;
+
             // MoveInput 固定为本地前进 (0,1) → 始终播前进走路；
             // moveDirection 传 heading → MoveState 把身体朝向转向它，实现边走边转。
-            SetMoveInput(new Vector2(0f, 1f), planarHeading, wantsRun);
+            SetMoveInput(new Vector2(0f, 1f), planarHeading, wantsRun, turnDuration);
         }
 
         public void StopMove()
