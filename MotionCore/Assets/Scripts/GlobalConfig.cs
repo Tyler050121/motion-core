@@ -18,6 +18,9 @@ namespace MotionCore
             public const float RunSpeedChangeRate = 3f;
             public const float RunTurnBackAngle = 135f;
             public const float RunThresholdSpeed = (WalkSpeed + RunSpeed) * 0.5f;
+
+            // 方向混合参数的阻尼时长（秒）；横移变向时在前/后/侧移动画间平滑过渡，0=不平滑。
+            public const float MoveInputDamp = 0.15f;
         }
 
         public static class Timer

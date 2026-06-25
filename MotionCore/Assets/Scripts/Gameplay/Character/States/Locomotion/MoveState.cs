@@ -26,6 +26,10 @@ namespace MotionCore.Gameplay.Character
 
         MovePhase m_Phase;
 
+        // 方向混合参数的阻尼状态：平滑后的输入与 SmoothDamp 速度缓存。
+        Vector2 m_SmoothedMoveInput;
+        Vector2 m_MoveInputVelocity;
+
         public override CharacterStateType Type => CharacterStateType.Move;
 
         public void SetContext(
@@ -55,6 +59,10 @@ namespace MotionCore.Gameplay.Character
         {
             ExitOptions = CharacterStateExitOptions.All;
             m_Phase = MovePhase.Starting;
+
+            // 从当前输入起步，避免重新进入移动时方向参数从上次残留值插值。
+            m_SmoothedMoveInput = Character.Parameters.MoveInput;
+            m_MoveInputVelocity = Vector2.zero;
 
             // 从 Idle 进入时先播起步，否则（如收招中途重新移动）直接进循环。
             bool fromIdle = StateChange<CharacterState>.PreviousState.Type == CharacterStateType.Idle;
@@ -98,6 +106,13 @@ namespace MotionCore.Gameplay.Character
             // 急转身不属于走/跑混合，不参与参数同步。
             if (m_Phase == MovePhase.TurningBack)
                 return;
+
+            // 方向混合参数按阻尼时长收敛，横移变向时在前/后/侧移动画间平滑过渡而非硬切。
+            m_SmoothedMoveInput = Vector2.SmoothDamp(
+                m_SmoothedMoveInput,
+                Character.Parameters.MoveInput,
+                ref m_MoveInputVelocity,
+                GlobalConfig.Locomotion.MoveInputDamp);
 
             if (m_Phase == MovePhase.Looping)
                 RefreshMoveLoopRoute();
@@ -230,7 +245,7 @@ namespace MotionCore.Gameplay.Character
                     linearMixer.Parameter = Character.Parameters.MoveSpeed;
                     break;
                 case Vector2MixerState directionMixer:
-                    directionMixer.Parameter = Character.Parameters.MoveInput;
+                    directionMixer.Parameter = m_SmoothedMoveInput;
                     break;
             }
         }

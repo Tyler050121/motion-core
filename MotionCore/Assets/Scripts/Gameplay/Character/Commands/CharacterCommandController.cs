@@ -129,6 +129,31 @@ namespace MotionCore.Gameplay.Character
             SetMoveInput(new Vector2(0f, 1f), planarHeading, wantsRun, turnDuration);
         }
 
+        /// <summary>
+        /// 横移：身体朝向锁定 worldFaceDirection（如对准玩家），沿 worldMoveDirection 移动，
+        /// 移动方向转到本地空间喂方向混合播出侧/后移，从而实现绕圈、横向走位。
+        /// </summary>
+        public void SetMoveStrafe(Vector3 worldMoveDirection, Vector3 worldFaceDirection, bool wantsRun, LocomotionTurnSpeed turnSpeed = LocomotionTurnSpeed.General)
+        {
+            Vector3 planarFace = NormalizePlanar(worldFaceDirection);
+            if (planarFace.sqrMagnitude <= 0.0001f)
+            {
+                StopMove();
+                return;
+            }
+
+            Vector3 localMove = m_Character.FacingRoot.InverseTransformDirection(NormalizePlanar(worldMoveDirection));
+            localMove.y = 0f;
+            Vector2 moveInput = new Vector2(localMove.x, localMove.z);
+
+            float turnDuration = turnSpeed == LocomotionTurnSpeed.General
+                ? m_MotorConfig.FacingTurnDuration
+                : m_MotorConfig.LocomotionTurnDuration;
+
+            // moveDirection 传 facing → MoveState 把身体转向目标；moveInput 是本地横移方向。
+            SetMoveInput(moveInput, planarFace, wantsRun, turnDuration);
+        }
+
         public void StopMove()
         {
             SetMoveInput(Vector2.zero, Vector3.zero, false);

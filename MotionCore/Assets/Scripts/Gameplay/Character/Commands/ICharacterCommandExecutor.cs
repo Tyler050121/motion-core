@@ -12,6 +12,8 @@ namespace MotionCore.Gameplay.Character
 
         void SetMoveSteer(Vector3 worldHeading, bool wantsRun, LocomotionTurnSpeed turnSpeed = LocomotionTurnSpeed.Locomotion);
 
+        void SetMoveStrafe(Vector3 worldMoveDirection, Vector3 worldFaceDirection, bool wantsRun, LocomotionTurnSpeed turnSpeed = LocomotionTurnSpeed.General);
+
         void StopMove();
 
         void SetFacingDirection(Vector3 facingDirection);

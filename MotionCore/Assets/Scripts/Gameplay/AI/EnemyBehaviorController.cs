@@ -75,6 +75,14 @@ namespace MotionCore.Gameplay.AI
         }
 
         /// <summary>
+        /// 横移：朝向锁定 worldFaceDirection，沿 worldMoveDirection 移动（绕圈/横向走位）。
+        /// </summary>
+        public void MoveStrafe(Vector3 worldMoveDirection, Vector3 worldFaceDirection, bool wantsRun, LocomotionTurnSpeed turnSpeed = LocomotionTurnSpeed.General)
+        {
+            m_CommandExecutor.SetMoveStrafe(worldMoveDirection, worldFaceDirection, wantsRun, turnSpeed);
+        }
+
+        /// <summary>
         /// 停止移动。
         /// </summary>
         public void StopMove()
