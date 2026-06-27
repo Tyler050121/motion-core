@@ -131,6 +131,8 @@ MonoBehaviour:
     m_Source: {fileID: 2911830175925473060}
   - m_Anchor: 6
     m_Source: {fileID: 1482827667125149058}
+  - m_Anchor: 1
+    m_Source: {fileID: 1482827667125149058}
   m_StateMachine:
     _CurrentState: {fileID: 5453529004559671413}
     _DefaultState: {fileID: 5453529004559671413}
@@ -139,6 +141,7 @@ MonoBehaviour:
   m_Health:
     m_MaxHealth: 1000000
   m_ConfigReceivers:
+  - {fileID: 4378358469696398247}
   - {fileID: 3518702131146598990}
   - {fileID: 5858993967822498649}
 --- !u!114 &5858993967822498649
@@ -182,6 +185,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_LockPoint: {fileID: 1482827667125149058}
   m_Health: {fileID: 5858993967822498649}
+  m_Faction: 0
 --- !u!1 &2495464562767638432
 GameObject:
   m_ObjectHideFlags: 0
@@ -410,7 +414,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Character: {fileID: 220462588144310259}
-  m_BehaviorConfig: {fileID: 11400000, guid: a160285db3c084697aab19f88f7b47b6, type: 2}
 --- !u!114 &5494595244689842143
 MonoBehaviour:
   m_ObjectHideFlags: 0

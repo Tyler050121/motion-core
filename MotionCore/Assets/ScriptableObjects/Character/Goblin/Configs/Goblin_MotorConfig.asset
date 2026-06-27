@@ -12,12 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dabfdae32e244d43bb708f8a446fd168, type: 3}
   m_Name: Goblin_MotorConfig
   m_EditorClassIdentifier: 
-  m_WalkSpeed: 1
-  m_RunSpeed: 3
   m_MoveSpeedScale: 0.8
-  m_WalkSpeedChangeRate: 8
-  m_RunSpeedChangeRate: 3
-  m_RunTurnBackAngle: 135
   m_RunTurnBackCooldown: 1
-  m_FacingTurnDuration: 0.2
+  m_FacingTurnDuration: 1
   m_LocomotionTurnDuration: 4
+  m_CombatTurnDuration: 0.4

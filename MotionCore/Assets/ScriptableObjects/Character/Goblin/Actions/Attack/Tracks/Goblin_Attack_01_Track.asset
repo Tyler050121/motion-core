@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 272e3bd31ff5482fbad71281de2fc1d0, type: 3}
-  m_Name: Anbi_Attack_Normal_03_Track
+  m_Name: Goblin_Attack_01_Track
   m_EditorClassIdentifier: 
-  m_Animation: {fileID: -4506043261380770619, guid: 19f7276f66a284cbfa65e2726e1fd573,
+  m_Animation: {fileID: 5995068774859539913, guid: 9aa8e0e683dff4e20973fe30705d1d32,
     type: 2}
   m_Hits:
-  - m_Profile: {fileID: 11400000, guid: c29aed11bb684b2a9d2d0dfde73dc55e, type: 2}
+  - m_Profile: {fileID: 11400000, guid: 04040a8c2f56346cfbb965338f406a44, type: 2}
     m_Anchor: 1
     m_LocalOffset: {x: 0, y: 0, z: 0}
     m_Vfx:
@@ -24,16 +24,5 @@ MonoBehaviour:
       m_Speed: 1
       m_SpawnPoint: 1
       m_FollowMode: 1
-      m_LocalOffset: {x: 0, y: 0.75, z: 0}
-      m_LocalEulerAngles: {x: 160, y: 89, z: -9}
-  - m_Profile: {fileID: 11400000, guid: c29aed11bb684b2a9d2d0dfde73dc55e, type: 2}
-    m_Anchor: 1
-    m_LocalOffset: {x: 0, y: 1, z: 1.05}
-    m_Vfx:
-      m_Preset: {fileID: 11400000, guid: 83f36453d052e4b1481e328e35bb7f95, type: 2}
-      m_Scale: 1
-      m_Speed: 1
-      m_SpawnPoint: 1
-      m_FollowMode: 1
       m_LocalOffset: {x: 0, y: 0.5, z: 0}
-      m_LocalEulerAngles: {x: 180, y: 20, z: 0}
+      m_LocalEulerAngles: {x: 0, y: 180, z: 0}

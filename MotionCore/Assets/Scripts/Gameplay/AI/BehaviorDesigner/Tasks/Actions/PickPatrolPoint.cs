@@ -7,11 +7,11 @@ using UnityEngine;
 namespace MotionCore.Gameplay.AI.BehaviorDesigner.Tasks.Actions
 {
     /// <summary>
-    /// 在中心点周围的环形范围（MinRadius~MaxRadius）内随机选一个点，写入共享变量供 MoveToDestination 使用。
+    /// 在中心点周围的环形范围（MinRadius~MaxRadius）内随机选一个点，写入共享变量供 MoveTo 使用。
     /// 单帧完成，立即返回 Success。
     /// </summary>
     [Description("在中心点周围的环形范围内随机选取一个巡逻点，并写入目标共享变量")]
-    public sealed class PickRandomPatrolPoint : EnemyBehaviorAction
+    public sealed class PickPatrolPoint : EnemyBehaviorAction
     {
         [Tooltip("巡逻圈中心来源")]
         [SerializeField] PositionSource m_CenterSource = PositionSource.Home;

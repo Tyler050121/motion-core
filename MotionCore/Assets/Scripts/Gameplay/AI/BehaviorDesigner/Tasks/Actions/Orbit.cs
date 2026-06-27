@@ -30,7 +30,7 @@ namespace MotionCore.Gameplay.AI.BehaviorDesigner.Tasks.Actions
     /// 中心来源为 Target 且无目标时返回 Failure，否则持续返回 Running，由父级中断或计时结束。
     /// </summary>
     [Description("绕中心横移环绕（来源可选 Home/CurrentPosition/Variable/Target），朝向锁定中心并维持半径")]
-    public sealed class OrbitPosition : EnemyBehaviorAction
+    public sealed class Orbit : EnemyBehaviorAction
     {
         [Tooltip("环绕中心来源")]
         [SerializeField] PositionSource m_CenterSource = PositionSource.Target;

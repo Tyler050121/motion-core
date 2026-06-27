@@ -37,7 +37,7 @@ namespace MotionCore.Gameplay.Character
         void Awake()
         {
             // 初始化默认的攻击朝向解析器，并将解析器传递给攻击状态
-            m_AttackFacingResolver = GetDefaultAttackFacingDirection;
+            m_AttackFacingResolver ??= GetDefaultAttackFacingDirection;
             m_AttackState.SetAttackFacingResolver(GetAttackFacingDirection);
             
             // 实例化输入缓冲区绑定角色的动作状态机
@@ -111,7 +111,7 @@ namespace MotionCore.Gameplay.Character
         /// 朝向目标方向前进（orient-to-move）：混合动画固定播本地前进，身体转向 worldHeading，
         /// 配合 root motion 沿当前朝向位移，从而边走边转、走出弧线。适合巡逻/追击这种"面朝去向"的移动。
         /// </summary>
-        public void SetMoveSteer(Vector3 worldHeading, bool wantsRun, LocomotionTurnSpeed turnSpeed = LocomotionTurnSpeed.Locomotion)
+        public void SetMoveSteer(Vector3 worldHeading, bool wantsRun, TurnSpeed turnSpeed = TurnSpeed.Locomotion)
         {
             Vector3 planarHeading = NormalizePlanar(worldHeading);
             if (planarHeading.sqrMagnitude <= 0.0001f)
@@ -120,9 +120,7 @@ namespace MotionCore.Gameplay.Character
                 return;
             }
 
-            float turnDuration = turnSpeed == LocomotionTurnSpeed.General
-                ? m_MotorConfig.FacingTurnDuration
-                : m_MotorConfig.LocomotionTurnDuration;
+            float turnDuration = ResolveTurnDuration(turnSpeed);
 
             // MoveInput 固定为本地前进 (0,1) → 始终播前进走路；
             // moveDirection 传 heading → MoveState 把身体朝向转向它，实现边走边转。
@@ -133,7 +131,7 @@ namespace MotionCore.Gameplay.Character
         /// 横移：身体朝向锁定 worldFaceDirection（如对准玩家），沿 worldMoveDirection 移动，
         /// 移动方向转到本地空间喂方向混合播出侧/后移，从而实现绕圈、横向走位。
         /// </summary>
-        public void SetMoveStrafe(Vector3 worldMoveDirection, Vector3 worldFaceDirection, bool wantsRun, LocomotionTurnSpeed turnSpeed = LocomotionTurnSpeed.General)
+        public void SetMoveStrafe(Vector3 worldMoveDirection, Vector3 worldFaceDirection, bool wantsRun, TurnSpeed turnSpeed = TurnSpeed.General)
         {
             Vector3 planarFace = NormalizePlanar(worldFaceDirection);
             if (planarFace.sqrMagnitude <= 0.0001f)
@@ -146,9 +144,7 @@ namespace MotionCore.Gameplay.Character
             localMove.y = 0f;
             Vector2 moveInput = new Vector2(localMove.x, localMove.z);
 
-            float turnDuration = turnSpeed == LocomotionTurnSpeed.General
-                ? m_MotorConfig.FacingTurnDuration
-                : m_MotorConfig.LocomotionTurnDuration;
+            float turnDuration = ResolveTurnDuration(turnSpeed);
 
             // moveDirection 传 facing → MoveState 把身体转向目标；moveInput 是本地横移方向。
             SetMoveInput(moveInput, planarFace, wantsRun, turnDuration);
@@ -159,9 +155,22 @@ namespace MotionCore.Gameplay.Character
             SetMoveInput(Vector2.zero, Vector3.zero, false);
         }
 
-        public void SetFacingDirection(Vector3 facingDirection)
+        public void SetFacingDirection(Vector3 facingDirection, TurnSpeed turnSpeed = TurnSpeed.General)
         {
-            m_Character.Parameters.SetFacing(facingDirection);
+            m_Character.Parameters.SetFacing(facingDirection, ResolveTurnDuration(turnSpeed));
+        }
+
+        /// <summary>
+        /// 把转身速度档位映射到 MotorConfig 上对应的 180 度转身时长。
+        /// </summary>
+        float ResolveTurnDuration(TurnSpeed turnSpeed)
+        {
+            return turnSpeed switch
+            {
+                TurnSpeed.Locomotion => m_MotorConfig.LocomotionTurnDuration,
+                TurnSpeed.Combat => m_MotorConfig.CombatTurnDuration,
+                _ => m_MotorConfig.FacingTurnDuration,
+            };
         }
 
         /// <summary>

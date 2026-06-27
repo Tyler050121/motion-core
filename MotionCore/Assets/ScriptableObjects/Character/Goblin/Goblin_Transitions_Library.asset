@@ -996,12 +996,22 @@ MonoBehaviour:
         _FadeDuration: 0.25
         _Speed: 1
         _Events:
-          _NormalizedTimes: []
-          _Callbacks: []
-          _Names: []
+          _NormalizedTimes:
+          - 0.2897515
+          - 0.6884694
+          - NaN
+          _Callbacks:
+          - rid: 7242315448505597952
+          _Names:
+          - {fileID: 11400000, guid: ea075a32c5b64350915583e7f695aacc, type: 2}
+          - {fileID: 11400000, guid: bdd8c6e6f24cd471182f6663dea679b7, type: 2}
         _Clip: {fileID: -3568453503579113454, guid: f5255da99f6af944b907e552b710ca49,
           type: 3}
         _NormalizedStartTime: NaN
+    - rid: 7242315448505597952
+      type: {class: AnimancerEvent/ParameterInt, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _Value: 0
 --- !u!114 &6405473748255136928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1025,9 +1035,14 @@ MonoBehaviour:
         _FadeDuration: 0.25
         _Speed: 1
         _Events:
-          _NormalizedTimes: []
+          _NormalizedTimes:
+          - 0.9766473
+          - 0.9803468
+          - NaN
           _Callbacks: []
-          _Names: []
+          _Names:
+          - {fileID: 11400000, guid: 6491e0006b6034848a20cdeb9c21e399, type: 2}
+          - {fileID: 11400000, guid: bdd8c6e6f24cd471182f6663dea679b7, type: 2}
         _Clip: {fileID: -1837773511420484736, guid: f5255da99f6af944b907e552b710ca49,
           type: 3}
         _NormalizedStartTime: NaN

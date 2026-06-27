@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using MotionCore.Gameplay.Common;
 using UnityEngine;
 
 namespace MotionCore.Gameplay.Combat
@@ -135,10 +136,17 @@ namespace MotionCore.Gameplay.Combat
                 profile.TargetLayers,
                 QueryTriggerInteraction.Collide);
 
+            // 攻击者阵营，用于跳过同阵营友伤。
+            Faction attackerFaction = source.root.GetComponentInChildren<Hurtbox>().Faction;
+
             for (int i = 0; i < count; i++)
             {
                 Hurtbox hurtbox = m_Results[i].GetComponentInParent<Hurtbox>();
                 if (hurtbox == null || hurtbox.transform.root == source.root)
+                    continue;
+
+                // 同阵营友伤跳过。
+                if (attackerFaction == hurtbox.Faction)
                     continue;
 
                 if (!hitTargets.Add(hurtbox))
@@ -153,7 +161,8 @@ namespace MotionCore.Gameplay.Combat
                     profile,
                     ResolveHitPoint(m_Results[i], impactPoint, rayOrigin),
                     hurtbox.ResolveVisualPoint(source),
-                    direction);
+                    direction,
+                    source);
             }
         }
 

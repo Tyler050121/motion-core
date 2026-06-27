@@ -13,7 +13,7 @@ namespace MotionCore.Gameplay.AI.BehaviorDesigner.Tasks.Actions
     /// 每帧重新解析来源，因此来源指向会移动的变量时（如追击目标位置）能持续跟踪。
     /// </summary>
     [Description("朝目标位置移动（来源可选 Home/CurrentPosition/Variable），进入停止距离内返回成功")]
-    public sealed class MoveToDestination : EnemyBehaviorAction
+    public sealed class MoveTo : EnemyBehaviorAction
     {
         [Tooltip("目标位置来源")]
         [SerializeField] PositionSource m_Source = PositionSource.Variable;
@@ -28,7 +28,7 @@ namespace MotionCore.Gameplay.AI.BehaviorDesigner.Tasks.Actions
         [SerializeField] bool m_WantsRun;
 
         [Tooltip("转身快慢")]
-        [SerializeField] LocomotionTurnSpeed m_TurnSpeed = LocomotionTurnSpeed.Locomotion;
+        [SerializeField] TurnSpeed m_TurnSpeed = TurnSpeed.Locomotion;
 
         public override TaskStatus OnUpdate()
         {
