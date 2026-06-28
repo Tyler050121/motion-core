@@ -210,6 +210,10 @@ namespace MotionCore.Gameplay.Character
         /// </summary>
         public void ReceiveHit(float knockbackPower)
         {
+            // 霸体窗口内吸收受击反应：不进硬直、不打断当前动作（伤害仍由 Health 照常结算）。
+            if (m_Character.StateMachine.CurrentState.AbsorbsHitReaction)
+                return;
+
             m_HitState.SetContext(knockbackPower);
             // 如果已经是受击状态则重置该状态重新开始，否则直接进入
             if (m_Character.StateMachine.CurrentState == m_HitState)

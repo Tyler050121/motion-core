@@ -102,7 +102,7 @@ MonoBehaviour:
       m_ValueHashes: 
       m_LongValueHashes: 30b77c28f48d1b2966cb3cf98c4bd96480f6501333363a662097e983f49ada6ba4c4c2f1210f6929
       m_ValuePositions: 000000000200000004000000060000000a000000
-      m_Values: 0c000800ffff0000000000000040
+      m_Values: 0c000800ffff000000000000a040
       m_UnityObjects:
       - {fileID: 11400000, guid: cb9de60b0f8f1456c81dd15ae508af7b, type: 2}
       m_Version: 3.4
@@ -181,7 +181,7 @@ MonoBehaviour:
       m_Version: 3.4
     m_DisabledEventNodesData: []
     m_DisabledLogicNodesData: []
-    m_UniqueID: 1177550161
+    m_UniqueID: 65056338
     m_LogicNodePropertiesData:
     - m_ObjectType: Opsive.GraphDesigner.Runtime.LogicNodeProperties
       m_ValueHashes: 

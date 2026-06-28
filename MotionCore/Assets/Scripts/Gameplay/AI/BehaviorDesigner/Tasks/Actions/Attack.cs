@@ -7,8 +7,9 @@ using UnityEngine;
 namespace MotionCore.Gameplay.AI.BehaviorDesigner.Tasks.Actions
 {
     /// <summary>
-    /// 触发一次攻击并等待其播完：期间 Running，结束 Success 并开始冷却；无目标或触发失败返回 Failure。
-    /// 冷却由前置条件 AttackReady 把守（本节点出手后写入 Controller 冷却），冷却期间攻击分支失败、同级分支（如绕走位）接管。
+    /// 触发一次攻击并等待其播完：期间 Running，播完 Success；无目标或触发失败返回 Failure。
+    /// 冷却自出手起算（出手成功即写入 Controller），由前置条件 AttackReady 把守；
+    /// 出手后即便被受击打断，冷却也已开始，避免硬直一结束就无限抢攻。
     /// 攻击类型由 Attack 字段指定，留空则用默认普攻；攻击朝向由 EnemyBehaviorController 设为对准目标。
     /// </summary>
     [Description("触发一次攻击并等待播完，出手后开始冷却")]
@@ -32,19 +33,15 @@ namespace MotionCore.Gameplay.AI.BehaviorDesigner.Tasks.Actions
             if (!Controller.HasTarget)
                 return TaskStatus.Failure;
 
-            // 已发起：等待攻击播完，结束后开始冷却。
+            // 已发起：等待攻击播完。
             if (m_Started)
-            {
-                if (Controller.IsAttacking)
-                    return TaskStatus.Running;
-
-                Controller.StartAttackCooldown(m_Cooldown);
-                return TaskStatus.Success;
-            }
+                return Controller.IsAttacking ? TaskStatus.Running : TaskStatus.Success;
 
             if (!Controller.TryAttack(m_Attack))
                 return TaskStatus.Failure;
 
+            // 出手即写入冷却：哪怕随后被受击打断，AttackReady 也已置假，硬直结束先走位而非抢攻。
+            Controller.StartAttackCooldown(m_Cooldown);
             m_Started = true;
             return TaskStatus.Running;
         }

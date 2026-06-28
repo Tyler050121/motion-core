@@ -17,7 +17,7 @@ MonoBehaviour:
   m_Hits:
   - m_Profile: {fileID: 11400000, guid: 04040a8c2f56346cfbb965338f406a44, type: 2}
     m_Anchor: 1
-    m_LocalOffset: {x: 0, y: 0, z: 0}
+    m_LocalOffset: {x: 0, y: 0, z: 2}
     m_Vfx:
       m_Preset: {fileID: 11400000, guid: 83f36453d052e4b1481e328e35bb7f95, type: 2}
       m_Scale: 1

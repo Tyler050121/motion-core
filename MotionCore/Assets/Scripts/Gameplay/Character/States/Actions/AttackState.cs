@@ -23,6 +23,7 @@ namespace MotionCore.Gameplay.Character
         float m_ComboExpireTime;
         bool m_IsPerfectVariant;
         bool m_IsPlayingEndStep;
+        bool m_Armored;
         System.Func<Vector3> m_AttackFacingResolver;
         IVfxService m_Vfx;
 
@@ -30,6 +31,9 @@ namespace MotionCore.Gameplay.Character
 
         protected override bool CanInterruptSelf => (ExitOptions & CharacterStateExitOptions.Attack) != 0;
         public override CharacterStateType Type => m_ActionType;
+
+        // 霸体窗口由 ArmorStart/ArmorEnd 事件开关，窗口内吸收受击不进硬直。
+        public override bool AbsorbsHitReaction => m_Armored;
 
         public void SetAttackFacingResolver(System.Func<Vector3> resolver)
         {
@@ -111,6 +115,7 @@ namespace MotionCore.Gameplay.Character
             m_LastStepIndexExclusive = 0;
             m_IsPerfectVariant = false;
             m_IsPlayingEndStep = false;
+            m_Armored = false;
         }
 
         #region 播放流程
@@ -149,6 +154,8 @@ namespace MotionCore.Gameplay.Character
 
         void PlayTrack(AttackAnimationTrack track)
         {
+            // 每段重置霸体，霸体窗口仅由本段的 ArmorStart/ArmorEnd 事件界定。
+            m_Armored = false;
             m_MeleeHitbox.CloseAll();
             AnimancerState state = Character.Animancer.Play(track.Animation);
             bool isNewEventSequence = state.Events(this, out AnimancerEvent.Sequence events);
@@ -185,6 +192,10 @@ namespace MotionCore.Gameplay.Character
                         events.AddCallback<int>(i, index => OpenHit(index, track));
                     else if (eventName == GlobalConfig.AnimationEventNames.HitEnd)
                         events.AddCallback<int>(i, m_MeleeHitbox.Close);
+                    else if (eventName == GlobalConfig.AnimationEventNames.ArmorStart)
+                        events.SetCallback(i, () => m_Armored = true);
+                    else if (eventName == GlobalConfig.AnimationEventNames.ArmorEnd)
+                        events.SetCallback(i, () => m_Armored = false);
                 }
             }
 

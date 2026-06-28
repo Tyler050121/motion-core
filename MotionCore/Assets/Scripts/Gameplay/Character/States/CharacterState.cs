@@ -44,6 +44,11 @@ namespace MotionCore.Gameplay.Character
         protected CharacterStateExitOptions ExitOptions { get; set; } = CharacterStateExitOptions.All;
         protected virtual bool CanInterruptSelf => false;
 
+        /// <summary>
+        /// 霸体：为真时吸收受击反应（不进入硬直），伤害照常结算。默认无霸体。
+        /// </summary>
+        public virtual bool AbsorbsHitReaction => false;
+
         public abstract CharacterStateType Type { get; }
 
         protected void OpenCancel() => ExitOptions |= CharacterStateExitOptions.Cancel;

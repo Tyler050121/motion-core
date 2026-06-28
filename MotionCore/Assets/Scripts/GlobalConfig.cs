@@ -36,6 +36,8 @@ namespace MotionCore
             public const string Hit = "Hit";
             public const string HitStart = "HitStart";
             public const string HitEnd = "HitEnd";
+            public const string ArmorStart = "ArmorStart";
+            public const string ArmorEnd = "ArmorEnd";
             public const string BranchOpen = "BranchOpen";
             public const string BranchClose = "BranchClose";
             public const string Feedback = "Feedback";
