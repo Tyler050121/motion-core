@@ -336,7 +336,7 @@ MonoBehaviour:
     _TransitionGroups:
     - _Name: Combat
       _Index: 0
-      _IsExpanded: 0
+      _IsExpanded: 1
       _TransitionIndices: 0c0000000f0000000e0000000d000000130000001200000011000000100000001500000014000000
     - _Name: Motion
       _Index: 1
@@ -503,27 +503,23 @@ MonoBehaviour:
       _NormalizedStartTime: NaN
     - _From: 11
       _To: 4
-      _Fade: 0.35
+      _Fade: 0.1
       _NormalizedStartTime: NaN
     - _From: 14
       _To: 4
-      _Fade: 0.35
+      _Fade: 0.1
       _NormalizedStartTime: NaN
     - _From: 13
       _To: 4
-      _Fade: 0.35
+      _Fade: 0.1
       _NormalizedStartTime: NaN
     - _From: 1
       _To: 7
       _Fade: 0.35
       _NormalizedStartTime: NaN
-    - _From: 1
-      _To: 4
-      _Fade: 0.35
-      _NormalizedStartTime: NaN
     - _From: 15
       _To: 4
-      _Fade: 0.35
+      _Fade: 0.1
       _NormalizedStartTime: NaN
     - _From: 15
       _To: 7
@@ -535,11 +531,11 @@ MonoBehaviour:
       _NormalizedStartTime: NaN
     - _From: 16
       _To: 4
-      _Fade: 0.35
+      _Fade: 0.1
       _NormalizedStartTime: NaN
     - _From: 17
       _To: 4
-      _Fade: 0.35
+      _Fade: 0.1
       _NormalizedStartTime: NaN
     - _From: 17
       _To: 7
@@ -551,11 +547,11 @@ MonoBehaviour:
       _NormalizedStartTime: NaN
     - _From: 18
       _To: 4
-      _Fade: 0.35
+      _Fade: 0.1
       _NormalizedStartTime: NaN
     - _From: 12
       _To: 4
-      _Fade: 0.35
+      _Fade: 0.1
       _NormalizedStartTime: NaN
     - _From: 12
       _To: 7
@@ -563,39 +559,39 @@ MonoBehaviour:
       _NormalizedStartTime: NaN
     - _From: 2
       _To: 4
-      _Fade: 0.35
+      _Fade: 0.1
       _NormalizedStartTime: NaN
     - _From: 3
       _To: 4
-      _Fade: 0.35
+      _Fade: 0.1
       _NormalizedStartTime: NaN
     - _From: 5
       _To: 4
-      _Fade: 0.35
+      _Fade: 0.1
       _NormalizedStartTime: NaN
     - _From: 7
       _To: 4
-      _Fade: 0.35
+      _Fade: 0.1
       _NormalizedStartTime: NaN
     - _From: 4
       _To: 4
-      _Fade: 0.35
+      _Fade: 0.1
       _NormalizedStartTime: NaN
     - _From: 8
       _To: 4
-      _Fade: 0.35
+      _Fade: 0.1
       _NormalizedStartTime: NaN
     - _From: 6
       _To: 4
-      _Fade: 0.35
+      _Fade: 0.1
       _NormalizedStartTime: NaN
     - _From: 9
       _To: 4
-      _Fade: 0.35
+      _Fade: 0.1
       _NormalizedStartTime: NaN
     - _From: 10
       _To: 4
-      _Fade: 0.35
+      _Fade: 0.1
       _NormalizedStartTime: NaN
     - _From: 10
       _To: 7
@@ -628,6 +624,26 @@ MonoBehaviour:
     - _From: 3
       _To: 22
       _Fade: 0.08
+      _NormalizedStartTime: NaN
+    - _From: 1
+      _To: 4
+      _Fade: 0.1
+      _NormalizedStartTime: NaN
+    - _From: 22
+      _To: 4
+      _Fade: 0.1
+      _NormalizedStartTime: NaN
+    - _From: 20
+      _To: 4
+      _Fade: 0.1
+      _NormalizedStartTime: NaN
+    - _From: 21
+      _To: 4
+      _Fade: 0.1
+      _NormalizedStartTime: NaN
+    - _From: 19
+      _To: 4
+      _Fade: 0.1
       _NormalizedStartTime: NaN
     _Aliases: []
     _AliasAllTransitions: 1

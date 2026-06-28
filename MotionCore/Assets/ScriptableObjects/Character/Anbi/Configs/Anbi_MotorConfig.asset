@@ -20,3 +20,4 @@ MonoBehaviour:
   m_RunTurnBackCooldown: 1
   m_FacingTurnDuration: 0.25
   m_LocomotionTurnDuration: 0.25
+  m_EvadeTurnDuration: 0.3

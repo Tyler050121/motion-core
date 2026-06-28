@@ -24,5 +24,9 @@ namespace MotionCore.Gameplay.Character
         [SerializeField, Seconds, Min(0f), Tooltip("战斗瞄准 180 度转身秒数；攻击/对准前精确转向，通常比通用更快")]
         float m_CombatTurnDuration = 0.15f;
         public float CombatTurnDuration => m_CombatTurnDuration;
+
+        [SerializeField, Seconds, Min(0f), Tooltip("闪避前 180 度瞬转秒数；用于闪避请求时先对齐输入方向")]
+        float m_EvadeTurnDuration = 0.3f;
+        public float EvadeTurnDuration => m_EvadeTurnDuration;
     }
 }

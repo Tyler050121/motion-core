@@ -17,3 +17,4 @@ MonoBehaviour:
   m_FacingTurnDuration: 1
   m_LocomotionTurnDuration: 4
   m_CombatTurnDuration: 0.4
+  m_EvadeTurnDuration: 0.3

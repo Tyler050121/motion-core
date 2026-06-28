@@ -178,6 +178,14 @@ namespace MotionCore.Gameplay.Character
         /// </summary>
         public bool TryEvade()
         {
+            Vector3 evadeFacing = m_Character.Parameters.HasMoveInput
+                ? m_Character.Parameters.MoveDirection
+                : m_Character.FacingRoot.forward;
+
+            evadeFacing.y = 0f;
+            if (evadeFacing.sqrMagnitude > 0.0001f)
+                m_Character.Parameters.SetFacing(evadeFacing, m_MotorConfig.EvadeTurnDuration);
+
             m_InputBuffer.Buffer(m_EvadeState, m_InputTimeOut);
             return m_InputBuffer.Update(0f);
         }
