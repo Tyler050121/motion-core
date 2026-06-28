@@ -6,6 +6,8 @@ namespace MotionCore.Infrastructure
     public sealed class PooledVfx : MonoBehaviour, IPoolLifecycle
     {
         ParticleSystem[] m_ParticleSystems;
+        Vector3[] m_BaseLocalScales;
+        float[] m_BaseSimulationSpeeds;
 
         Transform m_FollowTarget;
         bool m_FollowPosition;
@@ -16,6 +18,15 @@ namespace MotionCore.Infrastructure
         void Awake()
         {
             m_ParticleSystems = GetComponentsInChildren<ParticleSystem>(true);
+            m_BaseLocalScales = new Vector3[m_ParticleSystems.Length];
+            m_BaseSimulationSpeeds = new float[m_ParticleSystems.Length];
+
+            for (int i = 0; i < m_ParticleSystems.Length; i++)
+            {
+                ParticleSystem particle = m_ParticleSystems[i];
+                m_BaseLocalScales[i] = particle.transform.localScale;
+                m_BaseSimulationSpeeds[i] = particle.main.simulationSpeed;
+            }
         }
 
         /// <summary>
@@ -70,8 +81,14 @@ namespace MotionCore.Infrastructure
             for (int i = 0; i < m_ParticleSystems.Length; i++)
             {
                 ParticleSystem.MainModule main = m_ParticleSystems[i].main;
-                main.simulationSpeed = speed;
+                main.simulationSpeed = m_BaseSimulationSpeeds[i] * speed;
             }
+        }
+
+        public void SetScale(float scale)
+        {
+            for (int i = 0; i < m_ParticleSystems.Length; i++)
+                m_ParticleSystems[i].transform.localScale = m_BaseLocalScales[i] * scale;
         }
 
         public bool IsAlive()
@@ -94,6 +111,11 @@ namespace MotionCore.Infrastructure
             for (int i = 0; i < m_ParticleSystems.Length; i++)
             {
                 ParticleSystem particle = m_ParticleSystems[i];
+                particle.transform.localScale = m_BaseLocalScales[i];
+
+                ParticleSystem.MainModule main = particle.main;
+                main.simulationSpeed = m_BaseSimulationSpeeds[i];
+
                 particle.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
                 particle.Clear(true);
             }

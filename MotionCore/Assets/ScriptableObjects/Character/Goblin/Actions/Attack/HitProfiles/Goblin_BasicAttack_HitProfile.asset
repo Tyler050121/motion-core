@@ -20,9 +20,9 @@ MonoBehaviour:
   m_StaggerPower: 0.18
   m_KnockbackPower: 0
   m_Vfx:
-  - m_Preset: {fileID: 11400000, guid: 13d5d8c4f2d2847cfa1a00ba8f0431ec, type: 2}
-    m_Scale: 0.5
-    m_Speed: 1.2
-    m_SpawnPoint: 1
+  - m_Preset: {fileID: 11400000, guid: 832adbf3450c546d9972b13919bf7fda, type: 2}
+    m_Scale: 0.8
+    m_Speed: 1
+    m_SpawnPoint: 0
     m_LocalOffset: {x: 0, y: 0, z: 0}
     m_AlignToHitDirection: 1

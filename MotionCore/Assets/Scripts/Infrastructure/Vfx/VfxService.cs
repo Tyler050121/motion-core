@@ -66,7 +66,7 @@ namespace MotionCore.Infrastructure
         static void ApplyRequest(PooledVfx instance, in VfxSpawnRequest request)
         {
             instance.transform.SetPositionAndRotation(request.Position, request.Rotation);
-            instance.transform.localScale = Vector3.one * request.Scale;
+            instance.SetScale(request.Scale);
             instance.SetSpeed(request.Speed);
             instance.SetFollow(request.FollowTarget, request.FollowMode);
         }
