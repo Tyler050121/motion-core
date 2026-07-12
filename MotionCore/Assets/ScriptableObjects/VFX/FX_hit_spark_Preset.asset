@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f6d1b8b2dfb4f6cbb0ec6c7a4d6f3be, type: 3}
   m_Name: FX_hit_spark_Preset
   m_EditorClassIdentifier: 
-  m_AssetKey: VFX/FX_hit_spark
+  m_AssetKey: FX_hit_spark
   m_ReuseMode: 0
   m_ReleaseDelay: 0
   m_InitialCapacity: 2

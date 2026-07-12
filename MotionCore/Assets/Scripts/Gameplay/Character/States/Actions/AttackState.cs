@@ -219,6 +219,7 @@ namespace MotionCore.Gameplay.Character
                 return;
 
             m_MeleeHitbox.Open(index, hit.Profile, source, hit.LocalOffset, ResolveImpactRayOrigin(source));
+            PlayVfx(source, hit.Vfx);
         }
 
         void PlayVfx(Transform source, AttackVfxDefinition definition)

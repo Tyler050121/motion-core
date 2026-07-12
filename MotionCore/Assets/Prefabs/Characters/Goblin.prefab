@@ -132,7 +132,7 @@ MonoBehaviour:
   - m_Anchor: 6
     m_Source: {fileID: 1482827667125149058}
   - m_Anchor: 1
-    m_Source: {fileID: 1482827667125149058}
+    m_Source: {fileID: 1606733076803229681}
   m_StateMachine:
     _CurrentState: {fileID: 5453529004559671413}
     _DefaultState: {fileID: 5453529004559671413}
@@ -557,6 +557,12 @@ PrefabInstance:
 --- !u!95 &465642209057529536 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: f5255da99f6af944b907e552b710ca49,
+    type: 3}
+  m_PrefabInstance: {fileID: 6277136857210676049}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1606733076803229681 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4706434846886982816, guid: f5255da99f6af944b907e552b710ca49,
     type: 3}
   m_PrefabInstance: {fileID: 6277136857210676049}
   m_PrefabAsset: {fileID: 0}

@@ -117,7 +117,7 @@ MonoBehaviour:
       m_ValueHashes: 
       m_LongValueHashes: 30b77c28f48d1b2966cb3cf98c4bd96480f6501333363a6604dd4e27f48d1b29
       m_ValuePositions: 00000000020000000400000006000000
-      m_Values: 0e000d000f006666e63f
+      m_Values: 0e000d000f000000c040
       m_UnityObjects: []
       m_Version: 3.4
     - m_ObjectType: MotionCore.Gameplay.AI.BehaviorDesigner.Tasks.Actions.Orbit
@@ -181,7 +181,7 @@ MonoBehaviour:
       m_Version: 3.4
     m_DisabledEventNodesData: []
     m_DisabledLogicNodesData: []
-    m_UniqueID: 65056338
+    m_UniqueID: -1375383128
     m_LogicNodePropertiesData:
     - m_ObjectType: Opsive.GraphDesigner.Runtime.LogicNodeProperties
       m_ValueHashes: 

@@ -1,0 +1,4348 @@
+fileFormatVersion: 2
+guid: 002597160f5d042569e91ee6683a154c
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_0
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 1513
+        width: 490
+        height: 490
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3cd709be0bf724579ab6e4fcb9a9f92f
+      internalID: -1481934783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_1
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 1996
+        width: 808
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9bf6e6d050a0b49e283d9b40b9d8ae88
+      internalID: -1069838623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_2
+      rect:
+        serializedVersion: 2
+        x: 1312
+        y: 1888
+        width: 520
+        height: 114
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 649d8899c95a24962ac28ad068780615
+      internalID: 1568555310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_3
+      rect:
+        serializedVersion: 2
+        x: 1837
+        y: 1889
+        width: 114
+        height: 114
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e51733611605249a2b4e12aef3271cf9
+      internalID: 406593290
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_4
+      rect:
+        serializedVersion: 2
+        x: 904
+        y: 1628
+        width: 364
+        height: 364
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6dd35a4ea3c194f678964c7133648345
+      internalID: 1305553732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_5
+      rect:
+        serializedVersion: 2
+        x: 1272
+        y: 1949
+        width: 36
+        height: 42
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c1a40080c5a74f5a99eb38b7fbb132a
+      internalID: -173182180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_6
+      rect:
+        serializedVersion: 2
+        x: 1956
+        y: 1930
+        width: 84
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 279e4c44c034147f59c72e8315f02b44
+      internalID: -678296050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_7
+      rect:
+        serializedVersion: 2
+        x: 546
+        y: 1638
+        width: 312
+        height: 308
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c62663f6611024997aa16939f5c7e5b6
+      internalID: 2028276702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_8
+      rect:
+        serializedVersion: 2
+        x: 1273
+        y: 1909
+        width: 34
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a5141a4cfdaa94e3eac59d06c937f322
+      internalID: -1018634745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_9
+      rect:
+        serializedVersion: 2
+        x: 1272
+        y: 1889
+        width: 36
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4031ac9d39f4e43159f26761dada23e3
+      internalID: -159065029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_10
+      rect:
+        serializedVersion: 2
+        x: 1962
+        y: 1833
+        width: 72
+        height: 73
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 72bd5f7b33f19436ca93bcfdc5e901bf
+      internalID: 988087912
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_11
+      rect:
+        serializedVersion: 2
+        x: 1286
+        y: 1580
+        width: 292
+        height: 290
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 725a27a4f94ea4cee9e21f4b66fb0371
+      internalID: 209594596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_12
+      rect:
+        serializedVersion: 2
+        x: 1606
+        y: 1594
+        width: 281
+        height: 289
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2bf96a0a8d38e4f64af1e1220790c9b3
+      internalID: -920950074
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_13
+      rect:
+        serializedVersion: 2
+        x: 1902
+        y: 1828
+        width: 48
+        height: 54
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d776ff2d0ffa4681975e2c00916f8f1
+      internalID: 199065507
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_14
+      rect:
+        serializedVersion: 2
+        x: 1900
+        y: 1680
+        width: 140
+        height: 140
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 341e82cd659244ef7baa5ca1d6576d5b
+      internalID: -1302432977
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_15
+      rect:
+        serializedVersion: 2
+        x: 904
+        y: 1593
+        width: 64
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db25c0ecc3e1f461c8becad2ee216781
+      internalID: 1231952487
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_16
+      rect:
+        serializedVersion: 2
+        x: 974
+        y: 1595
+        width: 52
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 313b3fa062607488eb1b2b4c57e54d8f
+      internalID: -1346065870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_17
+      rect:
+        serializedVersion: 2
+        x: 1037
+        y: 1401
+        width: 223
+        height: 223
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af741a38df3614b0ca2dae9b119cfabd
+      internalID: 522132722
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_18
+      rect:
+        serializedVersion: 2
+        x: 1909
+        y: 1541
+        width: 134
+        height: 134
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac332d9028f344561aad3dab6a063e81
+      internalID: -1618324277
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_19
+      rect:
+        serializedVersion: 2
+        x: 906
+        y: 1509
+        width: 74
+        height: 73
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04218e28ec8cb4d47a3ffc31da57bee5
+      internalID: -1574861968
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_20
+      rect:
+        serializedVersion: 2
+        x: 993
+        y: 1527
+        width: 27
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b413c65aacf94f27949688c2832174c
+      internalID: 1082183669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_21
+      rect:
+        serializedVersion: 2
+        x: 1596
+        y: 1565
+        width: 24
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 037c9436dc8fe457fa2c95afc74b1039
+      internalID: 1015542338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_22
+      rect:
+        serializedVersion: 2
+        x: 1625
+        y: 1565
+        width: 22
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed09cce7bbfe042a0877630e69cb4218
+      internalID: -1512593389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_23
+      rect:
+        serializedVersion: 2
+        x: 1653
+        y: 1565
+        width: 18
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b93508e404a14e34a05d563352960b9
+      internalID: 686726925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_24
+      rect:
+        serializedVersion: 2
+        x: 1705
+        y: 1382
+        width: 185
+        height: 186
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 44e21d977f114497b8fdbd54ca9b9ea2
+      internalID: 2078066960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_25
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 1045
+        width: 451
+        height: 462
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c223da665d7734016b22aee50a0bbb6d
+      internalID: -558076761
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_26
+      rect:
+        serializedVersion: 2
+        x: 484
+        y: 1500
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 15e4f7c16bc794290957dd243a6163ba
+      internalID: -261912816
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_27
+      rect:
+        serializedVersion: 2
+        x: 501
+        y: 1502
+        width: 395
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d47702953dc7483ba5f30c97796ebed
+      internalID: 990804548
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_28
+      rect:
+        serializedVersion: 2
+        x: 1000
+        y: 1500
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe84889cb4b16400a81854acfe70f3a8
+      internalID: -1392848715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_29
+      rect:
+        serializedVersion: 2
+        x: 1278
+        y: 1474
+        width: 360
+        height: 56
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f7ce61acc122495aa8ad0a3800930bc
+      internalID: 1482884217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_30
+      rect:
+        serializedVersion: 2
+        x: 1908
+        y: 1408
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d2f00d9150e9a4a26bcc2d453543aa8d
+      internalID: -1728430927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_31
+      rect:
+        serializedVersion: 2
+        x: 484
+        y: 1198
+        width: 280
+        height: 297
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 60dd9ef5683034049aa8e55f1997fbe3
+      internalID: -1794128740
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_32
+      rect:
+        serializedVersion: 2
+        x: 774
+        y: 1237
+        width: 258
+        height: 253
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea3ed383c9cb344e7946f0b69dfae723
+      internalID: -857922040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_33
+      rect:
+        serializedVersion: 2
+        x: 1266
+        y: 1439
+        width: 18
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a403a01779dc457992ef0cbb578ce5e
+      internalID: 615618667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_34
+      rect:
+        serializedVersion: 2
+        x: 1306
+        y: 1381
+        width: 373
+        height: 69
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2925e98f164f04973b49e968b41b7976
+      internalID: -122155577
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_35
+      rect:
+        serializedVersion: 2
+        x: 1264
+        y: 1401
+        width: 26
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c98a4b4adf5ae4a72b4d9c42de841f2f
+      internalID: 1117361230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_36
+      rect:
+        serializedVersion: 2
+        x: 1908
+        y: 1286
+        width: 118
+        height: 118
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab835796a4ebf4aa58a43e94d29f83a2
+      internalID: 987406100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_37
+      rect:
+        serializedVersion: 2
+        x: 1038
+        y: 1147
+        width: 249
+        height: 247
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 706fee14ae9a34100b672d620aafa616
+      internalID: 1897519049
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_38
+      rect:
+        serializedVersion: 2
+        x: 1293
+        y: 1292
+        width: 395
+        height: 37
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 529635d71c4c6481b884b05e993222cb
+      internalID: 802746550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_39
+      rect:
+        serializedVersion: 2
+        x: 1694
+        y: 1156
+        width: 209
+        height: 207
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40535bbb6d52f4a1ba80bf4c090ad5f3
+      internalID: 1831019661
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_40
+      rect:
+        serializedVersion: 2
+        x: 772
+        y: 968
+        width: 260
+        height: 260
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5babb22b081fc47069ac8d90a5f5ec23
+      internalID: -28362059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_41
+      rect:
+        serializedVersion: 2
+        x: 1302
+        y: 1198
+        width: 378
+        height: 63
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: edf2f9d89b0e843a593e00de5696852f
+      internalID: -1774227253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_42
+      rect:
+        serializedVersion: 2
+        x: 1914
+        y: 1168
+        width: 105
+        height: 108
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df5e867e46c124c1aae94806e3b9ec13
+      internalID: -320948439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_43
+      rect:
+        serializedVersion: 2
+        x: 485
+        y: 910
+        width: 282
+        height: 281
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c146f669f16464bbd9e19e16aaea8dcd
+      internalID: -1538015000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_45
+      rect:
+        serializedVersion: 2
+        x: 1276
+        y: 1128
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd97a2f5d669648338ba04f0754d0eb9
+      internalID: -1428229044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_46
+      rect:
+        serializedVersion: 2
+        x: 1295
+        y: 1108
+        width: 384
+        height: 81
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6dce51b3c8b4940d6acd5e91a74c76b1
+      internalID: -1021726618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_47
+      rect:
+        serializedVersion: 2
+        x: 1684
+        y: 1108
+        width: 20
+        height: 42
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe8e2f0fc17fa48bcb921b077197c43b
+      internalID: 585419988
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_48
+      rect:
+        serializedVersion: 2
+        x: 1716
+        y: 956
+        width: 196
+        height: 196
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57aad2cd66f304b228acae3683296331
+      internalID: 877362861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_49
+      rect:
+        serializedVersion: 2
+        x: 1919
+        y: 1042
+        width: 111
+        height: 111
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e17d77ec9f424bbc8c389d2c10774b0
+      internalID: 20462684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_50
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 646
+        width: 386
+        height: 366
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe99b3e9878da448ca9c5da48b6393ba
+      internalID: -1648839505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_51
+      rect:
+        serializedVersion: 2
+        x: 411
+        y: 958
+        width: 68
+        height: 66
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57347ff532c464a46b76c3d2c0569681
+      internalID: 1176722656
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_52
+      rect:
+        serializedVersion: 2
+        x: 1037
+        y: 904
+        width: 234
+        height: 234
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 348fbabe442704121961fddb744b8265
+      internalID: 250325017
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_54
+      rect:
+        serializedVersion: 2
+        x: 1277
+        y: 997
+        width: 102
+        height: 102
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04fabaa524646408cb38dabd67c647c0
+      internalID: 120352024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_55
+      rect:
+        serializedVersion: 2
+        x: 1393
+        y: 997
+        width: 102
+        height: 102
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7bc3823de2a242d7b39a4b69a9e37b4
+      internalID: 1945651796
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_56
+      rect:
+        serializedVersion: 2
+        x: 1501
+        y: 890
+        width: 208
+        height: 208
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a38eb874d5dc45d6a0fb1c9231c6144
+      internalID: -1259736529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_57
+      rect:
+        serializedVersion: 2
+        x: 1916
+        y: 1001
+        width: 27
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7fae485cff21c4bf2a2e671bdb381ceb
+      internalID: -577451597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_58
+      rect:
+        serializedVersion: 2
+        x: 1950
+        y: 943
+        width: 91
+        height: 91
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7cecb5b5a53304931b1192a6ffc84f75
+      internalID: 1181450035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_60
+      rect:
+        serializedVersion: 2
+        x: 1277
+        y: 881
+        width: 102
+        height: 102
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce99c8ed46a36452091bfb779205737c
+      internalID: -1637914591
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_61
+      rect:
+        serializedVersion: 2
+        x: 1393
+        y: 881
+        width: 102
+        height: 102
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f230443cf4954a0ab2e5045e2f21d23
+      internalID: 739383973
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_62
+      rect:
+        serializedVersion: 2
+        x: 1917
+        y: 969
+        width: 27
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8efe9e7b1f9f645bb82cf4092a0564c4
+      internalID: -92165452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_63
+      rect:
+        serializedVersion: 2
+        x: 408
+        y: 908
+        width: 44
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e88b4471e71e240839736f70a6f8ed32
+      internalID: -546969323
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_64
+      rect:
+        serializedVersion: 2
+        x: 457
+        y: 937
+        width: 22
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6da3713c61a324b3da9d221072aa5c1a
+      internalID: -709534618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_65
+      rect:
+        serializedVersion: 2
+        x: 772
+        y: 938
+        width: 175
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f34d28c31a98a49f5a082887f3d34151
+      internalID: 1259624636
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_66
+      rect:
+        serializedVersion: 2
+        x: 956
+        y: 905
+        width: 68
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 37d1dc286db024cd3997cd3907bf4773
+      internalID: 120924534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_67
+      rect:
+        serializedVersion: 2
+        x: 1717
+        y: 917
+        width: 39
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f8b4f7c9d8cbf4646bd543da97d9bd53
+      internalID: -106501831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_68
+      rect:
+        serializedVersion: 2
+        x: 1762
+        y: 769
+        width: 181
+        height: 182
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ca0bb5036a1f4d379c4c221a901baac
+      internalID: -1214130078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_69
+      rect:
+        serializedVersion: 2
+        x: 456
+        y: 909
+        width: 16
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 08c9f95e8ff3347448463262c90ea526
+      internalID: 991374448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_70
+      rect:
+        serializedVersion: 2
+        x: 773
+        y: 925
+        width: 174
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d43bb04842f041109b3cd4d1cfb6ae3
+      internalID: 2087001158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_71
+      rect:
+        serializedVersion: 2
+        x: 1949
+        y: 845
+        width: 90
+        height: 90
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd5c8c7d3ee254514934d9db3197f7c2
+      internalID: -885025913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_72
+      rect:
+        serializedVersion: 2
+        x: 774
+        y: 909
+        width: 36
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9859f1ada0f9f463e956c96646e2c452
+      internalID: -228422035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SPR_HUD_PlayerVitals_HealthBarFill
+      rect:
+        serializedVersion: 2
+        x: 816
+        y: 909
+        width: 36
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 9, y: 0, z: 8, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d574eb333e9d741a5817325f605e211e
+      internalID: -2122770899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SPR_HUD_PlayerVitals_HealthBarTrack
+      rect:
+        serializedVersion: 2
+        x: 856
+        y: 909
+        width: 36
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 9, y: 0, z: 11, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 316ddf31636114210bf71173cf182cbf
+      internalID: -1775064539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_75
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 910
+        width: 16
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dea9f3b8687b24f57a07fd93936d50c2
+      internalID: 1863341229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_76
+      rect:
+        serializedVersion: 2
+        x: 1716
+        y: 890
+        width: 36
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d6ac0407474747b6b8e13a01f176f54
+      internalID: 2084583240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_77
+      rect:
+        serializedVersion: 2
+        x: 420
+        y: 632
+        width: 264
+        height: 261
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b828bae1d59345c5b971ab133482643
+      internalID: 1422592994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_78
+      rect:
+        serializedVersion: 2
+        x: 696
+        y: 648
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e889f96c9acf64a01b308f71c6d58fcc
+      internalID: -701919018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_79
+      rect:
+        serializedVersion: 2
+        x: 1170
+        y: 880
+        width: 72
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50dc12a4a67cd48f5a72b47c2253f33f
+      internalID: -742778848
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_80
+      rect:
+        serializedVersion: 2
+        x: 1252
+        y: 887
+        width: 19
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e1c902a712654cb8b088daadc24d8bb
+      internalID: -632284496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_82
+      rect:
+        serializedVersion: 2
+        x: 1172
+        y: 680
+        width: 196
+        height: 196
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d1a16ee1092254454a174b9d646f940b
+      internalID: -1264216965
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_83
+      rect:
+        serializedVersion: 2
+        x: 1372
+        y: 681
+        width: 188
+        height: 194
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ff1b163b820b46eb8eb73846db4b2d4
+      internalID: 178751198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_84
+      rect:
+        serializedVersion: 2
+        x: 1565
+        y: 692
+        width: 191
+        height: 191
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0efdad20b50a146c9ae98e42382cffdf
+      internalID: 2042055773
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_85
+      rect:
+        serializedVersion: 2
+        x: 1950
+        y: 782
+        width: 10
+        height: 55
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 39469d1e4b3804582adb8443585d3764
+      internalID: 819608708
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_86
+      rect:
+        serializedVersion: 2
+        x: 1965
+        y: 756
+        width: 79
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e9fed91d30604e4a84626c163044fcc
+      internalID: -83544220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_87
+      rect:
+        serializedVersion: 2
+        x: 969
+        y: 702
+        width: 185
+        height: 184
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c4ced885eec241a7bf3b1af0cdbb629
+      internalID: 1281120883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_88
+      rect:
+        serializedVersion: 2
+        x: 1776
+        y: 628
+        width: 180
+        height: 132
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d81b88811b5f420688af5eea2180820
+      internalID: -377253467
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_89
+      rect:
+        serializedVersion: 2
+        x: 1965
+        y: 669
+        width: 78
+        height: 79
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e0486151f38141d9b36809b22b52815
+      internalID: 350033847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_90
+      rect:
+        serializedVersion: 2
+        x: 967
+        y: 515
+        width: 158
+        height: 158
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c09dbe1d402714ce2b8cbcfcdadd16c4
+      internalID: -1956848081
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_91
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 507
+        width: 157
+        height: 158
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f06e279560a74584b5bb78b72a77368
+      internalID: 292949499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_92
+      rect:
+        serializedVersion: 2
+        x: 1326
+        y: 498
+        width: 176
+        height: 176
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7fc47b7db65e04700b363a00845b98c0
+      internalID: 529347672
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_93
+      rect:
+        serializedVersion: 2
+        x: 1506
+        y: 625
+        width: 54
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd66c926267e14f8795101a22bc078dd
+      internalID: -2059662652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_94
+      rect:
+        serializedVersion: 2
+        x: 1565
+        y: 617
+        width: 190
+        height: 70
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 51ab5669430814d0cac407e635ce0155
+      internalID: 99398714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_95
+      rect:
+        serializedVersion: 2
+        x: 1965
+        y: 629
+        width: 50
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 22941289ccc1441fc8097053a8e3a8ab
+      internalID: -1516944064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_96
+      rect:
+        serializedVersion: 2
+        x: 2022
+        y: 646
+        width: 21
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d84a7d9556bb462d84e366c63d79008
+      internalID: -265457108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_97
+      rect:
+        serializedVersion: 2
+        x: 698
+        y: 470
+        width: 172
+        height: 172
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee1d0874ac97449eca9322fb25e95133
+      internalID: -101165614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_98
+      rect:
+        serializedVersion: 2
+        x: 876
+        y: 568
+        width: 76
+        height: 75
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf3adece8f5e742a1a8dde72efc63864
+      internalID: -602510529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_99
+      rect:
+        serializedVersion: 2
+        x: 2018
+        y: 629
+        width: 20
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 673e87c19f352416f9d4e6420917a64c
+      internalID: 968360932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_100
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 224
+        width: 400
+        height: 400
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9683ae148bd704cbdad02cec1ffe852a
+      internalID: -54027099
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_101
+      rect:
+        serializedVersion: 2
+        x: 1760
+        y: 617
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0e7fda746e1b4d31a738db9a731c3d2
+      internalID: 1296448885
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_102
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 372
+        width: 216
+        height: 216
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a0560c9e83744e86b5e1af68fa5b375
+      internalID: -2024827549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_103
+      rect:
+        serializedVersion: 2
+        x: 877
+        y: 504
+        width: 69
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f88fa1fee1ca488aac1ba31f91b036b
+      internalID: -1660260231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_104
+      rect:
+        serializedVersion: 2
+        x: 1531
+        y: 459
+        width: 130
+        height: 130
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c672cfbc630c54e559d5de895ef75ad8
+      internalID: -455377906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_105
+      rect:
+        serializedVersion: 2
+        x: 1706
+        y: 454
+        width: 142
+        height: 140
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb6c5c9dd965f447c9d2538b0fb67d1a
+      internalID: -230512451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_106
+      rect:
+        serializedVersion: 2
+        x: 1875
+        y: 453
+        width: 165
+        height: 164
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18fe8ef0cbb7e4a1d979c32b9fe2b8a9
+      internalID: 2105533081
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_107
+      rect:
+        serializedVersion: 2
+        x: 876
+        y: 472
+        width: 40
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d368bab7064f54ad0821ca98380ffe89
+      internalID: -573065374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_108
+      rect:
+        serializedVersion: 2
+        x: 920
+        y: 328
+        width: 172
+        height: 172
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d8f4554c477047e9b8860d8064e6538
+      internalID: 1355397463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_109
+      rect:
+        serializedVersion: 2
+        x: 1124
+        y: 464
+        width: 57
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac773f98f8492462b812bc059ea76eea
+      internalID: 977430803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_110
+      rect:
+        serializedVersion: 2
+        x: 1451
+        y: 436
+        width: 53
+        height: 56
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dac5b5f1bb3cd492da47e4bf803fae94
+      internalID: 1664496435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_111
+      rect:
+        serializedVersion: 2
+        x: 688
+        y: 352
+        width: 112
+        height: 112
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f9abca6c96c3741c4bf383bff6cc4857
+      internalID: 1661824289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_112
+      rect:
+        serializedVersion: 2
+        x: 805
+        y: 354
+        width: 110
+        height: 109
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1235e05381a6c41fb80e39e188fee1b5
+      internalID: -1675409926
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_113
+      rect:
+        serializedVersion: 2
+        x: 1458
+        y: 352
+        width: 66
+        height: 66
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19f8340c28e2641458e29e7208f44249
+      internalID: -1364690338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_114
+      rect:
+        serializedVersion: 2
+        x: 1555
+        y: 293
+        width: 131
+        height: 119
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eac7a9cffdb5242efae88ec47a22b4c2
+      internalID: -731545035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_115
+      rect:
+        serializedVersion: 2
+        x: 1704
+        y: 272
+        width: 160
+        height: 160
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1956e7277891143e2933f6cbed641ef9
+      internalID: 61077214
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_116
+      rect:
+        serializedVersion: 2
+        x: 1875
+        y: 273
+        width: 165
+        height: 164
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ebd0ff4155d649a7810826563a96178
+      internalID: 1134057554
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_117
+      rect:
+        serializedVersion: 2
+        x: 690
+        y: 342
+        width: 5
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d5c9d6c1827d14f708a1409175f85092
+      internalID: -1099922706
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_118
+      rect:
+        serializedVersion: 2
+        x: 702
+        y: 177
+        width: 169
+        height: 170
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bee1f63958e254f858ce4661ca13ecdc
+      internalID: -443490281
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_119
+      rect:
+        serializedVersion: 2
+        x: 876
+        y: 330
+        width: 36
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 11, y: 0, z: 10, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c484b7c599aa4d36b0d075ae93ef8e6
+      internalID: 134338813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_120
+      rect:
+        serializedVersion: 2
+        x: 1298
+        y: 321
+        width: 118
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a12caf1ef93c402ebdbbba4930d2a2f
+      internalID: 1843375306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_121
+      rect:
+        serializedVersion: 2
+        x: 408
+        y: 298
+        width: 30
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2321ee45cbbc4fe38ac8adf6f2b42ea
+      internalID: 2056921087
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_122
+      rect:
+        serializedVersion: 2
+        x: 440
+        y: 80
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a035961c5c47040d1b46d57a0d03a5b6
+      internalID: -979483790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_125
+      rect:
+        serializedVersion: 2
+        x: 1448
+        y: 320
+        width: 36
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b996ee0df17c43739da8616c51366ac
+      internalID: 1247231544
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_126
+      rect:
+        serializedVersion: 2
+        x: 1489
+        y: 322
+        width: 22
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 09d7878a5825e4fddb8db71be6b1a32d
+      internalID: 1026607762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_127
+      rect:
+        serializedVersion: 2
+        x: 1517
+        y: 321
+        width: 19
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a09e415c05784d89bb1232e62fe3781
+      internalID: -604026334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_128
+      rect:
+        serializedVersion: 2
+        x: 414
+        y: 262
+        width: 18
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e9d8b898593824c978419b0fbbe525a5
+      internalID: 1392544523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_131
+      rect:
+        serializedVersion: 2
+        x: 1053
+        y: 153
+        width: 162
+        height: 162
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa34990a87d384bbb92f9af2879f78bd
+      internalID: -69332468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_132
+      rect:
+        serializedVersion: 2
+        x: 1235
+        y: 175
+        width: 133
+        height: 123
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe2e62252ccee40f390bc87b53560966
+      internalID: -1250225453
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_133
+      rect:
+        serializedVersion: 2
+        x: 1384
+        y: 152
+        width: 152
+        height: 164
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6938e3e66fa48434995c49b18a4d67b6
+      internalID: -660395083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_134
+      rect:
+        serializedVersion: 2
+        x: 1544
+        y: 110
+        width: 153
+        height: 154
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d90b05895c74405dbca73b7baac13b9
+      internalID: 8336502
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_135
+      rect:
+        serializedVersion: 2
+        x: 1704
+        y: 168
+        width: 100
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce0d90880e2174f3a921f71d33db211e
+      internalID: 1035605069
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_136
+      rect:
+        serializedVersion: 2
+        x: 408
+        y: 236
+        width: 27
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d760beb1f14394b01b68e6fdb1f31d24
+      internalID: -1906642136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_139
+      rect:
+        serializedVersion: 2
+        x: 1811
+        y: 175
+        width: 88
+        height: 86
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f6a9084a4c8b4194b21bad17d1bf905
+      internalID: 991849479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_140
+      rect:
+        serializedVersion: 2
+        x: 1908
+        y: 178
+        width: 81
+        height: 84
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 42cb96dae32de48288edfc7db9226539
+      internalID: -23901191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_141
+      rect:
+        serializedVersion: 2
+        x: 1998
+        y: 211
+        width: 44
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7eb53a81179849068b1200d6db90469
+      internalID: 822529791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_142
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 66
+        width: 146
+        height: 151
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e669f1615fcc417eb0895c23818a383
+      internalID: 456142954
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_143
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 66
+        width: 220
+        height: 151
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee5fd8def729648c8ae4e33106669b67
+      internalID: 2012072889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_144
+      rect:
+        serializedVersion: 2
+        x: 701
+        y: 6
+        width: 165
+        height: 162
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f31dddd8e078a4add84cc090371882e6
+      internalID: 991927031
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_145
+      rect:
+        serializedVersion: 2
+        x: 877
+        y: 153
+        width: 170
+        height: 170
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40f0704fe2ff442abb29825c0648cabb
+      internalID: 42420533
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_146
+      rect:
+        serializedVersion: 2
+        x: 1707
+        y: 68
+        width: 93
+        height: 93
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f0d43df92e464fab9f4a75f7f317767
+      internalID: 678942909
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_147
+      rect:
+        serializedVersion: 2
+        x: 1811
+        y: 79
+        width: 88
+        height: 86
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 409dad233a03b49d4b9f99b82c9a1534
+      internalID: -113348783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_148
+      rect:
+        serializedVersion: 2
+        x: 1908
+        y: 86
+        width: 82
+        height: 86
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23b43613fbe1246b4a833cfd2daa4f6c
+      internalID: 1285947843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_149
+      rect:
+        serializedVersion: 2
+        x: 1998
+        y: 153
+        width: 44
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 318a10316db1c44c881b1f51ccc6821f
+      internalID: 1250747309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_150
+      rect:
+        serializedVersion: 2
+        x: 872
+        y: 37
+        width: 111
+        height: 111
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cd371d4525b8e4954b84126ca1577a45
+      internalID: 135607984
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_151
+      rect:
+        serializedVersion: 2
+        x: 1002
+        y: 55
+        width: 80
+        height: 78
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2597cec92f1004f91a76f440165f9ff8
+      internalID: 978732900
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_152
+      rect:
+        serializedVersion: 2
+        x: 1102
+        y: 43
+        width: 104
+        height: 103
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 413ba41a6ca2d465db60535be5f2f9ce
+      internalID: 12585701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_153
+      rect:
+        serializedVersion: 2
+        x: 1214
+        y: 75
+        width: 71
+        height: 71
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d3e0e2040a284d2fa440d10eb373016
+      internalID: 705837329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_154
+      rect:
+        serializedVersion: 2
+        x: 1293
+        y: 84
+        width: 67
+        height: 67
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6286a1228046a43d798180788c169651
+      internalID: 748665773
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_155
+      rect:
+        serializedVersion: 2
+        x: 1369
+        y: 88
+        width: 59
+        height: 59
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 148f482d6d4b147d294e85db7c731980
+      internalID: -163864658
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_156
+      rect:
+        serializedVersion: 2
+        x: 1434
+        y: 86
+        width: 60
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0462fc0951077417c95adace0ba4dde7
+      internalID: -1102101799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_157
+      rect:
+        serializedVersion: 2
+        x: 1502
+        y: 117
+        width: 8
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c11236b554264f58be8fac90e60dc28
+      internalID: 1020442253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_158
+      rect:
+        serializedVersion: 2
+        x: 1513
+        y: 117
+        width: 10
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc46ec47ebd3c4533a0d3f197766c218
+      internalID: -693543163
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_159
+      rect:
+        serializedVersion: 2
+        x: 1525
+        y: 117
+        width: 10
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a7225d827ea4426ebaba712c747d16f
+      internalID: -1621361812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_160
+      rect:
+        serializedVersion: 2
+        x: 1998
+        y: 91
+        width: 44
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e905bb5bc3ce4a219ef224d7ec9694e
+      internalID: -1754886079
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_161
+      rect:
+        serializedVersion: 2
+        x: 1398
+        y: 84
+        width: 12
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47df47638891b45aca5e6982c767d9ea
+      internalID: 1157729772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_162
+      rect:
+        serializedVersion: 2
+        x: 1500
+        y: 86
+        width: 36
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf3c36cf9a6914a6fb26631e5906503b
+      internalID: -1926747208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_163
+      rect:
+        serializedVersion: 2
+        x: 1541
+        y: 70
+        width: 33
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 16, y: 0, z: 16, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 869f49316599e42b98469674433a6f2e
+      internalID: -847537289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_164
+      rect:
+        serializedVersion: 2
+        x: 1581
+        y: 72
+        width: 31
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a3e2af3ff044b407f895514ea1d04ce0
+      internalID: -556979004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_165
+      rect:
+        serializedVersion: 2
+        x: 1616
+        y: 76
+        width: 32
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 14, y: 0, z: 14, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 14971d28575ab4f408a0ea6fa878e79d
+      internalID: -879164814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_166
+      rect:
+        serializedVersion: 2
+        x: 1653
+        y: 84
+        width: 18
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a83c6560548d8438aa4215c77fe4ccb3
+      internalID: -1116270710
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SPR_HUD_PlayerVitals_HealthBarCapRing
+      rect:
+        serializedVersion: 2
+        x: 1677
+        y: 84
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dffd16bef85e14ffa8ef8ede786f7abc
+      internalID: -1789119549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_168
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 34
+        width: 382
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38edc9ec1da514fdaa458d42119f64ac
+      internalID: 1517091285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_169
+      rect:
+        serializedVersion: 2
+        x: 445
+        y: 58
+        width: 61
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c548f9b78654c4fe0a23374cdb5e8086
+      internalID: 1826537465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_170
+      rect:
+        serializedVersion: 2
+        x: 518
+        y: 54
+        width: 68
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 727e2d33879ce4cfdb91a4b7d5d0184b
+      internalID: 2030219791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_171
+      rect:
+        serializedVersion: 2
+        x: 607
+        y: 22
+        width: 41
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ab3b07e762fc4445abf50115bc7ce89
+      internalID: -372567914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_172
+      rect:
+        serializedVersion: 2
+        x: 670
+        y: 38
+        width: 20
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 56cf195e508ca430e97e0a4cf7e68992
+      internalID: -1178718147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_173
+      rect:
+        serializedVersion: 2
+        x: 1213
+        y: 15
+        width: 63
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e4bcfa643152b4d49a2afb6079c87002
+      internalID: -1067792001
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_174
+      rect:
+        serializedVersion: 2
+        x: 1278
+        y: 56
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 113bbb9f4ccc6479183805491d454986
+      internalID: 1500275749
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_175
+      rect:
+        serializedVersion: 2
+        x: 1305
+        y: 33
+        width: 39
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f55661640638492bbf52c3694550135
+      internalID: 791162709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_176
+      rect:
+        serializedVersion: 2
+        x: 1357
+        y: 24
+        width: 53
+        height: 55
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae5903a0a456b45c8a97eb5da39a699e
+      internalID: -551050854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_177
+      rect:
+        serializedVersion: 2
+        x: 1418
+        y: 33
+        width: 45
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 033416390e7824efead191d10ef7528d
+      internalID: 1047655942
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_178
+      rect:
+        serializedVersion: 2
+        x: 1470
+        y: 34
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d847eec1badad400a8322de5eefa5e2a
+      internalID: 1858685886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_179
+      rect:
+        serializedVersion: 2
+        x: 1523
+        y: 50
+        width: 13
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4619564708fd643be99423f5ee5c57ea
+      internalID: -34408260
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_180
+      rect:
+        serializedVersion: 2
+        x: 1540
+        y: 45
+        width: 13
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dfbcfe7770044449bb5970f4396e7763
+      internalID: -254988214
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_181
+      rect:
+        serializedVersion: 2
+        x: 1562
+        y: 49
+        width: 13
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed420369beed24bd796aa3d4aa0b1546
+      internalID: 1769945324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_182
+      rect:
+        serializedVersion: 2
+        x: 1581
+        y: 53
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 64e55622ad8734b4184cfb357891ef9e
+      internalID: -833771514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_183
+      rect:
+        serializedVersion: 2
+        x: 1808
+        y: 21
+        width: 60
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d79b6b2d779bb4fb0ad2056294112d99
+      internalID: 1677053623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_184
+      rect:
+        serializedVersion: 2
+        x: 1874
+        y: 13
+        width: 57
+        height: 58
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 82cc9bcd14b7543519fb2648cf76dc53
+      internalID: -132543320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_185
+      rect:
+        serializedVersion: 2
+        x: 1937
+        y: 24
+        width: 55
+        height: 55
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f1ce5cbead6048cab13d16461782931
+      internalID: -930974425
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_186
+      rect:
+        serializedVersion: 2
+        x: 1998
+        y: 31
+        width: 44
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb96327def45c4c09a57f6b92ce87b0f
+      internalID: 1123209285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_187
+      rect:
+        serializedVersion: 2
+        x: 393
+        y: 9
+        width: 42
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1837761e5bd3b4100bf14a872b1c511f
+      internalID: -422293894
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_188
+      rect:
+        serializedVersion: 2
+        x: 997
+        y: 8
+        width: 43
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7040245dadf7346ec9803428bc05e4bf
+      internalID: -21661546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_189
+      rect:
+        serializedVersion: 2
+        x: 1044
+        y: 9
+        width: 36
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4463c0420fbaf4d0e9b40580f0a621ed
+      internalID: 29057581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_190
+      rect:
+        serializedVersion: 2
+        x: 1084
+        y: 8
+        width: 36
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 15, y: 0, z: 15, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c98528819542645cdbe5748f63afe053
+      internalID: 1712398250
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_191
+      rect:
+        serializedVersion: 2
+        x: 1196
+        y: 24
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 05ed79c2927f443589913f8dc237e03a
+      internalID: 1281928053
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_192
+      rect:
+        serializedVersion: 2
+        x: 1278
+        y: 34
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ffa775fb594c480caf05291075caea1
+      internalID: -1718670976
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_193
+      rect:
+        serializedVersion: 2
+        x: 1521
+        y: 29
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 82bcfc99a0c7d456fbc9bc7847d44ea5
+      internalID: -1143249259
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_194
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 5
+        width: 196
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d1266ca0d1ca94ff7a651cbe9d438209
+      internalID: -126241586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_195
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 4
+        width: 317
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0ed1f2504e57456486ac5b8a9c5b071
+      internalID: 987715164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_196
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 5
+        width: 16
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1314b746dbac149759f0cd1540b72e7b
+      internalID: 1180770133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_197
+      rect:
+        serializedVersion: 2
+        x: 665
+        y: 9
+        width: 19
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54e30ef36cb1c48b8849e5106dcacb31
+      internalID: 955841441
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SPR_HUD_PlayerVitals_ShieldFrameTrack
+      rect:
+        serializedVersion: 2
+        x: 877
+        y: 8
+        width: 59
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 26, y: 0, z: 26, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e7d1837cf5ba4a2b821e410f7ce2f9e
+      internalID: 1945865849
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SPR_HUD_PlayerVitals_ShieldFrameFill
+      rect:
+        serializedVersion: 2
+        x: 948
+        y: 4
+        width: 41
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 17, y: 0, z: 18, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ceacc4be36d254aa6b147ec7bf74fbb4
+      internalID: -2016603750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_200
+      rect:
+        serializedVersion: 2
+        x: 1129
+        y: 11
+        width: 22
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5febf55d85e7440e78eab26d873c04a5
+      internalID: -1011143150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: T_TPI_UiFight1_UIAtlas_201
+      rect:
+        serializedVersion: 2
+        x: 1162
+        y: 8
+        width: 29
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 719962be45da64386b5a96b70dd86894
+      internalID: 890162001
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5817ef277886341a89edeba1c50442a0
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      SPR_HUD_PlayerVitals_HealthBarCapRing: -1789119549
+      SPR_HUD_PlayerVitals_HealthBarFill: -2122770899
+      SPR_HUD_PlayerVitals_HealthBarTrack: -1775064539
+      SPR_HUD_PlayerVitals_ShieldFrameFill: -2016603750
+      SPR_HUD_PlayerVitals_ShieldFrameTrack: 1945865849
+      T_TPI_UiFight1_UIAtlas_0: -1481934783
+      T_TPI_UiFight1_UIAtlas_1: -1069838623
+      T_TPI_UiFight1_UIAtlas_10: 988087912
+      T_TPI_UiFight1_UIAtlas_100: -54027099
+      T_TPI_UiFight1_UIAtlas_101: 1296448885
+      T_TPI_UiFight1_UIAtlas_102: -2024827549
+      T_TPI_UiFight1_UIAtlas_103: -1660260231
+      T_TPI_UiFight1_UIAtlas_104: -455377906
+      T_TPI_UiFight1_UIAtlas_105: -230512451
+      T_TPI_UiFight1_UIAtlas_106: 2105533081
+      T_TPI_UiFight1_UIAtlas_107: -573065374
+      T_TPI_UiFight1_UIAtlas_108: 1355397463
+      T_TPI_UiFight1_UIAtlas_109: 977430803
+      T_TPI_UiFight1_UIAtlas_11: 209594596
+      T_TPI_UiFight1_UIAtlas_110: 1664496435
+      T_TPI_UiFight1_UIAtlas_111: 1661824289
+      T_TPI_UiFight1_UIAtlas_112: -1675409926
+      T_TPI_UiFight1_UIAtlas_113: -1364690338
+      T_TPI_UiFight1_UIAtlas_114: -731545035
+      T_TPI_UiFight1_UIAtlas_115: 61077214
+      T_TPI_UiFight1_UIAtlas_116: 1134057554
+      T_TPI_UiFight1_UIAtlas_117: -1099922706
+      T_TPI_UiFight1_UIAtlas_118: -443490281
+      T_TPI_UiFight1_UIAtlas_119: 134338813
+      T_TPI_UiFight1_UIAtlas_12: -920950074
+      T_TPI_UiFight1_UIAtlas_120: 1843375306
+      T_TPI_UiFight1_UIAtlas_121: 2056921087
+      T_TPI_UiFight1_UIAtlas_122: -979483790
+      T_TPI_UiFight1_UIAtlas_123: 1655817052
+      T_TPI_UiFight1_UIAtlas_124: 824301371
+      T_TPI_UiFight1_UIAtlas_125: 1247231544
+      T_TPI_UiFight1_UIAtlas_126: 1026607762
+      T_TPI_UiFight1_UIAtlas_127: -604026334
+      T_TPI_UiFight1_UIAtlas_128: 1392544523
+      T_TPI_UiFight1_UIAtlas_129: -1616279786
+      T_TPI_UiFight1_UIAtlas_13: 199065507
+      T_TPI_UiFight1_UIAtlas_130: -905003626
+      T_TPI_UiFight1_UIAtlas_131: -69332468
+      T_TPI_UiFight1_UIAtlas_132: -1250225453
+      T_TPI_UiFight1_UIAtlas_133: -660395083
+      T_TPI_UiFight1_UIAtlas_134: 8336502
+      T_TPI_UiFight1_UIAtlas_135: 1035605069
+      T_TPI_UiFight1_UIAtlas_136: -1906642136
+      T_TPI_UiFight1_UIAtlas_137: 1292118756
+      T_TPI_UiFight1_UIAtlas_138: -676995465
+      T_TPI_UiFight1_UIAtlas_139: 991849479
+      T_TPI_UiFight1_UIAtlas_14: -1302432977
+      T_TPI_UiFight1_UIAtlas_140: -23901191
+      T_TPI_UiFight1_UIAtlas_141: 822529791
+      T_TPI_UiFight1_UIAtlas_142: 456142954
+      T_TPI_UiFight1_UIAtlas_143: 2012072889
+      T_TPI_UiFight1_UIAtlas_144: 991927031
+      T_TPI_UiFight1_UIAtlas_145: 42420533
+      T_TPI_UiFight1_UIAtlas_146: 678942909
+      T_TPI_UiFight1_UIAtlas_147: -113348783
+      T_TPI_UiFight1_UIAtlas_148: 1285947843
+      T_TPI_UiFight1_UIAtlas_149: 1250747309
+      T_TPI_UiFight1_UIAtlas_15: 1231952487
+      T_TPI_UiFight1_UIAtlas_150: 135607984
+      T_TPI_UiFight1_UIAtlas_151: 978732900
+      T_TPI_UiFight1_UIAtlas_152: 12585701
+      T_TPI_UiFight1_UIAtlas_153: 705837329
+      T_TPI_UiFight1_UIAtlas_154: 748665773
+      T_TPI_UiFight1_UIAtlas_155: -163864658
+      T_TPI_UiFight1_UIAtlas_156: -1102101799
+      T_TPI_UiFight1_UIAtlas_157: 1020442253
+      T_TPI_UiFight1_UIAtlas_158: -693543163
+      T_TPI_UiFight1_UIAtlas_159: -1621361812
+      T_TPI_UiFight1_UIAtlas_16: -1346065870
+      T_TPI_UiFight1_UIAtlas_160: -1754886079
+      T_TPI_UiFight1_UIAtlas_161: 1157729772
+      T_TPI_UiFight1_UIAtlas_162: -1926747208
+      T_TPI_UiFight1_UIAtlas_163: -847537289
+      T_TPI_UiFight1_UIAtlas_164: -556979004
+      T_TPI_UiFight1_UIAtlas_165: -879164814
+      T_TPI_UiFight1_UIAtlas_166: -1116270710
+      T_TPI_UiFight1_UIAtlas_168: 1517091285
+      T_TPI_UiFight1_UIAtlas_169: 1826537465
+      T_TPI_UiFight1_UIAtlas_17: 522132722
+      T_TPI_UiFight1_UIAtlas_170: 2030219791
+      T_TPI_UiFight1_UIAtlas_171: -372567914
+      T_TPI_UiFight1_UIAtlas_172: -1178718147
+      T_TPI_UiFight1_UIAtlas_173: -1067792001
+      T_TPI_UiFight1_UIAtlas_174: 1500275749
+      T_TPI_UiFight1_UIAtlas_175: 791162709
+      T_TPI_UiFight1_UIAtlas_176: -551050854
+      T_TPI_UiFight1_UIAtlas_177: 1047655942
+      T_TPI_UiFight1_UIAtlas_178: 1858685886
+      T_TPI_UiFight1_UIAtlas_179: -34408260
+      T_TPI_UiFight1_UIAtlas_18: -1618324277
+      T_TPI_UiFight1_UIAtlas_180: -254988214
+      T_TPI_UiFight1_UIAtlas_181: 1769945324
+      T_TPI_UiFight1_UIAtlas_182: -833771514
+      T_TPI_UiFight1_UIAtlas_183: 1677053623
+      T_TPI_UiFight1_UIAtlas_184: -132543320
+      T_TPI_UiFight1_UIAtlas_185: -930974425
+      T_TPI_UiFight1_UIAtlas_186: 1123209285
+      T_TPI_UiFight1_UIAtlas_187: -422293894
+      T_TPI_UiFight1_UIAtlas_188: -21661546
+      T_TPI_UiFight1_UIAtlas_189: 29057581
+      T_TPI_UiFight1_UIAtlas_19: -1574861968
+      T_TPI_UiFight1_UIAtlas_190: 1712398250
+      T_TPI_UiFight1_UIAtlas_191: 1281928053
+      T_TPI_UiFight1_UIAtlas_192: -1718670976
+      T_TPI_UiFight1_UIAtlas_193: -1143249259
+      T_TPI_UiFight1_UIAtlas_194: -126241586
+      T_TPI_UiFight1_UIAtlas_195: 987715164
+      T_TPI_UiFight1_UIAtlas_196: 1180770133
+      T_TPI_UiFight1_UIAtlas_197: 955841441
+      T_TPI_UiFight1_UIAtlas_2: 1568555310
+      T_TPI_UiFight1_UIAtlas_20: 1082183669
+      T_TPI_UiFight1_UIAtlas_200: -1011143150
+      T_TPI_UiFight1_UIAtlas_201: 890162001
+      T_TPI_UiFight1_UIAtlas_21: 1015542338
+      T_TPI_UiFight1_UIAtlas_22: -1512593389
+      T_TPI_UiFight1_UIAtlas_23: 686726925
+      T_TPI_UiFight1_UIAtlas_24: 2078066960
+      T_TPI_UiFight1_UIAtlas_25: -558076761
+      T_TPI_UiFight1_UIAtlas_26: -261912816
+      T_TPI_UiFight1_UIAtlas_27: 990804548
+      T_TPI_UiFight1_UIAtlas_28: -1392848715
+      T_TPI_UiFight1_UIAtlas_29: 1482884217
+      T_TPI_UiFight1_UIAtlas_3: 406593290
+      T_TPI_UiFight1_UIAtlas_30: -1728430927
+      T_TPI_UiFight1_UIAtlas_31: -1794128740
+      T_TPI_UiFight1_UIAtlas_32: -857922040
+      T_TPI_UiFight1_UIAtlas_33: 615618667
+      T_TPI_UiFight1_UIAtlas_34: -122155577
+      T_TPI_UiFight1_UIAtlas_35: 1117361230
+      T_TPI_UiFight1_UIAtlas_36: 987406100
+      T_TPI_UiFight1_UIAtlas_37: 1897519049
+      T_TPI_UiFight1_UIAtlas_38: 802746550
+      T_TPI_UiFight1_UIAtlas_39: 1831019661
+      T_TPI_UiFight1_UIAtlas_4: 1305553732
+      T_TPI_UiFight1_UIAtlas_40: -28362059
+      T_TPI_UiFight1_UIAtlas_41: -1774227253
+      T_TPI_UiFight1_UIAtlas_42: -320948439
+      T_TPI_UiFight1_UIAtlas_43: -1538015000
+      T_TPI_UiFight1_UIAtlas_44: 1191987499
+      T_TPI_UiFight1_UIAtlas_45: -1428229044
+      T_TPI_UiFight1_UIAtlas_46: -1021726618
+      T_TPI_UiFight1_UIAtlas_47: 585419988
+      T_TPI_UiFight1_UIAtlas_48: 877362861
+      T_TPI_UiFight1_UIAtlas_49: 20462684
+      T_TPI_UiFight1_UIAtlas_5: -173182180
+      T_TPI_UiFight1_UIAtlas_50: -1648839505
+      T_TPI_UiFight1_UIAtlas_51: 1176722656
+      T_TPI_UiFight1_UIAtlas_52: 250325017
+      T_TPI_UiFight1_UIAtlas_53: -902169358
+      T_TPI_UiFight1_UIAtlas_54: 120352024
+      T_TPI_UiFight1_UIAtlas_55: 1945651796
+      T_TPI_UiFight1_UIAtlas_56: -1259736529
+      T_TPI_UiFight1_UIAtlas_57: -577451597
+      T_TPI_UiFight1_UIAtlas_58: 1181450035
+      T_TPI_UiFight1_UIAtlas_59: 2040331178
+      T_TPI_UiFight1_UIAtlas_6: -678296050
+      T_TPI_UiFight1_UIAtlas_60: -1637914591
+      T_TPI_UiFight1_UIAtlas_61: 739383973
+      T_TPI_UiFight1_UIAtlas_62: -92165452
+      T_TPI_UiFight1_UIAtlas_63: -546969323
+      T_TPI_UiFight1_UIAtlas_64: -709534618
+      T_TPI_UiFight1_UIAtlas_65: 1259624636
+      T_TPI_UiFight1_UIAtlas_66: 120924534
+      T_TPI_UiFight1_UIAtlas_67: -106501831
+      T_TPI_UiFight1_UIAtlas_68: -1214130078
+      T_TPI_UiFight1_UIAtlas_69: 991374448
+      T_TPI_UiFight1_UIAtlas_7: 2028276702
+      T_TPI_UiFight1_UIAtlas_70: 2087001158
+      T_TPI_UiFight1_UIAtlas_71: -885025913
+      T_TPI_UiFight1_UIAtlas_72: -228422035
+      T_TPI_UiFight1_UIAtlas_75: 1863341229
+      T_TPI_UiFight1_UIAtlas_76: 2084583240
+      T_TPI_UiFight1_UIAtlas_77: 1422592994
+      T_TPI_UiFight1_UIAtlas_78: -701919018
+      T_TPI_UiFight1_UIAtlas_79: -742778848
+      T_TPI_UiFight1_UIAtlas_8: -1018634745
+      T_TPI_UiFight1_UIAtlas_80: -632284496
+      T_TPI_UiFight1_UIAtlas_81: 1814516569
+      T_TPI_UiFight1_UIAtlas_82: -1264216965
+      T_TPI_UiFight1_UIAtlas_83: 178751198
+      T_TPI_UiFight1_UIAtlas_84: 2042055773
+      T_TPI_UiFight1_UIAtlas_85: 819608708
+      T_TPI_UiFight1_UIAtlas_86: -83544220
+      T_TPI_UiFight1_UIAtlas_87: 1281120883
+      T_TPI_UiFight1_UIAtlas_88: -377253467
+      T_TPI_UiFight1_UIAtlas_89: 350033847
+      T_TPI_UiFight1_UIAtlas_9: -159065029
+      T_TPI_UiFight1_UIAtlas_90: -1956848081
+      T_TPI_UiFight1_UIAtlas_91: 292949499
+      T_TPI_UiFight1_UIAtlas_92: 529347672
+      T_TPI_UiFight1_UIAtlas_93: -2059662652
+      T_TPI_UiFight1_UIAtlas_94: 99398714
+      T_TPI_UiFight1_UIAtlas_95: -1516944064
+      T_TPI_UiFight1_UIAtlas_96: -265457108
+      T_TPI_UiFight1_UIAtlas_97: -101165614
+      T_TPI_UiFight1_UIAtlas_98: -602510529
+      T_TPI_UiFight1_UIAtlas_99: 968360932
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -66,6 +66,13 @@ Desktop.ini
 /MotionCore/[Aa]ssets/AddressableAssetsData/*/*.bin*
 
 # ----------------------------------------------------------------------
+# YooAsset generated content
+# ----------------------------------------------------------------------
+/MotionCore/Bundles/
+/MotionCore/[Aa]ssets/StreamingAssets/yoo/
+/MotionCore/[Aa]ssets/StreamingAssets/yoo.meta
+
+# ----------------------------------------------------------------------
 # Unity Visual Scripting generated content
 # ----------------------------------------------------------------------
 /MotionCore/[Aa]ssets/Unity.VisualScripting.Generated/
