@@ -113,7 +113,7 @@ namespace MotionCore.Editor
             else if (m_CurrentTab == 4)
                 tabContentArea.Add(CreatePrefabRegistrySection());
             else if (m_CurrentTab == 5)
-                tabContentArea.Add(CreatePanelScopesSection());
+                tabContentArea.Add(CreateElementScopesSection());
 
             m_ContentRoot.Add(tabContentArea);
         }
@@ -202,20 +202,13 @@ namespace MotionCore.Editor
         VisualElement CreateRootSection()
         {
             var wrapper = CreateSection("Root Configuration", out var content);
+            bool hasScreenSpaceCamera = HasRenderMode(UISystemConfig.UIRenderMode.ScreenSpaceCamera);
 
             content.Add(CreateTextField("Root Name", m_Config.Root.RootName,
                                         value =>
                                         {
                                             RecordConfig("Edit UI Root Name");
                                             m_Config.Root.RootName = value;
-                                            SaveConfig();
-                                            RefreshWindow();
-                                        }));
-            content.Add(CreateEnumField("Render Mode", m_Config.Root.RenderMode,
-                                        value =>
-                                        {
-                                            RecordConfig("Edit UI Render Mode");
-                                            m_Config.Root.RenderMode = (UISystemConfig.UIRenderMode)value;
                                             SaveConfig();
                                             RefreshWindow();
                                         }));
@@ -236,7 +229,7 @@ namespace MotionCore.Editor
                                               RefreshWindow();
                                           }));
 
-            if (m_Config.Root.RenderMode == UISystemConfig.UIRenderMode.ScreenSpaceCamera)
+            if (hasScreenSpaceCamera)
             {
                 content.Add(CreateEnumField("Camera Source", m_Config.Root.CameraResolveMode,
                                             value =>
@@ -260,17 +253,32 @@ namespace MotionCore.Editor
                                                 }));
                 }
 
-                content.Add(CreateFloatField("Plane Distance", m_Config.Root.PlaneDistance,
-                                             value =>
-                                             {
-                                                 RecordConfig("Edit UI Plane Distance");
-                                                 m_Config.Root.PlaneDistance = value;
-                                                 SaveConfig();
-                                                 RefreshWindow();
-                                             }));
+                if (hasScreenSpaceCamera)
+                {
+                    content.Add(CreateFloatField("Plane Distance", m_Config.Root.PlaneDistance,
+                                                 value =>
+                                                 {
+                                                     RecordConfig("Edit UI Plane Distance");
+                                                     m_Config.Root.PlaneDistance = value;
+                                                     SaveConfig();
+                                                     RefreshWindow();
+                                                 }));
+                }
             }
 
             return wrapper;
+        }
+
+        bool HasRenderMode(UISystemConfig.UIRenderMode renderMode)
+        {
+            for (int i = 0; i < m_Config.Layers.Count; i++)
+            {
+                UISystemConfig.LayerEntry layer = m_Config.Layers[i];
+                if (layer != null && layer.RenderMode == renderMode)
+                    return true;
+            }
+
+            return false;
         }
 
         VisualElement CreateLayerSection()
@@ -285,7 +293,8 @@ namespace MotionCore.Editor
             header.AddToClassList("ui-layer-header-row");
             // Drag handle spacer
             // spacer removed
-            header.Add(CreateLayerCell("ui-layer-name-cell", CreateColumnHeader("Layer Name")));
+            header.Add(CreateLayerCell("ui-layer-name-compact-cell", CreateColumnHeader("Layer Name")));
+            header.Add(CreateLayerCell("ui-layer-mode-cell", CreateColumnHeader("Render Mode")));
             header.Add(CreateLayerCell("ui-layer-order-cell", CreateColumnHeader("Sort Order")));
             header.Add(CreateLayerCell("ui-layer-ray-cell", CreateColumnHeader("Raycaster")));
             header.Add(CreateLayerCell("ui-layer-remove-cell", CreateColumnHeader(string.Empty, true)));
@@ -346,7 +355,27 @@ namespace MotionCore.Editor
                                                    RefreshWindow();
                                                });
             layerIdField.AddToClassList("ui-layer-input-field");
-            line.Add(CreateLayerCell("ui-layer-name-cell", layerIdField));
+            line.Add(CreateLayerCell("ui-layer-name-compact-cell", layerIdField));
+
+            var modes = new List<string>
+            {
+                UISystemConfig.UIRenderMode.ScreenSpaceCamera.ToString(),
+                UISystemConfig.UIRenderMode.ScreenSpaceOverlay.ToString(),
+                UISystemConfig.UIRenderMode.WorldSpace.ToString()
+            };
+            var modeField = new PopupField<string>(modes, layer.RenderMode.ToString());
+            modeField.labelElement.style.display = DisplayStyle.None;
+            modeField.AddToClassList("ui-table-dropdown");
+            modeField.style.flexGrow = 1f;
+            modeField.RegisterValueChangedCallback(evt =>
+                                                   {
+                                                       RecordConfig("Edit UI Layer Render Mode");
+                                                       layer.RenderMode = (UISystemConfig.UIRenderMode)System.Enum.Parse(
+                                                           typeof(UISystemConfig.UIRenderMode), evt.newValue);
+                                                       SaveConfig();
+                                                       RefreshWindow();
+                                                   });
+            line.Add(CreateLayerCell("ui-layer-mode-cell", modeField));
 
             var sortingField = new IntegerField { value = layer.SortingOrder };
             sortingField.labelElement.style.display = DisplayStyle.None;
@@ -504,6 +533,8 @@ namespace MotionCore.Editor
                     string[] guids = AssetDatabase.FindAssets("t:Prefab", new[] { searchPath });
 
                     var panelsToKeep = new List<UISystemConfig.UIPanelEntry>();
+                    var windowsToKeep = new List<UISystemConfig.UIWindowEntry>();
+                    var popupsToKeep = new List<UISystemConfig.UIPopupEntry>();
                     var widgetsToKeep = new List<UISystemConfig.UIWidgetEntry>();
 
                     foreach (var guid in guids)
@@ -513,47 +544,99 @@ namespace MotionCore.Editor
                             continue;
 
                         string id = Path.GetFileNameWithoutExtension(assetPath);
-                        string assetKey = BuildAssetAddress(assetPath, searchPath);
-                        var existingPanel = m_Config.Panels.Find(p => p.Id == id);
-                        var existingWidget = m_Config.Widgets.Find(w => w.Id == id);
+                        string assetKey = BuildAssetAddress(assetPath);
+                        UISystemConfig.UIPrefabType type = ResolvePrefabType(assetPath);
+                        UISystemConfig.UIPrefabBaseEntry existingEntry = FindEntry(id);
 
-                        if (existingPanel != null)
+                        if (existingEntry != null)
                         {
-                            existingPanel.AssetKey = assetKey;
-                            panelsToKeep.Add(existingPanel);
+                            if (existingEntry.PrefabType != type)
+                                existingEntry = CreateEntry(type, id, assetKey);
+                            else
+                                existingEntry.AssetKey = assetKey;
+                            AddEntry(existingEntry);
+                            continue;
                         }
-                        else if (existingWidget != null)
-                        {
-                            existingWidget.AssetKey = assetKey;
-                            widgetsToKeep.Add(existingWidget);
-                        }
-                        else if (IsPanelAsset(assetPath))
-                        {
-                            panelsToKeep.Add(new UISystemConfig.UIPanelEntry
-                            {
-                                Id = id,
-                                AssetKey = assetKey,
-                                LayerId = UISystemConfig.DefaultLayerIds.Normal,
-                                IsEscapable = true
-                            });
-                        }
-                        else
-                        {
-                            widgetsToKeep.Add(new UISystemConfig.UIWidgetEntry
-                            {
-                                Id = id,
-                                AssetKey = assetKey,
-                                LayerId = UISystemConfig.DefaultLayerIds.WorldOverlay
-                            });
-                        }
+
+                        AddEntry(CreateEntry(type, id, assetKey));
                     }
 
                     m_Config.Panels = panelsToKeep;
+                    m_Config.Windows = windowsToKeep;
+                    m_Config.Popups = popupsToKeep;
                     m_Config.Widgets = widgetsToKeep;
-                    RemoveInvalidPanelSelections(CreateValidPanelIdSet());
+                    RemoveInvalidElementSelections(CreateValidElementIdSet());
 
                     SaveConfig();
                     rootVisualElement.schedule.Execute(() => RefreshWindow());
+
+                    void AddEntry(UISystemConfig.UIPrefabBaseEntry entry)
+                    {
+                        switch (entry.PrefabType)
+                        {
+                            case UISystemConfig.UIPrefabType.Window:
+                                windowsToKeep.Add((UISystemConfig.UIWindowEntry)entry);
+                                break;
+                            case UISystemConfig.UIPrefabType.Popup:
+                                popupsToKeep.Add((UISystemConfig.UIPopupEntry)entry);
+                                break;
+                            case UISystemConfig.UIPrefabType.Widget:
+                                widgetsToKeep.Add((UISystemConfig.UIWidgetEntry)entry);
+                                break;
+                            default:
+                                panelsToKeep.Add((UISystemConfig.UIPanelEntry)entry);
+                                break;
+                        }
+                    }
+
+                    UISystemConfig.UIPrefabBaseEntry FindEntry(string entryId)
+                    {
+                        if (m_Config.TryGetPanel(entryId, out UISystemConfig.UIPanelEntry panel))
+                            return panel;
+                        if (m_Config.TryGetWindow(entryId, out UISystemConfig.UIWindowEntry window))
+                            return window;
+                        if (m_Config.TryGetPopup(entryId, out UISystemConfig.UIPopupEntry popup))
+                            return popup;
+                        if (m_Config.TryGetWidget(entryId, out UISystemConfig.UIWidgetEntry widget))
+                            return widget;
+                        return null;
+                    }
+
+                    UISystemConfig.UIPrefabBaseEntry CreateEntry(
+                        UISystemConfig.UIPrefabType entryType, string entryId, string entryAssetKey)
+                    {
+                        switch (entryType)
+                        {
+                            case UISystemConfig.UIPrefabType.Window:
+                                return new UISystemConfig.UIWindowEntry
+                                {
+                                    Id = entryId,
+                                    AssetKey = entryAssetKey,
+                                    LayerId = UISystemConfig.DefaultLayerIds.Normal
+                                };
+                            case UISystemConfig.UIPrefabType.Popup:
+                                return new UISystemConfig.UIPopupEntry
+                                {
+                                    Id = entryId,
+                                    AssetKey = entryAssetKey,
+                                    LayerId = UISystemConfig.DefaultLayerIds.Popup
+                                };
+                            case UISystemConfig.UIPrefabType.Widget:
+                                return new UISystemConfig.UIWidgetEntry
+                                {
+                                    Id = entryId,
+                                    AssetKey = entryAssetKey,
+                                    LayerId = UISystemConfig.DefaultLayerIds.WorldOverlay
+                                };
+                            default:
+                                return new UISystemConfig.UIPanelEntry
+                                {
+                                    Id = entryId,
+                                    AssetKey = entryAssetKey,
+                                    LayerId = UISystemConfig.DefaultLayerIds.Normal
+                                };
+                        }
+                    }
                 },
                 true);
             syncBtn.style.flexShrink = 0; // Prevent from being squished
@@ -575,7 +658,11 @@ namespace MotionCore.Editor
 
                 System.Collections.IList list = type == UISystemConfig.UIPrefabType.Panel
                                                     ? m_Config.Panels
-                                                    : m_Config.Widgets;
+                                                    : type == UISystemConfig.UIPrefabType.Window
+                                                        ? m_Config.Windows
+                                                        : type == UISystemConfig.UIPrefabType.Popup
+                                                            ? m_Config.Popups
+                                                            : m_Config.Widgets;
 
                 var tableRows = new VisualElement();
                 tableRows.AddToClassList("ui-table-rows");
@@ -584,17 +671,21 @@ namespace MotionCore.Editor
                 var header = new VisualElement();
                 header.AddToClassList("ui-layer-header-row");
 
-                header.Add(CreateLayerCell("ui-layer-name-cell", CreateColumnHeader(type.ToString())));
+                var nameHeader = CreateLayerCell("ui-layer-name-cell", CreateColumnHeader(type.ToString()));
+                nameHeader.style.width = 210f;
+                nameHeader.style.flexGrow = 0f;
+                nameHeader.style.flexShrink = 0f;
+                header.Add(nameHeader);
 
                 var layerHeader = CreateColumnHeader("Layer", false);
-                layerHeader.style.width = 120f;
+                layerHeader.style.width = type == UISystemConfig.UIPrefabType.Widget ? 160f : 180f;
                 layerHeader.style.flexShrink = 0f;
                 layerHeader.style.paddingLeft = 11f;
                 header.Add(layerHeader);
 
-                var configHeader =
-                    CreateColumnHeader(type == UISystemConfig.UIPrefabType.Panel ? "Esc" : "Pooled", true);
-                configHeader.style.width = 160f; // 统一宽度保证两表对齐
+                var configHeader = CreateColumnHeader(
+                    type == UISystemConfig.UIPrefabType.Widget ? "Pooled" : "Esc", true);
+                configHeader.style.width = type == UISystemConfig.UIPrefabType.Widget ? 170f : 200f;
                 configHeader.style.flexShrink = 0f;
                 header.Add(configHeader);
 
@@ -696,24 +787,8 @@ namespace MotionCore.Editor
                                     DragAndDrop.AcceptDrag();
                                     RecordConfig("Change Prefab Type via Drag");
 
-                                    if (type == UISystemConfig.UIPrefabType.Panel)
-                                    {
-                                        var newEntry = new UISystemConfig.UIPanelEntry {
-                                            Id = draggedEntry.Id, AssetKey = draggedEntry.AssetKey,
-                                            LayerId = draggedEntry.LayerId, IsEscapable = true
-                                        };
-                                        m_Config.Panels.Insert(Mathf.Min(i, m_Config.Panels.Count), newEntry);
-                                        m_Config.Widgets.Remove(m_Config.Widgets.Find(x => x.Id == draggedEntry.Id));
-                                    }
-                                    else
-                                    {
-                                        var newEntry =
-                                            new UISystemConfig.UIWidgetEntry { Id = draggedEntry.Id,
-                                                                               AssetKey = draggedEntry.AssetKey,
-                                                                               LayerId = draggedEntry.LayerId };
-                                        m_Config.Widgets.Insert(Mathf.Min(i, m_Config.Widgets.Count), newEntry);
-                                        m_Config.Panels.Remove(m_Config.Panels.Find(x => x.Id == draggedEntry.Id));
-                                    }
+                                    RemoveEntry(draggedEntry.Id);
+                                    AddEntry(CreateEntry(type, draggedEntry));
 
                                     DragAndDrop.SetGenericData("DraggedEntry", null);
                                     SaveConfig();
@@ -732,33 +807,40 @@ namespace MotionCore.Editor
                         pathLabel.style.fontSize = 10f;
                         infoContainer.Add(pathLabel);
 
-                        line.Add(CreateLayerCell("ui-layer-name-cell", infoContainer));
+                        var nameCell = CreateLayerCell("ui-layer-name-cell", infoContainer);
+                        nameCell.style.width = 210f;
+                        nameCell.style.flexGrow = 0f;
+                        nameCell.style.flexShrink = 0f;
+                        line.Add(nameCell);
+
+                        var layerCell = new VisualElement();
+                        layerCell.style.width = type == UISystemConfig.UIPrefabType.Widget ? 160f : 180f;
+                        layerCell.style.flexShrink = 0f;
+                        layerCell.style.justifyContent = Justify.FlexStart;
+                        layerCell.style.alignItems = Align.Center;
+                        layerCell.style.paddingLeft = 5f;
 
                         var layerPopup = new PopupField<string>(
                             availableLayers,
-                            availableLayers.Contains(entryBase.LayerId) ? entryBase.LayerId : availableLayers[0]);
+                            availableLayers.Contains(entryBase.LayerId)
+                                ? entryBase.LayerId
+                                : availableLayers[0]);
                         layerPopup.labelElement.style.display = DisplayStyle.None;
                         layerPopup.AddToClassList("ui-table-dropdown");
-                        layerPopup.style.width = 110f;
+                        layerPopup.style.width = type == UISystemConfig.UIPrefabType.Widget ? 150f : 170f;
                         layerPopup.RegisterValueChangedCallback(evt =>
-                                                                {
-                                                                    RecordConfig("Edit Layer");
-                                                                    entryBase.LayerId = evt.newValue;
-                                                                    SaveConfig();
-                                                                });
-
-                        var layerCell = new VisualElement();
-                        layerCell.style.width = 120f;
-                        layerCell.style.flexShrink = 0f;
-                        layerCell.style.justifyContent = Justify.FlexStart; // 靠左对齐与表头一致
-                        layerCell.style.alignItems = Align.Center;
-                        layerCell.style.paddingLeft = 5f; // 增添一些左侧间距避免太贴紧
+                        {
+                            RecordConfig("Edit Layer");
+                            entryBase.LayerId = evt.newValue;
+                            SaveConfig();
+                        });
                         layerCell.Add(layerPopup);
+
                         line.Add(layerCell);
 
                         var toggle = new Toggle();
                         var toggleCell = new VisualElement();
-                        toggleCell.style.width = 160f; // 统一宽度保证两表对齐
+                        toggleCell.style.width = type == UISystemConfig.UIPrefabType.Widget ? 170f : 200f;
                         toggleCell.style.flexShrink = 0f;
                         toggleCell.style.flexDirection = FlexDirection.Row;
                         toggleCell.style.justifyContent = Justify.Center;
@@ -772,15 +854,15 @@ namespace MotionCore.Editor
                         toggleWrapper.Add(toggle);
                         toggleCell.Add(toggleWrapper);
 
-                        if (type == UISystemConfig.UIPrefabType.Panel)
+                        if (type != UISystemConfig.UIPrefabType.Widget)
                         {
-                            toggle.value = ((UISystemConfig.UIPanelEntry)entryBase).IsEscapable;
+                            toggle.value = entryBase.IsEscapable;
                             toggleWrapper.style.width = 80f;
                             toggle.RegisterValueChangedCallback(
                                 evt =>
                                 {
                                     RecordConfig("Edit Stack");
-                                    ((UISystemConfig.UIPanelEntry)entryBase).IsEscapable = evt.newValue;
+                                    entryBase.IsEscapable = evt.newValue;
                                     SaveConfig();
                                 });
                         }
@@ -898,23 +980,8 @@ namespace MotionCore.Editor
                             DragAndDrop.AcceptDrag();
                             RecordConfig("Change Prefab Type via Drag");
 
-                            if (type == UISystemConfig.UIPrefabType.Panel)
-                            {
-                                var newEntry = new UISystemConfig.UIPanelEntry { Id = draggedEntry.Id,
-                                                                                 AssetKey = draggedEntry.AssetKey,
-                                                                                 LayerId = draggedEntry.LayerId,
-                                                                                 IsEscapable = true };
-                                m_Config.Panels.Add(newEntry);
-                                m_Config.Widgets.Remove(m_Config.Widgets.Find(x => x.Id == draggedEntry.Id));
-                            }
-                            else
-                            {
-                                var newEntry = new UISystemConfig.UIWidgetEntry { Id = draggedEntry.Id,
-                                                                                  AssetKey = draggedEntry.AssetKey,
-                                                                                  LayerId = draggedEntry.LayerId };
-                                m_Config.Widgets.Add(newEntry);
-                                m_Config.Panels.Remove(m_Config.Panels.Find(x => x.Id == draggedEntry.Id));
-                            }
+                            RemoveEntry(draggedEntry.Id);
+                            AddEntry(CreateEntry(type, draggedEntry));
 
                             DragAndDrop.SetGenericData("DraggedEntry", null);
                             SaveConfig();
@@ -925,12 +992,100 @@ namespace MotionCore.Editor
                 return container;
             }
 
-            var panelTable = CreatePrefabTable(UISystemConfig.UIPrefabType.Panel);
-            panelTable.style.marginBottom = 15f; // Add vertical margin between the two tables
-            content.Add(panelTable);
-            content.Add(CreatePrefabTable(UISystemConfig.UIPrefabType.Widget));
+            UISystemConfig.UIPrefabType[] types =
+            {
+                UISystemConfig.UIPrefabType.Window,
+                UISystemConfig.UIPrefabType.Panel,
+                UISystemConfig.UIPrefabType.Popup,
+                UISystemConfig.UIPrefabType.Widget
+            };
+            for (int i = 0; i < types.Length; i++)
+            {
+                VisualElement table = CreatePrefabTable(types[i]);
+                table.style.marginBottom = 15f;
+                content.Add(table);
+            }
 
             return wrapper;
+
+            void RemoveEntry(string id)
+            {
+                m_Config.Panels.Remove(m_Config.Panels.Find(entry => entry.Id == id));
+                m_Config.Windows.Remove(m_Config.Windows.Find(entry => entry.Id == id));
+                m_Config.Popups.Remove(m_Config.Popups.Find(entry => entry.Id == id));
+                m_Config.Widgets.Remove(m_Config.Widgets.Find(entry => entry.Id == id));
+            }
+
+            void AddEntry(UISystemConfig.UIPrefabBaseEntry entry)
+            {
+                switch (entry.PrefabType)
+                {
+                    case UISystemConfig.UIPrefabType.Window:
+                        m_Config.Windows.Add((UISystemConfig.UIWindowEntry)entry);
+                        break;
+                    case UISystemConfig.UIPrefabType.Popup:
+                        m_Config.Popups.Add((UISystemConfig.UIPopupEntry)entry);
+                        break;
+                    case UISystemConfig.UIPrefabType.Widget:
+                        m_Config.Widgets.Add((UISystemConfig.UIWidgetEntry)entry);
+                        break;
+                    default:
+                        m_Config.Panels.Add((UISystemConfig.UIPanelEntry)entry);
+                        break;
+                }
+            }
+
+            UISystemConfig.UIPrefabBaseEntry CreateEntry(
+                UISystemConfig.UIPrefabType type, UISystemConfig.UIPrefabBaseEntry source)
+            {
+                if (type == UISystemConfig.UIPrefabType.Window)
+                {
+                    return new UISystemConfig.UIWindowEntry
+                    {
+                        Id = source.Id,
+                        AssetKey = source.AssetKey,
+                        LayerId = UISystemConfig.DefaultLayerIds.Normal,
+                        IsEscapable = source.IsEscapable
+                    };
+                }
+
+                if (type == UISystemConfig.UIPrefabType.Popup)
+                {
+                    return new UISystemConfig.UIPopupEntry
+                    {
+                        Id = source.Id,
+                        AssetKey = source.AssetKey,
+                        LayerId = UISystemConfig.DefaultLayerIds.Popup,
+                        IsEscapable = source.IsEscapable
+                    };
+                }
+
+                if (type == UISystemConfig.UIPrefabType.Widget)
+                {
+                    var widget = new UISystemConfig.UIWidgetEntry
+                    {
+                        Id = source.Id,
+                        AssetKey = source.AssetKey,
+                        LayerId = UISystemConfig.DefaultLayerIds.WorldOverlay
+                    };
+                    if (source is UISystemConfig.UIWidgetEntry sourceWidget)
+                    {
+                        widget.IsPooled = sourceWidget.IsPooled;
+                        widget.InitialCapacity = sourceWidget.InitialCapacity;
+                        widget.MinCachedCount = sourceWidget.MinCachedCount;
+                    }
+
+                    return widget;
+                }
+
+                return new UISystemConfig.UIPanelEntry
+                {
+                    Id = source.Id,
+                    AssetKey = source.AssetKey,
+                    LayerId = UISystemConfig.DefaultLayerIds.Normal,
+                    IsEscapable = source.IsEscapable
+                };
+            }
         }
 
         VisualElement CreateSceneMappingSection()
@@ -1114,18 +1269,18 @@ namespace MotionCore.Editor
             return wrapper;
         }
 
-        VisualElement CreatePanelScopesSection()
+        VisualElement CreateElementScopesSection()
         {
             var wrapper = new VisualElement();
 
             // Sync Scopes
             var syncAction = new System.Action(() =>
                                                {
-                                                   RecordConfig("Sync Panel Scopes");
+                                                   RecordConfig("Sync Element Scopes");
                                                    var validScopes = new HashSet<string>(m_Config.Scopes);
 
                                                    SyncScopeGroups(validScopes);
-                                                   RemoveInvalidPanelSelections(CreateValidPanelIdSet());
+                                                   RemoveInvalidElementSelections(CreateValidElementIdSet());
 
                                                    SaveConfig();
                                                    rootVisualElement.schedule.Execute(() => RefreshWindow());
@@ -1142,15 +1297,19 @@ namespace MotionCore.Editor
             scrollView.verticalScrollerVisibility = ScrollerVisibility.Hidden;
             wrapper.Add(scrollView);
 
-            var availablePanels = new List<string>();
+            var availableElements = new List<string>();
             foreach (var p in m_Config.Panels)
-                availablePanels.Add(p.Id);
-            if (availablePanels.Count == 0)
-                availablePanels.Add(UISystemConfig.DefaultScopeIds.None);
+                availableElements.Add(p.Id);
+            foreach (var window in m_Config.Windows)
+                availableElements.Add(window.Id);
+            foreach (var popup in m_Config.Popups)
+                availableElements.Add(popup.Id);
+            if (availableElements.Count == 0)
+                availableElements.Add(UISystemConfig.DefaultScopeIds.None);
 
-            VisualElement CreatePanelGroupTable(
+            VisualElement CreateElementGroupTable(
                 string title, string columnTitle,
-                IList<UISystemConfig.ScopePanelSelection> list)
+                IList<UISystemConfig.ScopeElementSelection> list)
             {
                 var container = CreateSection(title, out var content);
                 container.style.marginTop = 10f;
@@ -1216,18 +1375,19 @@ namespace MotionCore.Editor
                     line.AddToClassList("ui-layer-line");
                     line.style.alignItems = Align.Center;
 
-                    var panelPopup = new PopupField<string>(availablePanels, availablePanels.Contains(selection.PanelId)
-                                                                                 ? selection.PanelId
-                                                                                 : availablePanels[0]);
-                    panelPopup.labelElement.style.display = DisplayStyle.None;
-                    panelPopup.AddToClassList("ui-table-dropdown");
-                    panelPopup.RegisterValueChangedCallback(evt =>
+                    var elementPopup = new PopupField<string>(
+                        availableElements, availableElements.Contains(selection.ElementId)
+                                                ? selection.ElementId
+                                                : availableElements[0]);
+                    elementPopup.labelElement.style.display = DisplayStyle.None;
+                    elementPopup.AddToClassList("ui-table-dropdown");
+                    elementPopup.RegisterValueChangedCallback(evt =>
                                                             {
-                                                                RecordConfig("Edit Panel Assignment");
-                                                                selection.PanelId = evt.newValue;
+                                                                RecordConfig("Edit Element Assignment");
+                                                                selection.ElementId = evt.newValue;
                                                                 SaveConfig();
                                                             });
-                    var nameCell = CreateLayerCell("ui-layer-name-cell", panelPopup);
+                    var nameCell = CreateLayerCell("ui-layer-name-cell", elementPopup);
                     nameCell.style.width = 240f;
                     nameCell.style.flexShrink = 0;
                     nameCell.style.flexGrow = 0;
@@ -1268,10 +1428,10 @@ namespace MotionCore.Editor
                     line.Add(rowSpace);
 
                     var removeCell =
-                        CreateLayerCell("ui-layer-remove-cell", CreateIconButton("Remove Panel", GetTrashIcon(),
+                        CreateLayerCell("ui-layer-remove-cell", CreateIconButton("Remove Element", GetTrashIcon(),
                                                                                  () =>
                                                                                  {
-                                                                                     RecordConfig("Remove Panel");
+                                                                                     RecordConfig("Remove Element");
                                                                                      list.RemoveAt(index);
                                                                                      SaveConfig();
                                                                                      RefreshWindow();
@@ -1287,7 +1447,7 @@ namespace MotionCore.Editor
                 if (list.Count == 0)
                 {
                     listView.style.display = DisplayStyle.None; // 隐藏自带的空提示
-                    var emptyLabel = new Label("No panels assigned.");
+                    var emptyLabel = new Label("No elements assigned.");
                     emptyLabel.style.color = new Color(0.5f, 0.5f, 0.5f);
                     emptyLabel.style.paddingLeft = 10f;
                     emptyLabel.style.height = 24f;
@@ -1296,11 +1456,11 @@ namespace MotionCore.Editor
                 }
 
                 var addButton = CreateActionButton(
-                    "+ Add Panel",
+                    "+ Add Element",
                     () =>
                     {
-                        RecordConfig("Add Scope Panel");
-                        list.Add(new UISystemConfig.ScopePanelSelection { PanelId = availablePanels[0], Preload = true,
+                        RecordConfig("Add Scope Element");
+                        list.Add(new UISystemConfig.ScopeElementSelection { ElementId = availableElements[0], Preload = true,
                                                                           OpenOnEnter = false });
                         SaveConfig();
                         RefreshWindow();
@@ -1313,12 +1473,12 @@ namespace MotionCore.Editor
             }
 
             scrollView.Add(
-                CreatePanelGroupTable("Global Panels (Always Active)", "Global Panel", m_Config.GlobalPanels));
+                CreateElementGroupTable("Global Elements (Always Active)", "Global Element", m_Config.GlobalElements));
 
-            foreach (var group in m_Config.ScopePanels)
+            foreach (var group in m_Config.ScopeElements)
             {
                 scrollView.Add(
-                    CreatePanelGroupTable($"Scope: {group.ScopeId}", $"[{group.ScopeId}] Panel", group.Panels));
+                    CreateElementGroupTable($"Scope: {group.ScopeId}", $"[{group.ScopeId}] Element", group.Elements));
             }
 
             return wrapper;
@@ -1381,35 +1541,39 @@ namespace MotionCore.Editor
             return config;
         }
 
-        HashSet<string> CreateValidPanelIdSet()
+        HashSet<string> CreateValidElementIdSet()
         {
-            var validPanels = new HashSet<string>();
+            var validElements = new HashSet<string>();
             for (int i = 0; i < m_Config.Panels.Count; i++)
-                validPanels.Add(m_Config.Panels[i].Id);
+                validElements.Add(m_Config.Panels[i].Id);
+            for (int i = 0; i < m_Config.Windows.Count; i++)
+                validElements.Add(m_Config.Windows[i].Id);
+            for (int i = 0; i < m_Config.Popups.Count; i++)
+                validElements.Add(m_Config.Popups[i].Id);
 
-            return validPanels;
+            return validElements;
         }
 
-        void RemoveInvalidPanelSelections(HashSet<string> validPanels)
+        void RemoveInvalidElementSelections(HashSet<string> validElements)
         {
-            for (int i = m_Config.GlobalPanels.Count - 1; i >= 0; i--)
+            for (int i = m_Config.GlobalElements.Count - 1; i >= 0; i--)
             {
-                string panelId = m_Config.GlobalPanels[i].PanelId;
-                if (!validPanels.Contains(panelId) || panelId == UISystemConfig.DefaultScopeIds.None)
+                string elementId = m_Config.GlobalElements[i].ElementId;
+                if (!validElements.Contains(elementId) || elementId == UISystemConfig.DefaultScopeIds.None)
                 {
-                    m_Config.GlobalPanels.RemoveAt(i);
+                    m_Config.GlobalElements.RemoveAt(i);
                 }
             }
 
-            for (int groupIndex = 0; groupIndex < m_Config.ScopePanels.Count; groupIndex++)
+            for (int groupIndex = 0; groupIndex < m_Config.ScopeElements.Count; groupIndex++)
             {
-                List<UISystemConfig.ScopePanelSelection> panels = m_Config.ScopePanels[groupIndex].Panels;
-                for (int panelIndex = panels.Count - 1; panelIndex >= 0; panelIndex--)
+                List<UISystemConfig.ScopeElementSelection> elements = m_Config.ScopeElements[groupIndex].Elements;
+                for (int elementIndex = elements.Count - 1; elementIndex >= 0; elementIndex--)
                 {
-                    string panelId = panels[panelIndex].PanelId;
-                    if (!validPanels.Contains(panelId) || panelId == UISystemConfig.DefaultScopeIds.None)
+                    string elementId = elements[elementIndex].ElementId;
+                    if (!validElements.Contains(elementId) || elementId == UISystemConfig.DefaultScopeIds.None)
                     {
-                        panels.RemoveAt(panelIndex);
+                        elements.RemoveAt(elementIndex);
                     }
                 }
             }
@@ -1417,12 +1581,12 @@ namespace MotionCore.Editor
 
         void SyncScopeGroups(HashSet<string> validScopes)
         {
-            for (int i = m_Config.ScopePanels.Count - 1; i >= 0; i--)
+            for (int i = m_Config.ScopeElements.Count - 1; i >= 0; i--)
             {
-                string scopeId = m_Config.ScopePanels[i].ScopeId;
+                string scopeId = m_Config.ScopeElements[i].ScopeId;
                 if (!validScopes.Contains(scopeId) || scopeId == UISystemConfig.DefaultScopeIds.None)
                 {
-                    m_Config.ScopePanels.RemoveAt(i);
+                    m_Config.ScopeElements.RemoveAt(i);
                 }
             }
 
@@ -1433,9 +1597,9 @@ namespace MotionCore.Editor
                     continue;
                 }
 
-                if (m_Config.ScopePanels.Find(group => group.ScopeId == scope) == null)
+                if (m_Config.ScopeElements.Find(group => group.ScopeId == scope) == null)
                 {
-                    m_Config.ScopePanels.Add(new UISystemConfig.ScopePanelGroup { ScopeId = scope });
+                    m_Config.ScopeElements.Add(new UISystemConfig.ScopeElementGroup { ScopeId = scope });
                 }
             }
         }
@@ -1634,17 +1798,25 @@ namespace MotionCore.Editor
             return field;
         }
 
-        static bool IsPanelAsset(string assetPath)
+        static UISystemConfig.UIPrefabType ResolvePrefabType(string assetPath)
         {
-            return assetPath.Contains("/Panels/");
+            string normalizedPath = assetPath.Replace('\\', '/');
+            if (normalizedPath.Contains("/Windows/"))
+                return UISystemConfig.UIPrefabType.Window;
+            if (normalizedPath.Contains("/Panels/"))
+                return UISystemConfig.UIPrefabType.Panel;
+            if (normalizedPath.Contains("/Popups/"))
+                return UISystemConfig.UIPrefabType.Popup;
+            if (normalizedPath.Contains("/Widgets/"))
+                return UISystemConfig.UIPrefabType.Widget;
+
+            throw new IOException("UI Prefab 必须位于 Windows、Panels、Popups 或 Widgets 目录：" +
+                                  assetPath);
         }
 
-        static string BuildAssetAddress(string assetPath, string searchPath)
+        static string BuildAssetAddress(string assetPath)
         {
-            assetPath = assetPath.Replace('\\', '/');
-            searchPath = searchPath.Replace('\\', '/').TrimEnd('/');
-            string relativePath = assetPath.Substring(searchPath.Length + 1);
-            return Path.ChangeExtension(relativePath, null).Replace('\\', '/');
+            return Path.GetFileNameWithoutExtension(assetPath);
         }
 
         static VisualElement CreateSection(string title, out VisualElement content, VisualElement trailing = null)

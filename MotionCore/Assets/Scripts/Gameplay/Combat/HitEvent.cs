@@ -1,6 +1,8 @@
+using MotionCore.Infrastructure;
+
 namespace MotionCore.Gameplay.Combat
 {
-    public readonly struct HitEvent
+    public readonly struct HitEvent : IEvent
     {
         public HitEvent(HitResult result, HitFeedbackContext feedback)
         {

@@ -35,11 +35,6 @@ namespace MotionCore.Editor
                 errors.Add("PrefabSearchPath 不能为空。");
             }
 
-            if (config.Root.RenderMode == UISystemConfig.UIRenderMode.ScreenSpaceCamera)
-            {
-                ValidateCamera(config, errors, warnings);
-            }
-
             if (config.Layers.Count == 0)
             {
                 errors.Add("至少需要一个 Layer。");
@@ -47,8 +42,11 @@ namespace MotionCore.Editor
 
             var layerIds = new HashSet<string>();
             var sortingOrders = new HashSet<int>();
-            var panelIds = new HashSet<string>();
+            var windowIds = new HashSet<string>();
+            var popupIds = new HashSet<string>();
             var widgetIds = new HashSet<string>();
+            var elementIds = new HashSet<string>();
+            var assetKeys = new HashSet<string>();
 
             for (int i = 0; i < config.Layers.Count; i++)
             {
@@ -74,11 +72,18 @@ namespace MotionCore.Editor
                 {
                     warnings.Add("SortingOrder 重复: " + layer.SortingOrder);
                 }
+
             }
 
             if (!config.ContainsLayer(UISystemConfig.DefaultLayerIds.Normal))
             {
                 warnings.Add("当前配置没有 Normal 层。");
+            }
+
+            if (HasRenderMode(config, UISystemConfig.UIRenderMode.WorldSpace) ||
+                HasRenderMode(config, UISystemConfig.UIRenderMode.ScreenSpaceCamera))
+            {
+                ValidateCamera(config, errors, warnings);
             }
 
             for (int i = 0; i < config.Panels.Count; i++)
@@ -95,15 +100,20 @@ namespace MotionCore.Editor
                     errors.Add("Panel ID 不能为空。");
                     continue;
                 }
-
-                if (!panelIds.Add(panel.Id))
+                if (panel.PrefabType != UISystemConfig.UIPrefabType.Panel)
                 {
-                    errors.Add("Panel ID 重复: " + panel.Id);
+                    errors.Add("Panel 类型不匹配: " + panel.Id);
                 }
+                if (!elementIds.Add(panel.Id))
+                    errors.Add("Panel ID 重复: " + panel.Id);
 
                 if (string.IsNullOrWhiteSpace(panel.AssetKey))
                 {
                     errors.Add("Panel 资源地址为空: " + panel.Id);
+                }
+                else if (!assetKeys.Add(panel.AssetKey))
+                {
+                    errors.Add("UI 资源地址重复: " + panel.AssetKey);
                 }
 
                 if (!config.ContainsLayer(panel.LayerId))
@@ -131,15 +141,27 @@ namespace MotionCore.Editor
                     errors.Add("Widget ID 不能为空。");
                     continue;
                 }
+                if (widget.PrefabType != UISystemConfig.UIPrefabType.Widget)
+                {
+                    errors.Add("Widget 类型不匹配: " + widget.Id);
+                }
 
                 if (!widgetIds.Add(widget.Id))
                 {
                     errors.Add("Widget ID 重复: " + widget.Id);
                 }
+                if (!elementIds.Add(widget.Id))
+                {
+                    errors.Add("UI ID 重复: " + widget.Id);
+                }
 
                 if (string.IsNullOrWhiteSpace(widget.AssetKey))
                 {
                     errors.Add("Widget 资源地址为空: " + widget.Id);
+                }
+                else if (!assetKeys.Add(widget.AssetKey))
+                {
+                    errors.Add("UI 资源地址重复: " + widget.AssetKey);
                 }
 
                 if (!config.ContainsLayer(widget.LayerId))
@@ -148,7 +170,95 @@ namespace MotionCore.Editor
                 }
             }
 
+            for (int i = 0; i < config.Windows.Count; i++)
+            {
+                UISystemConfig.UIWindowEntry window = config.Windows[i];
+                if (window == null)
+                {
+                    errors.Add("存在空 Window 条目。");
+                    continue;
+                }
+
+                if (string.IsNullOrWhiteSpace(window.Id))
+                {
+                    errors.Add("Window ID 不能为空。");
+                    continue;
+                }
+                if (window.PrefabType != UISystemConfig.UIPrefabType.Window)
+                {
+                    errors.Add("Window 类型不匹配: " + window.Id);
+                }
+                if (!windowIds.Add(window.Id) || !elementIds.Add(window.Id))
+                {
+                    errors.Add("Window ID 重复: " + window.Id);
+                }
+
+                if (string.IsNullOrWhiteSpace(window.AssetKey))
+                {
+                    errors.Add("Window 资源地址为空: " + window.Id);
+                }
+                else if (!assetKeys.Add(window.AssetKey))
+                {
+                    errors.Add("UI 资源地址重复: " + window.AssetKey);
+                }
+
+                if (!config.ContainsLayer(window.LayerId))
+                {
+                    errors.Add("Window 层不存在: " + window.Id + " -> " + window.LayerId);
+                }
+            }
+
+            for (int i = 0; i < config.Popups.Count; i++)
+            {
+                UISystemConfig.UIPopupEntry popup = config.Popups[i];
+                if (popup == null)
+                {
+                    errors.Add("存在空 Popup 条目。");
+                    continue;
+                }
+
+                if (string.IsNullOrWhiteSpace(popup.Id))
+                {
+                    errors.Add("Popup ID 不能为空。");
+                    continue;
+                }
+                if (popup.PrefabType != UISystemConfig.UIPrefabType.Popup)
+                {
+                    errors.Add("Popup 类型不匹配: " + popup.Id);
+                }
+                if (!popupIds.Add(popup.Id) || !elementIds.Add(popup.Id))
+                {
+                    errors.Add("Popup ID 重复: " + popup.Id);
+                }
+
+                if (string.IsNullOrWhiteSpace(popup.AssetKey))
+                {
+                    errors.Add("Popup 资源地址为空: " + popup.Id);
+                }
+                else if (!assetKeys.Add(popup.AssetKey))
+                {
+                    errors.Add("UI 资源地址重复: " + popup.AssetKey);
+                }
+
+                if (!config.ContainsLayer(popup.LayerId))
+                {
+                    errors.Add("Popup 层不存在: " + popup.Id + " -> " + popup.LayerId);
+                }
+            }
+
             return errors.Count == 0;
+        }
+
+        static bool HasRenderMode(UISystemConfig config, UISystemConfig.UIRenderMode renderMode)
+        {
+            for (int i = 0; i < config.Layers.Count; i++)
+            {
+                UISystemConfig.LayerEntry layer = config.Layers[i];
+                if (layer != null && layer.RenderMode == renderMode)
+                    return true;
+            }
+
+            return false;
         }
 
         static void ValidateCamera(UISystemConfig config, List<string> errors, List<string> warnings)
@@ -157,7 +267,7 @@ namespace MotionCore.Editor
             {
                 if (Camera.main == null)
                 {
-                    warnings.Add("当前场景没有 MainCamera，预览时可能看不到 Screen Space Camera 结果。");
+                    warnings.Add("当前场景没有 MainCamera，预览时可能看不到 Camera 或 World Space 结果。");
                 }
 
                 return;

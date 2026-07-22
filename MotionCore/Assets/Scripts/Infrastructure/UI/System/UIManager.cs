@@ -5,30 +5,30 @@ using UnityEngine.SceneManagement;
 namespace MotionCore.Infrastructure
 {
     /// <summary>
-    /// UI 子系统主入口：根据当前场景作用域收敛允许面板与默认打开面板。
+    /// UI 子系统主入口：根据当前场景作用域收敛允许元素与默认打开元素。
     /// </summary>
     [DisallowMultipleComponent]
-    [RequireComponent(typeof(UIPanelManager))]
-    public sealed class UIManager : MonoBehaviour
+    [RequireComponent(typeof(UIElementManager))]
+    public sealed class UIManager : MonoBehaviour, IEventListener<SceneLoadedEvent>
     {
         [Header("流程")]
-        [Tooltip("按 ESC 时尝试关闭顶部可返回面板")]
+        [Tooltip("按 ESC 时尝试关闭顶部可返回元素")]
         [SerializeField]
         bool m_EnableEscapeBack = true;
 
-        readonly HashSet<string> m_KeepPanelIds = new();
-        readonly HashSet<string> m_PreloadPanelIds = new();
-        readonly HashSet<string> m_OpenOnEnterPanelIds = new();
+        readonly HashSet<string> m_KeepElementIds = new();
+        readonly HashSet<string> m_PreloadElementIds = new();
+        readonly HashSet<string> m_OpenOnEnterElementIds = new();
 
-        UIPanelManager m_PanelManager;
-        UIService m_UIService;
+        UIElementManager m_ElementManager;
+        IEventBus m_EventBus;
         bool m_Booted;
 
-        UISystemConfig Config => m_PanelManager.Config;
+        UISystemConfig Config => m_ElementManager.Config;
 
         void Awake()
         {
-            m_PanelManager = GetComponent<UIPanelManager>();
+            m_ElementManager = GetComponent<UIElementManager>();
         }
 
         /// <summary>
@@ -36,12 +36,8 @@ namespace MotionCore.Infrastructure
         /// </summary>
         void OnDestroy()
         {
-            SceneManager.sceneLoaded -= OnSceneLoaded;
-            ServiceLocator.Unregister(m_PanelManager);
-            if (m_UIService != null)
-            {
-                ServiceLocator.Unregister<IUIService>(m_UIService);
-            }
+            m_EventBus.Unsubscribe<SceneLoadedEvent>(this);
+            ServiceLocator.Unregister<IUIService>(m_ElementManager);
         }
 
         void Update()
@@ -50,77 +46,76 @@ namespace MotionCore.Infrastructure
                 return;
 
             if (Input.GetKeyDown(KeyCode.Escape))
-                m_PanelManager.TryCloseTopEscapable();
+                m_ElementManager.TryCloseTopEscapable();
         }
 
         /// <summary>
-        /// 初始化面板运行时并应用当前场景作用域。
+        /// 初始化 UI 元素运行时并应用当前场景 UI 作用域。
         /// </summary>
-        public void BootRuntime()
+        internal void BootRuntime()
         {
             if (m_Booted)
                 return;
 
-            m_PanelManager.InitializeRuntime();
-            ServiceLocator.Register(m_PanelManager);
-            m_UIService = new UIService(m_PanelManager);
-            ServiceLocator.Register<IUIService>(m_UIService);
+            m_ElementManager.InitializeRuntime();
+            m_EventBus = ServiceLocator.Resolve<IEventBus>();
+            ServiceLocator.Register<IUIService>(m_ElementManager);
             ApplySceneScope(SceneManager.GetActiveScene().name, false);
-            SceneManager.sceneLoaded += OnSceneLoaded;
+            m_EventBus.Subscribe<SceneLoadedEvent>(this);
             m_Booted = true;
         }
 
         /// <summary>
         /// 场景切换后重新应用 UI 作用域。
         /// </summary>
-        void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        public void OnEvent(SceneLoadedEvent eventData)
         {
-            m_PanelManager.RefreshCanvasSettings();
-            ApplySceneScope(scene.name, true);
+            m_ElementManager.RefreshCanvasSettings();
+            ApplySceneScope(eventData.Scene.name, true);
         }
 
         /// <summary>
-        /// 按场景作用域更新允许、预加载和默认打开的面板。
+        /// 按场景作用域更新允许、预加载和默认打开的 UI 元素。
         /// </summary>
-        void ApplySceneScope(string sceneName, bool releaseUnscopedPanels)
+        void ApplySceneScope(string sceneName, bool releaseUnscopedElements)
         {
             string scopeId = Config.TryGetSceneScope(sceneName, out string mappedScopeId)
                                  ? mappedScopeId
                                  : UISystemConfig.DefaultScopeIds.None;
-            m_KeepPanelIds.Clear();
-            m_PreloadPanelIds.Clear();
-            m_OpenOnEnterPanelIds.Clear();
-            AddPanelSelections(Config.GlobalPanels);
+            m_KeepElementIds.Clear();
+            m_PreloadElementIds.Clear();
+            m_OpenOnEnterElementIds.Clear();
+            AddElementSelections(Config.GlobalElements);
 
-            if (Config.TryGetScopePanelGroup(scopeId, out UISystemConfig.ScopePanelGroup group))
-                AddPanelSelections(group.Panels);
+            if (Config.TryGetScopeElementGroup(scopeId, out UISystemConfig.ScopeElementGroup group))
+                AddElementSelections(group.Elements);
 
-            m_PanelManager.SetAllowedPanels(m_KeepPanelIds);
-            if (releaseUnscopedPanels)
-                m_PanelManager.ReleasePanelsExcept(m_KeepPanelIds);
+            m_ElementManager.SetAllowed(m_KeepElementIds);
+            if (releaseUnscopedElements)
+                m_ElementManager.ReleaseExcept(m_KeepElementIds);
 
-            m_PanelManager.PreloadPanels(m_PreloadPanelIds);
+            m_ElementManager.Preload(m_PreloadElementIds);
 
-            foreach (string panelId in m_KeepPanelIds)
+            foreach (string elementId in m_KeepElementIds)
             {
-                if (m_OpenOnEnterPanelIds.Contains(panelId))
-                    m_PanelManager.Open(panelId);
+                if (m_OpenOnEnterElementIds.Contains(elementId))
+                    m_ElementManager.Open(elementId);
                 else
-                    m_PanelManager.Close(panelId);
+                    m_ElementManager.Close(elementId);
             }
         }
 
-        void AddPanelSelections(IReadOnlyList<UISystemConfig.ScopePanelSelection> panelConfigs)
+        void AddElementSelections(IReadOnlyList<UISystemConfig.ScopeElementSelection> elementConfigs)
         {
-            for (int i = 0; i < panelConfigs.Count; i++)
+            for (int i = 0; i < elementConfigs.Count; i++)
             {
-                UISystemConfig.ScopePanelSelection panelConfig = panelConfigs[i];
-                m_KeepPanelIds.Add(panelConfig.PanelId);
-                if (panelConfig.Preload)
-                    m_PreloadPanelIds.Add(panelConfig.PanelId);
+                UISystemConfig.ScopeElementSelection elementConfig = elementConfigs[i];
+                m_KeepElementIds.Add(elementConfig.ElementId);
+                if (elementConfig.Preload)
+                    m_PreloadElementIds.Add(elementConfig.ElementId);
 
-                if (panelConfig.OpenOnEnter)
-                    m_OpenOnEnterPanelIds.Add(panelConfig.PanelId);
+                if (elementConfig.OpenOnEnter)
+                    m_OpenOnEnterElementIds.Add(elementConfig.ElementId);
             }
         }
     }

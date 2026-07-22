@@ -15,6 +15,7 @@ namespace MotionCore.Gameplay.Targeting
 
         public static IReadOnlyCollection<LockOnTarget> Targets => s_Targets;
         public Transform LockPoint => m_LockPoint;
+        public Health Health => m_Health;
         public Faction Faction => m_Faction;
         public bool IsAvailable => isActiveAndEnabled && !m_Health.IsDepleted;
 

@@ -1,5 +1,6 @@
 using MotionCore.Gameplay.Cameras;
 using MotionCore.Gameplay.Combat;
+using MotionCore.Gameplay.Common;
 using MotionCore.Gameplay.Input;
 using MotionCore.Gameplay.Targeting;
 using MotionCore.Infrastructure;
@@ -40,6 +41,8 @@ namespace MotionCore.Gameplay.Character
         void Start()
         {
             m_Camera = ServiceLocator.Resolve<ICameraService>();
+            // TODO: 接入玩家生成流程后由生成器发布。
+            ServiceLocator.Resolve<IEventBus>().Publish(new PlayerSpawnedEvent(GetComponentInParent<Health>()));
         }
 
         void OnDestroy()

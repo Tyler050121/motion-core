@@ -1,6 +1,8 @@
 using MotionCore.Gameplay.Character;
 using MotionCore.Gameplay.Combat;
+using MotionCore.Gameplay.Common;
 using MotionCore.Gameplay.Targeting;
+using MotionCore.Infrastructure;
 using UnityEngine;
 using CharacterContext = MotionCore.Gameplay.Character.Character;
 
@@ -11,13 +13,14 @@ namespace MotionCore.Gameplay.AI
     /// 不承载任何行为决策——巡逻/追击等逻辑由行为树节点编排，本类只负责把意图下发给命令控制器。
     /// </summary>
     [DisallowMultipleComponent]
-    public sealed class EnemyBehaviorController : MonoBehaviour
+    public sealed class EnemyBehaviorController : MonoBehaviour, IEventListener<HitEvent>
     {
         [SerializeField, Tooltip("敌人角色根")]
         CharacterContext m_Character;
 
         ICharacterCommandExecutor m_CommandExecutor;
-        Hurtbox m_Hurtbox;
+        IDamageable m_Damageable;
+        IEventBus m_EventBus;
         Vector3 m_HomePosition;
         Transform m_Target;
         float m_NextAttackTime;
@@ -72,7 +75,8 @@ namespace MotionCore.Gameplay.AI
         void Awake()
         {
             m_CommandExecutor = GetComponentInChildren<ICharacterCommandExecutor>();
-            m_Hurtbox = transform.root.GetComponentInChildren<Hurtbox>();
+            m_Damageable = GetComponentInParent<IDamageable>();
+            m_EventBus = ServiceLocator.Resolve<IEventBus>();
             m_HomePosition = m_Character.transform.position;
 
             // 攻击朝向对准当前目标，无目标则维持正面。
@@ -81,12 +85,12 @@ namespace MotionCore.Gameplay.AI
 
         void OnEnable()
         {
-            m_Hurtbox.HitReceived += OnHitReceived;
+            m_EventBus.Subscribe<HitEvent>(m_Damageable, this);
         }
 
         void OnDisable()
         {
-            m_Hurtbox.HitReceived -= OnHitReceived;
+            m_EventBus.Unsubscribe<HitEvent>(m_Damageable, this);
 
             m_CommandExecutor.StopMove();
             m_Target = null;
@@ -95,7 +99,7 @@ namespace MotionCore.Gameplay.AI
         /// <summary>
         /// 被命中即仇恨攻击者：锁其锁定点
         /// </summary>
-        void OnHitReceived(HitEvent hitEvent)
+        public void OnEvent(HitEvent hitEvent)
         {
             Transform attacker = hitEvent.Result.Attacker;
 

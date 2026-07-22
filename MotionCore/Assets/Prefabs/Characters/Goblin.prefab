@@ -59,6 +59,7 @@ GameObject:
   - component: {fileID: 5858993967822498649}
   - component: {fileID: 5453529004559671413}
   - component: {fileID: 8821119268093245579}
+  - component: {fileID: 5353110664472907182}
   m_Layer: 0
   m_Name: Goblin
   m_TagString: Untagged
@@ -139,7 +140,7 @@ MonoBehaviour:
   m_CharacterDefinition: {fileID: 11400000, guid: 39b89fdc4218444fbb1f6215ecb28824,
     type: 2}
   m_Health:
-    m_MaxHealth: 1000000
+    m_MaxHealth: 100
   m_ConfigReceivers:
   - {fileID: 4378358469696398247}
   - {fileID: 3518702131146598990}
@@ -186,6 +187,19 @@ MonoBehaviour:
   m_LockPoint: {fileID: 1482827667125149058}
   m_Health: {fileID: 5858993967822498649}
   m_Faction: 0
+--- !u!114 &5353110664472907182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1864300481083180197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8980ca6e000f0e528a35aef5f85ca4ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Offset: {x: 0, y: 2, z: 0}
 --- !u!1 &2495464562767638432
 GameObject:
   m_ObjectHideFlags: 0

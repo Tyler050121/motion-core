@@ -314,7 +314,6 @@ MonoBehaviour:
   m_DamageDuration: 0.35
   m_HealDelay: 0.15
   m_HealDuration: 0.25
-  m_TestStep: 10
 --- !u!1 &8033316378023271155
 GameObject:
   m_ObjectHideFlags: 0

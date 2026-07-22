@@ -4,11 +4,11 @@ using UnityEngine;
 namespace MotionCore.Infrastructure
 {
     /// <summary>
-    /// 面板开关场动画。
+    /// UI 元素开关场动画。
     /// </summary>
     [RequireComponent(typeof(CanvasGroup))]
     [DisallowMultipleComponent]
-    public sealed class UIPanelTransition : MonoBehaviour
+    public sealed class UIElementTransition : MonoBehaviour
     {
         [Header("开场动画")]
         [Tooltip("开场缩放起点。")]
@@ -57,7 +57,7 @@ namespace MotionCore.Infrastructure
         }
 
         /// <summary>
-        /// 播放面板开场动画并恢复交互。
+        /// 播放 UI 元素开场动画并恢复交互。
         /// </summary>
         public IEnumerator PlayOpen()
         {
@@ -69,7 +69,7 @@ namespace MotionCore.Infrastructure
         }
 
         /// <summary>
-        /// 关闭交互并播放面板退场动画。
+        /// 关闭交互并播放 UI 元素退场动画。
         /// </summary>
         public IEnumerator PlayClose()
         {

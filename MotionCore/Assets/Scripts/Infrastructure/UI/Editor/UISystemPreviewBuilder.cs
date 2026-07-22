@@ -82,12 +82,21 @@ namespace MotionCore.Editor
             layerObject.transform.SetParent(root, false);
 
             RectTransform layerRoot = layerObject.GetComponent<RectTransform>();
-            StretchRoot(layerRoot);
+            if (layer.RenderMode == UISystemConfig.UIRenderMode.WorldSpace)
+                ConfigureWorldLayer(layerRoot, config.Root.ReferenceResolution);
+            else
+                StretchRoot(layerRoot);
 
             Canvas canvas = layerObject.GetComponent<Canvas>();
             ConfigureCanvas(canvas, config, layer);
 
             CanvasScaler scaler = layerObject.GetComponent<CanvasScaler>();
+            if (layer.RenderMode == UISystemConfig.UIRenderMode.WorldSpace)
+            {
+                scaler.enabled = false;
+                return;
+            }
+
             scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
             scaler.referenceResolution = config.Root.ReferenceResolution;
             scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
@@ -99,16 +108,33 @@ namespace MotionCore.Editor
             canvas.overrideSorting = true;
             canvas.sortingOrder = layer.SortingOrder;
 
-            if (config.Root.RenderMode == UISystemConfig.UIRenderMode.ScreenSpaceOverlay)
+            if (layer.RenderMode == UISystemConfig.UIRenderMode.WorldSpace)
+            {
+                canvas.renderMode = RenderMode.WorldSpace;
+                canvas.worldCamera = ResolveCamera(config);
+            }
+            else if (layer.RenderMode == UISystemConfig.UIRenderMode.ScreenSpaceCamera)
+            {
+                canvas.renderMode = RenderMode.ScreenSpaceCamera;
+                canvas.worldCamera = ResolveCamera(config);
+            }
+            else
             {
                 canvas.renderMode = RenderMode.ScreenSpaceOverlay;
                 canvas.worldCamera = null;
-                return;
             }
-
-            canvas.renderMode = RenderMode.ScreenSpaceCamera;
-            canvas.worldCamera = ResolveCamera(config);
             canvas.planeDistance = config.Root.PlaneDistance;
+        }
+
+        static void ConfigureWorldLayer(RectTransform rect, Vector2 size)
+        {
+            rect.anchorMin = new Vector2(0.5f, 0.5f);
+            rect.anchorMax = new Vector2(0.5f, 0.5f);
+            rect.pivot = new Vector2(0.5f, 0.5f);
+            rect.sizeDelta = size;
+            rect.localPosition = Vector3.zero;
+            rect.localRotation = Quaternion.identity;
+            rect.localScale = Vector3.one * UISystemConfig.DefaultWorldScale;
         }
 
         static Camera ResolveCamera(UISystemConfig config)

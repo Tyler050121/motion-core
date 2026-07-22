@@ -1,18 +1,35 @@
+using UnityEngine;
+
 namespace MotionCore.Infrastructure
 {
     /// <summary>
-    /// UI 面板显式开关服务。
+    /// 可打开 UI 显式开关服务。
     /// </summary>
     public interface IUIService
     {
         /// <summary>
-        /// 打开当前作用域允许的面板。
+        /// 打开当前作用域允许的 UI。
         /// </summary>
-        void Open(string panelId);
+        void Open(string id);
 
         /// <summary>
-        /// 关闭指定面板。
+        /// 关闭指定 UI。
         /// </summary>
-        void Close(string panelId);
+        void Close(string id);
+
+        /// <summary>
+        /// 创建动态 Widget。
+        /// </summary>
+        GameObject CreateWidget(string id);
+
+        /// <summary>
+        /// 注册动态世界 Widget。
+        /// </summary>
+        void RegisterWorldWidget(IWorldWidget widget);
+
+        /// <summary>
+        /// 注销动态世界 Widget。
+        /// </summary>
+        void UnregisterWorldWidget(IWorldWidget widget);
     }
 }

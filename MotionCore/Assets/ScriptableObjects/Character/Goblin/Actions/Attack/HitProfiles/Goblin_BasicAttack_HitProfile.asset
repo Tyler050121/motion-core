@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62878bc6035f4c8f9496fc5197bac348, type: 3}
   m_Name: Goblin_BasicAttack_HitProfile
   m_EditorClassIdentifier: 
-  m_Damage: 2
+  m_Damage: 10
   m_Radius: 0.8
   m_TargetLayers:
     serializedVersion: 2

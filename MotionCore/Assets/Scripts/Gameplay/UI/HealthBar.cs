@@ -11,7 +11,6 @@ namespace MotionCore.Gameplay.UI
         [SerializeField, Min(0.01f), Tooltip("受伤段扣除时间")] float m_DamageDuration = 0.35f;
         [SerializeField, Min(0f), Tooltip("回血段停留时间")] float m_HealDelay = 0.15f;
         [SerializeField, Min(0.01f), Tooltip("回血段填充时间")] float m_HealDuration = 0.25f;
-        [SerializeField, Min(0f), Tooltip("测试扣血量")] float m_TestStep = 10f;
 
         float m_CurrentHealth = 100f;
         float m_MaxHealth = 100f;
@@ -22,16 +21,11 @@ namespace MotionCore.Gameplay.UI
 
         void Awake()
         {
-            SetHealth(m_CurrentHealth, m_MaxHealth);
+            SetHealthImmediate(m_CurrentHealth, m_MaxHealth);
         }
 
         void Update()
         {
-            if (UnityEngine.Input.GetKeyDown(KeyCode.Minus))
-                SetHealth(m_CurrentHealth - m_TestStep, m_MaxHealth);
-            if (UnityEngine.Input.GetKeyDown(KeyCode.Equals))
-                SetHealth(m_CurrentHealth + m_TestStep, m_MaxHealth);
-
             if (Value < m_HealValue)
             {
                 if (m_HealDelayRemaining > 0f)
@@ -92,6 +86,24 @@ namespace MotionCore.Gameplay.UI
                 m_DamageDelayRemaining = m_DamageDelay;
 
             ResizeBar(m_DamageFill.rectTransform, m_DamageValue);
+        }
+
+        /// <summary>
+        /// 立即刷新全部血条层。
+        /// </summary>
+        public void SetHealthImmediate(float currentHealth, float maxHealth)
+        {
+            m_MaxHealth = Mathf.Max(1f, maxHealth);
+            m_CurrentHealth = Mathf.Clamp(currentHealth, 0f, m_MaxHealth);
+            float value = m_CurrentHealth / m_MaxHealth;
+
+            SetValue(value);
+            m_DamageValue = value;
+            m_HealValue = value;
+            m_DamageDelayRemaining = 0f;
+            m_HealDelayRemaining = 0f;
+            ResizeBar(m_DamageFill.rectTransform, value);
+            ResizeBar(m_HealFill.rectTransform, value);
         }
     }
 }

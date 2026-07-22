@@ -1,5 +1,6 @@
 using MotionCore.Infrastructure;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace MotionCore.ApplicationLifecycle
 {
@@ -30,10 +31,15 @@ namespace MotionCore.ApplicationLifecycle
         [SerializeField, Tooltip("VFX 根节点")]
         Transform m_VfxRoot;
 
+        [SerializeField, Tooltip("启动完成后进入的场景")]
+        string m_StartupSceneName;
+
         ICursorService m_Cursor;
         ITimerService m_Timer;
+        IEventBus m_EventBus;
         IAssetProvider m_Assets;
         VfxService m_Vfx;
+        SceneNavigator m_SceneNavigator;
         UIRuntimeBootstrap m_UiBootstrap;
         bool m_RuntimeStarted;
 
@@ -41,15 +47,20 @@ namespace MotionCore.ApplicationLifecycle
         {
             // 先把运行时基础服务准备好，再交给 UI 启动器接管界面。
             Application.runInBackground = GlobalConfig.Application.RunInBackground;
+            DontDestroyOnLoad(gameObject);
             m_Cursor = new CursorService();
             m_Timer = new TimerService();
+            m_EventBus = new EventBus();
             m_Assets = CreateAssetProvider();
             m_Vfx = new VfxService(m_Assets, m_Timer, m_VfxRoot);
+            m_SceneNavigator = new SceneNavigator(m_EventBus);
             m_UiBootstrap = GetComponent<UIRuntimeBootstrap>();
             ServiceLocator.Register(m_Cursor);
             ServiceLocator.Register(m_Timer);
+            ServiceLocator.Register(m_EventBus);
             ServiceLocator.Register(m_Assets);
             ServiceLocator.Register<IVfxService>(m_Vfx);
+            ServiceLocator.Register<ISceneNavigator>(m_SceneNavigator);
         }
 
         async void Start()
@@ -62,8 +73,8 @@ namespace MotionCore.ApplicationLifecycle
             }
 
             m_UiBootstrap.Boot();
-
             m_RuntimeStarted = true;
+            m_SceneNavigator.LoadScene(m_StartupSceneName, LoadSceneMode.Single);
         }
 
         void Update()
@@ -89,8 +100,12 @@ namespace MotionCore.ApplicationLifecycle
 
             ServiceLocator.Unregister(m_Cursor);
             ServiceLocator.Unregister(m_Timer);
+            ServiceLocator.Unregister(m_EventBus);
             ServiceLocator.Unregister(m_Assets);
             ServiceLocator.Unregister<IVfxService>(m_Vfx);
+            ServiceLocator.Unregister<ISceneNavigator>(m_SceneNavigator);
+            m_SceneNavigator.Dispose();
+            m_EventBus.Clear();
             m_Vfx.Dispose();
             if (m_Assets is System.IDisposable disposableAssets)
             {

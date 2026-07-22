@@ -16,9 +16,6 @@ namespace MotionCore.Infrastructure
         [SerializeField, Tooltip("运行时根节点名称。")]
         string m_RuntimeRootName = "UIRuntime";
 
-        [SerializeField, Tooltip("场景切换时保留 UI 运行时。")]
-        bool m_DontDestroyOnLoad = true;
-
         UIManager m_UIManager;
         GameObject m_RuntimeRoot;
 
@@ -35,14 +32,11 @@ namespace MotionCore.Infrastructure
             if (string.IsNullOrWhiteSpace(m_RuntimeRootName))
                 throw new InvalidOperationException("UI 运行时根节点名称不能为空。");
 
-            if (m_DontDestroyOnLoad)
-                DontDestroyOnLoad(gameObject);
-
             m_RuntimeRoot = new GameObject(m_RuntimeRootName);
             m_RuntimeRoot.transform.SetParent(transform, false);
 
-            var panelManager = m_RuntimeRoot.AddComponent<UIPanelManager>();
-            panelManager.SetConfig(m_Config);
+            var elementManager = m_RuntimeRoot.AddComponent<UIElementManager>();
+            elementManager.SetConfig(m_Config);
             m_UIManager = m_RuntimeRoot.AddComponent<UIManager>();
             m_UIManager.BootRuntime();
         }

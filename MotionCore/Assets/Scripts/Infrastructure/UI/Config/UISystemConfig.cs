@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace MotionCore.Infrastructure
 {
@@ -13,7 +14,8 @@ namespace MotionCore.Infrastructure
         public enum UIRenderMode
         {
             ScreenSpaceCamera = 0,
-            ScreenSpaceOverlay = 1
+            ScreenSpaceOverlay = 1,
+            WorldSpace = 2
         }
 
         public enum UICameraResolveMode
@@ -25,7 +27,9 @@ namespace MotionCore.Infrastructure
         public enum UIPrefabType
         {
             Panel = 0,
-            Widget = 1
+            Widget = 1,
+            Window = 2,
+            Popup = 3
         }
 
         [Serializable]
@@ -33,9 +37,6 @@ namespace MotionCore.Infrastructure
         {
             [Tooltip("运行时 UI 根节点名")]
             public string RootName = "UIRoot";
-
-            [Tooltip("Canvas 渲染模式")]
-            public UIRenderMode RenderMode = UIRenderMode.ScreenSpaceOverlay;
 
             [Tooltip("屏幕相机解析方式")]
             public UICameraResolveMode CameraResolveMode = UICameraResolveMode.MainCamera;
@@ -60,6 +61,9 @@ namespace MotionCore.Infrastructure
         {
             [Tooltip("逻辑层 ID，例如 Background / Popup")]
             public string LayerId = DefaultLayerIds.Normal;
+
+            [Tooltip("Canvas 渲染模式")]
+            public UIRenderMode RenderMode = UIRenderMode.ScreenSpaceOverlay;
 
             [Tooltip("Canvas sorting order")]
             public int SortingOrder = 200;
@@ -87,22 +91,40 @@ namespace MotionCore.Infrastructure
             [Tooltip("运行时资源地址")]
             public string AssetKey = string.Empty;
 
-            [Tooltip("UI 类型：Panel 或 Widget")]
+            [Tooltip("UI 类型")]
             public UIPrefabType PrefabType = UIPrefabType.Panel;
 
             [Tooltip("目标层级")]
             public string LayerId = string.Empty;
+
+            [Tooltip("是否允许进入返回栈并响应 ESC")]
+            public bool IsEscapable = true;
         }
 
         [Serializable]
         public sealed class UIPanelEntry : UIPrefabBaseEntry
         {
-            [Tooltip("是否允许进入返回栈并响应 ESC")]
-            public bool IsEscapable = true;
-
             public UIPanelEntry()
             {
                 PrefabType = UIPrefabType.Panel;
+            }
+        }
+
+        [Serializable]
+        public sealed class UIWindowEntry : UIPrefabBaseEntry
+        {
+            public UIWindowEntry()
+            {
+                PrefabType = UIPrefabType.Window;
+            }
+        }
+
+        [Serializable]
+        public sealed class UIPopupEntry : UIPrefabBaseEntry
+        {
+            public UIPopupEntry()
+            {
+                PrefabType = UIPrefabType.Popup;
             }
         }
 
@@ -127,10 +149,11 @@ namespace MotionCore.Infrastructure
         }
 
         [Serializable]
-        public sealed class ScopePanelSelection
+        public sealed class ScopeElementSelection
         {
-            [Tooltip("面板 ID")]
-            public string PanelId = string.Empty;
+            [FormerlySerializedAs("PanelId")]
+            [Tooltip("UI 元素 ID")]
+            public string ElementId = string.Empty;
 
             [Tooltip("进入时是否预加载")]
             public bool Preload = true;
@@ -140,16 +163,19 @@ namespace MotionCore.Infrastructure
         }
 
         [Serializable]
-        public sealed class ScopePanelGroup
+        public sealed class ScopeElementGroup
         {
             [Tooltip("绑定的 Scope ID")]
             public string ScopeId = string.Empty;
 
-            [Tooltip("分配给该 Scope 的面板列表")]
-            public List<ScopePanelSelection> Panels = new List<ScopePanelSelection>();
+            [FormerlySerializedAs("Panels")]
+            [Tooltip("分配给该 Scope 的 UI 元素列表")]
+            public List<ScopeElementSelection> Elements = new List<ScopeElementSelection>();
         }
 
         public const string DefaultLayerPrefix = "Layer_";
+        public const float DefaultWorldScale = 0.01f;
+
         public static class DefaultLayerIds
         {
             public const string Background = "Background";
@@ -182,17 +208,25 @@ namespace MotionCore.Infrastructure
         [Tooltip("Panel 注册信息")]
         public List<UIPanelEntry> Panels = new List<UIPanelEntry>();
 
+        [Tooltip("Window 注册信息")]
+        public List<UIWindowEntry> Windows = new List<UIWindowEntry>();
+
+        [Tooltip("Popup 注册信息")]
+        public List<UIPopupEntry> Popups = new List<UIPopupEntry>();
+
         [Tooltip("Widget 注册信息")]
         public List<UIWidgetEntry> Widgets = new List<UIWidgetEntry>();
 
         [Tooltip("UI Prefab 扫描路径")]
         public string PrefabSearchPath = "Assets/ResourcesAssets/UI";
 
-        [Tooltip("所有 Scope 均加载的面板")]
-        public List<ScopePanelSelection> GlobalPanels = new List<ScopePanelSelection>();
+        [FormerlySerializedAs("GlobalPanels")]
+        [Tooltip("所有 Scope 均加载的 UI 元素")]
+        public List<ScopeElementSelection> GlobalElements = new List<ScopeElementSelection>();
 
-        [Tooltip("按 Scope 分配的控制面板")]
-        public List<ScopePanelGroup> ScopePanels = new List<ScopePanelGroup>();
+        [FormerlySerializedAs("ScopePanels")]
+        [Tooltip("按 Scope 分配的 UI 元素")]
+        public List<ScopeElementGroup> ScopeElements = new List<ScopeElementGroup>();
 
         /// <summary>
         /// 查找 UI 层配置。
@@ -206,10 +240,73 @@ namespace MotionCore.Infrastructure
         /// <summary>
         /// 查找面板配置。
         /// </summary>
-        public bool TryGetPanel(string panelId, out UIPanelEntry entry)
+        public bool TryGetPanel(string elementId, out UIPanelEntry entry)
         {
-            entry = Panels.Find(panel => panel != null && panel.Id == panelId);
+            entry = Panels.Find(panel => panel != null && panel.Id == elementId);
             return entry != null;
+        }
+
+        /// <summary>
+        /// 查找窗口配置。
+        /// </summary>
+        public bool TryGetWindow(string windowId, out UIWindowEntry entry)
+        {
+            entry = Windows.Find(window => window != null && window.Id == windowId);
+            return entry != null;
+        }
+
+        /// <summary>
+        /// 查找弹窗配置。
+        /// </summary>
+        public bool TryGetPopup(string popupId, out UIPopupEntry entry)
+        {
+            entry = Popups.Find(popup => popup != null && popup.Id == popupId);
+            return entry != null;
+        }
+
+        /// <summary>
+        /// 查找可打开 UI 配置。
+        /// </summary>
+        public bool TryGetOpenable(string id, out UIPrefabBaseEntry entry)
+        {
+            if (TryGetPanel(id, out UIPanelEntry panel))
+            {
+                entry = panel;
+                return true;
+            }
+
+            if (TryGetWindow(id, out UIWindowEntry window))
+            {
+                entry = window;
+                return true;
+            }
+
+            if (TryGetPopup(id, out UIPopupEntry popup))
+            {
+                entry = popup;
+                return true;
+            }
+
+            entry = null;
+            return false;
+        }
+
+        /// <summary>
+        /// 查找所有已注册 UI 元素。
+        /// </summary>
+        public bool TryGetElement(string id, out UIPrefabBaseEntry entry)
+        {
+            if (TryGetOpenable(id, out entry))
+                return true;
+
+            if (TryGetWidget(id, out UIWidgetEntry widget))
+            {
+                entry = widget;
+                return true;
+            }
+
+            entry = null;
+            return false;
         }
 
         /// <summary>
@@ -224,9 +321,9 @@ namespace MotionCore.Infrastructure
         /// <summary>
         /// 查找作用域面板组。
         /// </summary>
-        public bool TryGetScopePanelGroup(string scopeId, out ScopePanelGroup entry)
+        public bool TryGetScopeElementGroup(string scopeId, out ScopeElementGroup entry)
         {
-            entry = ScopePanels.Find(group => group != null && group.ScopeId == scopeId);
+            entry = ScopeElements.Find(group => group != null && group.ScopeId == scopeId);
             return entry != null;
         }
 
@@ -249,7 +346,6 @@ namespace MotionCore.Infrastructure
             PrefabSearchPath = "Assets/ResourcesAssets/UI";
 
             Root.RootName = "UIRoot";
-            Root.RenderMode = UIRenderMode.ScreenSpaceOverlay;
             Root.CameraResolveMode = UICameraResolveMode.MainCamera;
             Root.CameraTag = "MainCamera";
             Root.PlaneDistance = 100f;
@@ -271,9 +367,11 @@ namespace MotionCore.Infrastructure
             SceneMappings.Clear();
 
             Panels.Clear();
+            Windows.Clear();
+            Popups.Clear();
             Widgets.Clear();
-            GlobalPanels.Clear();
-            ScopePanels.Clear();
+            GlobalElements.Clear();
+            ScopeElements.Clear();
         }
 
         /// <summary>
@@ -314,7 +412,13 @@ namespace MotionCore.Infrastructure
 
         static LayerEntry CreateLayer(string layerId, int sortingOrder)
         {
-            return new LayerEntry { LayerId = layerId, SortingOrder = sortingOrder, HasGraphicRaycaster = true };
+            return new LayerEntry
+            {
+                LayerId = layerId,
+                RenderMode = UIRenderMode.ScreenSpaceOverlay,
+                SortingOrder = sortingOrder,
+                HasGraphicRaycaster = true
+            };
         }
 
 #if UNITY_EDITOR

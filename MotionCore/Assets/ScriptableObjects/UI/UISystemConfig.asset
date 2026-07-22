@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Root:
     RootName: UIRoot
-    RenderMode: 1
     CameraResolveMode: 0
     CameraTag: MainCamera
     PlaneDistance: 100
@@ -22,24 +21,29 @@ MonoBehaviour:
     MatchWidthOrHeight: 0.5
   Layers:
   - LayerId: Background
+    RenderMode: 1
     SortingOrder: 100
     HasGraphicRaycaster: 1
   - LayerId: WorldOverlay
+    RenderMode: 2
     SortingOrder: 150
     HasGraphicRaycaster: 1
   - LayerId: Normal
+    RenderMode: 1
     SortingOrder: 200
     HasGraphicRaycaster: 1
   - LayerId: Popup
+    RenderMode: 1
     SortingOrder: 300
     HasGraphicRaycaster: 1
   - LayerId: Top
+    RenderMode: 1
     SortingOrder: 400
     HasGraphicRaycaster: 1
   Scopes:
+  - None
   - Menu
   - Gameplay
-  - None
   SceneMappings:
   - SceneName: SampleScene
     ScopeId: Gameplay
@@ -49,14 +53,24 @@ MonoBehaviour:
     PrefabType: 0
     LayerId: Normal
     IsEscapable: 0
-  Widgets: []
+  Windows: []
+  Popups: []
+  Widgets:
+  - Id: OverheadHealthBar
+    AssetKey: OverheadHealthBar
+    PrefabType: 1
+    LayerId: WorldOverlay
+    IsEscapable: 1
+    IsPooled: 1
+    InitialCapacity: 5
+    MinCachedCount: 5
   PrefabSearchPath: Assets/ResourcesAssets/UI
-  GlobalPanels:
-  - PanelId: CombatHudPanel
-    Preload: 1
-    OpenOnEnter: 1
-  ScopePanels:
+  GlobalElements: []
+  ScopeElements:
   - ScopeId: Menu
-    Panels: []
+    Elements: []
   - ScopeId: Gameplay
-    Panels: []
+    Elements:
+    - ElementId: CombatHudPanel
+      Preload: 1
+      OpenOnEnter: 1

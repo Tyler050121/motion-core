@@ -1,6 +1,6 @@
-using System;
 using MotionCore.Gameplay.Common;
 using MotionCore.Gameplay.Targeting;
+using MotionCore.Infrastructure;
 using UnityEngine;
 
 namespace MotionCore.Gameplay.Combat
@@ -12,6 +12,7 @@ namespace MotionCore.Gameplay.Combat
         [SerializeField, Min(0f), Tooltip("表现点向上偏移")] float m_VisualHeightOffset = 1f;
 
         IDamageable m_Damageable;
+        IEventBus m_EventBus;
         Faction m_Faction;
 
         public IDamageable Damageable => m_Damageable;
@@ -20,8 +21,6 @@ namespace MotionCore.Gameplay.Combat
         /// 所属阵营，启动时从角色的 LockOnTarget 取一次缓存。
         /// </summary>
         public Faction Faction => m_Faction;
-
-        public event Action<HitEvent> HitReceived;
 
         public Vector3 ResolveVisualPoint(Transform attacker)
         {
@@ -43,13 +42,14 @@ namespace MotionCore.Gameplay.Combat
                 m_Damageable.CurrentHealth,
                 m_Damageable.IsDepleted,
                 profile.KnockbackPower);
-            HitReceived?.Invoke(new HitEvent(result, feedback));
+            m_EventBus.Publish(m_Damageable, new HitEvent(result, feedback));
             return result;
         }
 
         void Awake()
         {
             m_Damageable = GetComponentInParent<IDamageable>();
+            m_EventBus = ServiceLocator.Resolve<IEventBus>();
             m_Faction = GetComponentInParent<LockOnTarget>().Faction;
         }
     }
