@@ -149,6 +149,9 @@ namespace MotionCore.Gameplay.Combat
                 if (attackerFaction == hurtbox.Faction)
                     continue;
 
+                // 同一窗口内每个目标只结算一次。
+                // 注意 Add 先于 ReceiveHit：被无敌拒绝的命中同样占用窗口，
+                // 一次成功闪避作废整刀，不会在 HitStart/HitEnd 窗口尾部被补中。
                 if (!hitTargets.Add(hurtbox))
                     continue;
 

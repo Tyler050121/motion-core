@@ -14,6 +14,7 @@ namespace MotionCore.Gameplay.Combat
         IDamageable m_Damageable;
         IEventBus m_EventBus;
         Faction m_Faction;
+        bool m_Invulnerable;
 
         public IDamageable Damageable => m_Damageable;
 
@@ -31,8 +32,20 @@ namespace MotionCore.Gameplay.Combat
                 + Vector3.up * m_VisualHeightOffset;
         }
 
-        public HitResult ReceiveHit(HitProfile profile, Vector3 point, Vector3 visualPoint, Vector3 direction, Transform attacker)
+        public void SetInvulnerable(bool invulnerable)
         {
+            m_Invulnerable = invulnerable;
+        }
+
+        /// <summary>
+        /// 结算一次命中。无敌期间直接拒绝，不产生伤害也不广播 HitEvent；
+        /// 调用方（MeleeHitbox）仍会把本次命中记入攻击窗口。
+        /// </summary>
+        public void ReceiveHit(HitProfile profile, Vector3 point, Vector3 visualPoint, Vector3 direction, Transform attacker)
+        {
+            if (m_Invulnerable)
+                return;
+
             m_Damageable.ApplyDamage(profile.Damage);
             HitFeedbackContext feedback = new(point, visualPoint, direction, profile.Vfx);
             HitResult result = new(
@@ -43,7 +56,6 @@ namespace MotionCore.Gameplay.Combat
                 m_Damageable.IsDepleted,
                 profile.KnockbackPower);
             m_EventBus.Publish(m_Damageable, new HitEvent(result, feedback));
-            return result;
         }
 
         void Awake()
@@ -52,5 +64,12 @@ namespace MotionCore.Gameplay.Combat
             m_EventBus = ServiceLocator.Resolve<IEventBus>();
             m_Faction = GetComponentInParent<LockOnTarget>().Faction;
         }
+
+#if UNITY_EDITOR
+        void Reset()
+        {
+            gameObject.layer = LayerMask.NameToLayer(GlobalConfig.LayerNames.Hurtbox);
+        }
+#endif
     }
 }

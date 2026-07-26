@@ -14,7 +14,8 @@ namespace MotionCore.Gameplay.Combat
         [SerializeField, Min(0.01f)] float m_Radius = 0.75f;
         public float Radius => m_Radius;
 
-        [SerializeField] LayerMask m_TargetLayers = ~0;
+        // 只查 Hurtbox 层，不要放开到全层：全层会把环境碰撞体也捞进 Overlap 结果。
+        [SerializeField, Tooltip("命中查询层，仅勾 Hurtbox")] LayerMask m_TargetLayers;
         public LayerMask TargetLayers => m_TargetLayers;
 
         [SerializeField, Min(0f), Tooltip("受击僵直强度")] float m_StaggerPower = 0.18f;

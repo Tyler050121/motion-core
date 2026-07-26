@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5789416337036434025}
   - component: {fileID: 94999494827869240}
   - component: {fileID: 7771431953369132130}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: TrainingDummy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 3103926484834840477}
   - component: {fileID: 5276140659852895888}
   - component: {fileID: 3266243511475220147}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: HurtboxRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}

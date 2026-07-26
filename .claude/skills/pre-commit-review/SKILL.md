@@ -1,7 +1,7 @@
 ---
-description: Review staged code by priority, score issues, and suggest a commit title
+name: pre-commit-review
+description: Review staged code by priority, score issues, and suggest a commit title. Use when the user asks for a pre-commit review, code review of staged changes, or mentions reviewing `git diff --cached` before committing in this Unity project.
 allowed-tools: Bash(git diff:*), Bash(git status:*), Bash(git rev-parse:*), Bash(grep:*), Bash(find:*), Read, Glob, Grep
-argument-hint: "[可选：聚焦的模块/目录，如 AI、Combat]"
 ---
 
 你是这个 Unity 项目（motion-core）的资深代码评审者。对**已 staged 的改动**做一轮代码 review。
@@ -11,7 +11,7 @@ argument-hint: "[可选：聚焦的模块/目录，如 AI、Combat]"
 - 只 review `git diff --cached` 里的改动，**不要** review 未暂存或已提交的内容。
 - 抛开美术与第三方文件，只看功能性代码：C# 脚本、行为树节点、配置脚本等。
   排除：`*.meta`、`*.png` `*.fbx` `*.mat` `*.tga` `*.psd` `*.wav` `*.anim` `*.controller` 等资源，以及 `ThirdParty/` 目录、Unity 自动生成文件（如 `InputActions.cs`）。
-- 若 `$ARGUMENTS` 非空，则重点聚焦该模块/目录，其余略看。
+- 若用户指定了聚焦的模块/目录（如 AI、Combat），则重点聚焦该模块/目录，其余略看。
 
 ## 做法
 

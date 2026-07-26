@@ -28,16 +28,30 @@ namespace MotionCore
             public const int InvalidId = -1;
         }
 
+        /// <summary>
+        /// 物理层名，需与 ProjectSettings/TagManager.asset 保持一致。
+        /// </summary>
+        public static class LayerNames
+        {
+            public const string Character = "Character";
+            public const string Hurtbox = "Hurtbox";
+        }
+
         public static class AnimationEventNames
         {
             public const string CanCancel = "CanCancel";
             public const string CanInterrupt = "CanInterrupt";
             public const string CanAttack = "CanAttack";
+            public const string CanEvade = "CanEvade";
             public const string Hit = "Hit";
             public const string HitStart = "HitStart";
             public const string HitEnd = "HitEnd";
             public const string ArmorStart = "ArmorStart";
             public const string ArmorEnd = "ArmorEnd";
+            public const string InvulnerableStart = "InvulnerableStart";
+            public const string InvulnerableEnd = "InvulnerableEnd";
+            public const string CharacterCollisionOff = "CharacterCollisionOff";
+            public const string CharacterCollisionOn = "CharacterCollisionOn";
             public const string BranchOpen = "BranchOpen";
             public const string BranchClose = "BranchClose";
             public const string Feedback = "Feedback";

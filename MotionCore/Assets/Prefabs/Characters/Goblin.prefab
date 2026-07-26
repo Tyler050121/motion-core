@@ -60,7 +60,7 @@ GameObject:
   - component: {fileID: 5453529004559671413}
   - component: {fileID: 8821119268093245579}
   - component: {fileID: 5353110664472907182}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Goblin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -243,7 +243,7 @@ GameObject:
   - component: {fileID: 7337548742790665426}
   - component: {fileID: 5687817433974040857}
   - component: {fileID: 7491176479491938617}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: HurtboxRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -624,6 +624,6 @@ MonoBehaviour:
   m_Character: {fileID: 220462588144310259}
   m_AttackBlockLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 128
   m_AttackBlockProbeDistance: 0.55
   m_ApplyRootRotation: 1

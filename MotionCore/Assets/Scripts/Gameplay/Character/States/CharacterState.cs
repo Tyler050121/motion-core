@@ -52,6 +52,7 @@ namespace MotionCore.Gameplay.Character
         public abstract CharacterStateType Type { get; }
 
         protected void OpenCancel() => ExitOptions |= CharacterStateExitOptions.Cancel;
+        protected void OpenEvade() => ExitOptions |= CharacterStateExitOptions.Evade;
         protected void ReturnToDefaultState()
         {
             ExitOptions |= CharacterStateExitOptions.Idle;

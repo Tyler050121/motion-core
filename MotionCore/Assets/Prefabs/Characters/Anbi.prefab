@@ -220,6 +220,11 @@ MonoBehaviour:
     type: 2}
   m_EvadeBack: {fileID: -3357782011662745360, guid: 19f7276f66a284cbfa65e2726e1fd573,
     type: 2}
+  m_Hurtbox: {fileID: 782638903086812021}
+  m_Controller: {fileID: 6808166811772849021}
+  m_CharacterCollisionLayers:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!114 &6383220402655325866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -283,7 +288,7 @@ GameObject:
   - component: {fileID: 6808166811772849021}
   - component: {fileID: 3862269262689677338}
   - component: {fileID: 4684523107543515566}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Anbi
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -421,7 +426,7 @@ GameObject:
   - component: {fileID: 1500117299750188052}
   - component: {fileID: 782638903086812021}
   - component: {fileID: 1319469931227808544}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: HurtboxRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -673,7 +678,7 @@ MonoBehaviour:
   m_Character: {fileID: 5408090951713516069}
   m_AttackBlockLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 128
   m_AttackBlockProbeDistance: 0.7
   m_ApplyRootRotation: 1
 --- !u!4 &8095687814133986338 stripped

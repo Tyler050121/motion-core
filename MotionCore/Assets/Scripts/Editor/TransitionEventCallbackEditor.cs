@@ -89,6 +89,18 @@ namespace MotionCore.Editor
     {
         static readonly List<TimedEventIndex> s_ParameterEvents = new();
 
+        // 由状态机在运行时绑定回调的事件，编辑器只需把回调槽清空。
+        static readonly HashSet<string> s_NullCallbackEvents = new()
+        {
+            GlobalConfig.AnimationEventNames.CanAttack,
+            GlobalConfig.AnimationEventNames.CanCancel,
+            GlobalConfig.AnimationEventNames.CanEvade,
+            GlobalConfig.AnimationEventNames.InvulnerableStart,
+            GlobalConfig.AnimationEventNames.InvulnerableEnd,
+            GlobalConfig.AnimationEventNames.CharacterCollisionOff,
+            GlobalConfig.AnimationEventNames.CharacterCollisionOn,
+        };
+
         [MenuItem("MotionCore/Animation/Fix Selected Transition Event Callbacks")]
         static void FixSelectedTransitionEventCallbacks()
         {
@@ -251,8 +263,7 @@ namespace MotionCore.Editor
                 return CallbackRule.ParameterInt;
             }
 
-            if (name == GlobalConfig.AnimationEventNames.CanAttack ||
-                name == GlobalConfig.AnimationEventNames.CanCancel)
+            if (s_NullCallbackEvents.Contains(name))
             {
                 return CallbackRule.Null;
             }
