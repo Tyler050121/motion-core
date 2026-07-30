@@ -26,7 +26,11 @@ namespace MotionCore.Gameplay.Character
                 CharacterStateType.Ultimate => CharacterStateExitOptions.Skill,
                 CharacterStateType.SwitchIn => CharacterStateExitOptions.Switch,
                 CharacterStateType.SwitchOut => CharacterStateExitOptions.Switch,
-                _ => CharacterStateExitOptions.Default
+                CharacterStateType.TurnBack => CharacterStateExitOptions.Evade,
+                CharacterStateType.QuestStart => CharacterStateExitOptions.Evade,
+                CharacterStateType.Hit => CharacterStateExitOptions.None,
+                CharacterStateType.Dead => CharacterStateExitOptions.None,
+                _ => throw new System.ArgumentOutOfRangeException(nameof(nextState), nextState, null)
             };
         }
     }

@@ -37,6 +37,9 @@ namespace MotionCore
             public const string Hurtbox = "Hurtbox";
         }
 
+        /// <summary>
+        /// 动画事件名，需与 Assets/ScriptableObjects/Events 下的 StringAsset 同名。
+        /// </summary>
         public static class AnimationEventNames
         {
             public const string CanCancel = "CanCancel";

@@ -57,7 +57,7 @@ namespace MotionCore.Gameplay.Character
 
         void OnEnable()
         {
-            ExitOptions = CharacterStateExitOptions.All;
+            ExitOptions = CharacterStateExitOptions.AllActions;
             m_Phase = MovePhase.Starting;
 
             // 从当前输入起步，避免重新进入移动时方向参数从上次残留值插值。

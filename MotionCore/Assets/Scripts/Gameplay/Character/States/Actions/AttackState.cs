@@ -2,6 +2,7 @@ using Animancer;
 using MotionCore.Infrastructure;
 using MotionCore.Gameplay.Combat;
 using UnityEngine;
+using EventNames = MotionCore.GlobalConfig.AnimationEventNames;
 
 namespace MotionCore.Gameplay.Character
 {
@@ -14,6 +15,7 @@ namespace MotionCore.Gameplay.Character
         AttackDefinition m_CurrentAttack;
         AttackDefinition.AttackStepDefinition m_CurrentStep;
         AttackDefinition m_ComboAttack;
+        AttackAnimationTrack m_CurrentTrack;
         CharacterStateType m_ActionType;
         int m_CurrentStepIndex;
         int m_LastStepIndexExclusive;
@@ -157,54 +159,35 @@ namespace MotionCore.Gameplay.Character
             // 每段重置霸体，霸体窗口仅由本段的 ArmorStart/ArmorEnd 事件界定。
             m_Armored = false;
             m_MeleeHitbox.CloseAll();
-            AnimancerState state = Character.Animancer.Play(track.Animation);
-            bool isNewEventSequence = state.Events(this, out AnimancerEvent.Sequence events);
 
-            AttackStepEventOptions stepEventOptions = AttackStepEventOptions.None;
-            for (int i = 0; i < events.Count; i++)
-            {
-                stepEventOptions |= GetStepEventOptions(events.GetName(i));
-            }
-
-            CharacterStateExitOptions cancelOptions = CharacterStateExitOptions.Cancel;
-
-            ExitOptions = CharacterStateExitOptions.All;
-            if ((stepEventOptions & AttackStepEventOptions.CanCancel) != 0)
-                ExitOptions &= ~CharacterStateExitOptions.Cancel;
-            if ((stepEventOptions & AttackStepEventOptions.CanAttack) != 0)
-            {
-                ExitOptions &= ~CharacterStateExitOptions.Attack;
-                cancelOptions &= ~CharacterStateExitOptions.Attack;
-            }
-
-            if (isNewEventSequence)
-            {
-                for (int i = 0; i < events.Count; i++)
-                {
-                    string eventName = events.GetName(i);
-                    if (eventName == GlobalConfig.AnimationEventNames.CanCancel)
-                        events.SetCallback(i, () => OpenCancel(cancelOptions));
-                    else if (eventName == GlobalConfig.AnimationEventNames.CanAttack)
-                        events.SetCallback(i, OpenAttack);
-                    else if (eventName == GlobalConfig.AnimationEventNames.Hit)
-                        events.AddCallback<int>(i, index => Hit(index, track));
-                    else if (eventName == GlobalConfig.AnimationEventNames.HitStart)
-                        events.AddCallback<int>(i, index => OpenHit(index, track));
-                    else if (eventName == GlobalConfig.AnimationEventNames.HitEnd)
-                        events.AddCallback<int>(i, m_MeleeHitbox.Close);
-                    else if (eventName == GlobalConfig.AnimationEventNames.ArmorStart)
-                        events.SetCallback(i, () => m_Armored = true);
-                    else if (eventName == GlobalConfig.AnimationEventNames.ArmorEnd)
-                        events.SetCallback(i, () => m_Armored = false);
-                }
-            }
-
-            events.OnEnd = OnStepEnded;
+            // 事件回调只绑定一次、之后重播复用，所以命中数据只能从字段读、不能被回调捕获。
+            m_CurrentTrack = track;
+            PlayWithEvents(track.Animation, OnStepEnded);
         }
 
-        void Hit(int index, AttackAnimationTrack track)
+        protected override void BindEvent(AnimancerEvent.Sequence events, int index, string name)
         {
-            AttackHitDefinition hit = track.GetHitDefinition(index);
+            if (name == EventNames.CanCancel)
+                Bind(events, index, OpenStepCancel);
+            else if (name == EventNames.CanAttack)
+                Bind(events, index, OpenStepAttack);
+            else if (name == EventNames.Hit)
+                Bind(events, index, Hit);
+            else if (name == EventNames.HitStart)
+                Bind(events, index, OpenHit);
+            else if (name == EventNames.HitEnd)
+                Bind(events, index, m_MeleeHitbox.Close);
+            else if (name == EventNames.ArmorStart)
+                Bind(events, index, () => m_Armored = true);
+            else if (name == EventNames.ArmorEnd)
+                Bind(events, index, () => m_Armored = false);
+            else
+                base.BindEvent(events, index, name);
+        }
+
+        void Hit(int index)
+        {
+            AttackHitDefinition hit = m_CurrentTrack.GetHitDefinition(index);
             if (!Character.TryGetAnchor(hit.Anchor, out Transform source))
                 return;
 
@@ -212,9 +195,9 @@ namespace MotionCore.Gameplay.Character
             PlayVfx(source, hit.Vfx);
         }
 
-        void OpenHit(int index, AttackAnimationTrack track)
+        void OpenHit(int index)
         {
-            AttackHitDefinition hit = track.GetHitDefinition(index);
+            AttackHitDefinition hit = m_CurrentTrack.GetHitDefinition(index);
             if (!Character.TryGetAnchor(hit.Anchor, out Transform source))
                 return;
 
@@ -259,20 +242,24 @@ namespace MotionCore.Gameplay.Character
         /// 打开当前段的取消窗口。如果之前已经缓存了下一段输入，
         /// 这里会立即消费并切到下一段。
         /// </summary>
-        void OpenCancel(CharacterStateExitOptions cancelOptions)
+        void OpenStepCancel()
         {
-            ExitOptions |= cancelOptions;
+            OpenCancel();
 
             if ((ExitOptions & CharacterStateExitOptions.Attack) == 0)
                 return;
 
-            if (m_PendingRequest.Definition != null)
-                PlayAttack(m_PendingRequest);
+            TryConsumePendingRequest();
         }
 
-        void OpenAttack()
+        void OpenStepAttack()
         {
-            ExitOptions |= CharacterStateExitOptions.Attack;
+            OpenAttack();
+            TryConsumePendingRequest();
+        }
+
+        void TryConsumePendingRequest()
+        {
             if (m_PendingRequest.Definition != null)
                 PlayAttack(m_PendingRequest);
         }
@@ -371,25 +358,7 @@ namespace MotionCore.Gameplay.Character
             m_ComboExpireTime = 0f;
         }
 
-        static AttackStepEventOptions GetStepEventOptions(string eventName)
-        {
-            if (eventName == GlobalConfig.AnimationEventNames.CanCancel)
-                return AttackStepEventOptions.CanCancel;
-            if (eventName == GlobalConfig.AnimationEventNames.CanAttack)
-                return AttackStepEventOptions.CanAttack;
-
-            return AttackStepEventOptions.None;
-        }
-
         #endregion
-    }
-
-    [System.Flags]
-    enum AttackStepEventOptions
-    {
-        None = 0,
-        CanCancel = 1 << 0,
-        CanAttack = 1 << 1,
     }
 
     public readonly struct AttackRequest

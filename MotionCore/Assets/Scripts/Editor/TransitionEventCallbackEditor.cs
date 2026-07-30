@@ -80,6 +80,7 @@ namespace MotionCore.Editor
                 currentEvent.rawType == EventType.KeyUp ||
                 currentEvent.type == EventType.ExecuteCommand;
         }
+
     }
 
     /// <summary>
@@ -89,12 +90,22 @@ namespace MotionCore.Editor
     {
         static readonly List<TimedEventIndex> s_ParameterEvents = new();
 
+        // 回调带 int 参数的事件，参数为本轨道所有带参事件按时间排序后的序号（即 m_Hits 下标）。
+        static readonly HashSet<string> s_ParameterIntEvents = new()
+        {
+            GlobalConfig.AnimationEventNames.Hit,
+            GlobalConfig.AnimationEventNames.HitStart,
+        };
+
         // 由状态机在运行时绑定回调的事件，编辑器只需把回调槽清空。
         static readonly HashSet<string> s_NullCallbackEvents = new()
         {
             GlobalConfig.AnimationEventNames.CanAttack,
             GlobalConfig.AnimationEventNames.CanCancel,
             GlobalConfig.AnimationEventNames.CanEvade,
+            GlobalConfig.AnimationEventNames.CanInterrupt,
+            GlobalConfig.AnimationEventNames.ArmorStart,
+            GlobalConfig.AnimationEventNames.ArmorEnd,
             GlobalConfig.AnimationEventNames.InvulnerableStart,
             GlobalConfig.AnimationEventNames.InvulnerableEnd,
             GlobalConfig.AnimationEventNames.CharacterCollisionOff,
@@ -257,8 +268,7 @@ namespace MotionCore.Editor
             }
 
             string name = eventName.name;
-            if (name == GlobalConfig.AnimationEventNames.Hit ||
-                name == GlobalConfig.AnimationEventNames.HitStart)
+            if (s_ParameterIntEvents.Contains(name))
             {
                 return CallbackRule.ParameterInt;
             }
