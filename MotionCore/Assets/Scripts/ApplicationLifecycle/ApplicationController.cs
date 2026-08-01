@@ -36,6 +36,7 @@ namespace MotionCore.ApplicationLifecycle
 
         ICursorService m_Cursor;
         ITimerService m_Timer;
+        IGameTimeService m_GameTime;
         IEventBus m_EventBus;
         IAssetProvider m_Assets;
         VfxService m_Vfx;
@@ -50,6 +51,7 @@ namespace MotionCore.ApplicationLifecycle
             DontDestroyOnLoad(gameObject);
             m_Cursor = new CursorService();
             m_Timer = new TimerService();
+            m_GameTime = new GameTimeService();
             m_EventBus = new EventBus();
             m_Assets = CreateAssetProvider();
             m_Vfx = new VfxService(m_Assets, m_Timer, m_VfxRoot);
@@ -57,6 +59,7 @@ namespace MotionCore.ApplicationLifecycle
             m_UiBootstrap = GetComponent<UIRuntimeBootstrap>();
             ServiceLocator.Register(m_Cursor);
             ServiceLocator.Register(m_Timer);
+            ServiceLocator.Register(m_GameTime);
             ServiceLocator.Register(m_EventBus);
             ServiceLocator.Register(m_Assets);
             ServiceLocator.Register<IVfxService>(m_Vfx);
@@ -84,6 +87,7 @@ namespace MotionCore.ApplicationLifecycle
 
             m_Cursor.Tick();
             m_Timer.Tick(Time.deltaTime);
+            m_GameTime.Tick(Time.unscaledDeltaTime);
         }
 
         void OnApplicationFocus(bool focus)
@@ -100,6 +104,7 @@ namespace MotionCore.ApplicationLifecycle
 
             ServiceLocator.Unregister(m_Cursor);
             ServiceLocator.Unregister(m_Timer);
+            ServiceLocator.Unregister(m_GameTime);
             ServiceLocator.Unregister(m_EventBus);
             ServiceLocator.Unregister(m_Assets);
             ServiceLocator.Unregister<IVfxService>(m_Vfx);
@@ -107,6 +112,7 @@ namespace MotionCore.ApplicationLifecycle
             m_SceneNavigator.Dispose();
             m_EventBus.Clear();
             m_Vfx.Dispose();
+            m_GameTime.Reset();
             if (m_Assets is System.IDisposable disposableAssets)
             {
                 disposableAssets.Dispose();

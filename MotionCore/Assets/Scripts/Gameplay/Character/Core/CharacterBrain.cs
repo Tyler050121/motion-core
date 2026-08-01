@@ -18,13 +18,14 @@ namespace MotionCore.Gameplay.Character
         ICharacterCommandExecutor m_CommandExecutor;
         IHitReactionHandler m_HitReactionHandler;
         ICameraService m_Camera;
-        bool m_IsPaused;
+        IGameTimeService m_GameTime;
 
         void Awake()
         {
             m_CommandExecutor = GetComponentInChildren<ICharacterCommandExecutor>();
             m_HitReactionHandler = GetComponentInChildren<IHitReactionHandler>();
             m_InputActions = new InputActions();
+            m_GameTime = ServiceLocator.Resolve<IGameTimeService>();
             m_CommandExecutor.SetAttackFacingResolver(GetAttackFacingDirection);
         }
 
@@ -53,7 +54,7 @@ namespace MotionCore.Gameplay.Character
         void Update()
         {
             UpdatePause();
-            if (m_IsPaused)
+            if (m_GameTime.IsPaused)
                 return;
 
             UpdateMovement();
@@ -99,8 +100,7 @@ namespace MotionCore.Gameplay.Character
             if (!m_InputActions.Character.Pause.WasPressedThisFrame())
                 return;
 
-            m_IsPaused = !m_IsPaused;
-            Time.timeScale = m_IsPaused ? 0f : 1f;
+            m_GameTime.SetPaused(!m_GameTime.IsPaused);
         }
 
         void UpdateMovement()

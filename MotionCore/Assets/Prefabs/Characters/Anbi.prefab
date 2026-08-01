@@ -159,7 +159,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Character: {fileID: 5408090951713516069}
-  m_CommandController: {fileID: 1068605082628049589}
   m_TargetLockController: {fileID: 838387318756680902}
 --- !u!114 &838387318756680902
 MonoBehaviour:
@@ -225,6 +224,7 @@ MonoBehaviour:
   m_CharacterCollisionLayers:
     serializedVersion: 2
     m_Bits: 64
+  m_PerfectDodgeFeedback: {fileID: 7120349922114455002}
 --- !u!114 &6383220402655325866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -288,6 +288,7 @@ GameObject:
   - component: {fileID: 6808166811772849021}
   - component: {fileID: 3862269262689677338}
   - component: {fileID: 4684523107543515566}
+  - component: {fileID: 7120349922114455002}
   m_Layer: 6
   m_Name: Anbi
   m_TagString: Untagged
@@ -344,6 +345,7 @@ MonoBehaviour:
   m_Health:
     m_MaxHealth: 100
   m_ConfigReceivers:
+  - {fileID: 202777672028910151}
   - {fileID: 1068605082628049589}
   - {fileID: 3862269262689677338}
 --- !u!114 &4345843532071137959
@@ -414,6 +416,24 @@ MonoBehaviour:
   m_LockPoint: {fileID: 826064935721159764}
   m_Health: {fileID: 3862269262689677338}
   m_Faction: 1
+--- !u!114 &7120349922114455002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7778320943819192780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42a4f761b24443418068e2e04838088d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 2100000, guid: e2f25ca197c24d48836853225a4680a2, type: 2}
+  m_SnapshotCount: 4
+  m_SnapshotInterval: 0.035
+  m_Lifetime: 0.4
+  m_TimeScale: 0.3
+  m_Duration: 0.5
 --- !u!1 &7822878106139067855
 GameObject:
   m_ObjectHideFlags: 0

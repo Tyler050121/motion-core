@@ -990,6 +990,8 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 7242315265358168066
       type: {class: ClipTransition, ns: Animancer, asm: Kybernetik.Animancer}
       data:
@@ -1004,7 +1006,7 @@ MonoBehaviour:
           - 0.9487511
           - NaN
           _Callbacks:
-          - rid: 7242315448505597954
+          - rid: -2
           - rid: 7242315448505597973
           - rid: 7242315448505597952
           _Names:
@@ -1017,10 +1019,6 @@ MonoBehaviour:
           type: 3}
         _NormalizedStartTime: NaN
     - rid: 7242315448505597952
-      type: {class: AnimancerEvent/ParameterInt, ns: Animancer, asm: Kybernetik.Animancer}
-      data:
-        _Value: 0
-    - rid: 7242315448505597954
       type: {class: AnimancerEvent/ParameterInt, ns: Animancer, asm: Kybernetik.Animancer}
       data:
         _Value: 0

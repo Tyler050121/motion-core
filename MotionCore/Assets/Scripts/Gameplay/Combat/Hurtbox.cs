@@ -38,13 +38,16 @@ namespace MotionCore.Gameplay.Combat
         }
 
         /// <summary>
-        /// 结算一次命中。无敌期间直接拒绝，不产生伤害也不广播 HitEvent；
+        /// 结算一次命中。无敌期间拒绝伤害并广播 HitAvoidedEvent，不广播 HitEvent；
         /// 调用方（MeleeHitbox）仍会把本次命中记入攻击窗口。
         /// </summary>
         public void ReceiveHit(HitProfile profile, Vector3 point, Vector3 visualPoint, Vector3 direction, Transform attacker)
         {
             if (m_Invulnerable)
+            {
+                m_EventBus.Publish(this, new HitAvoidedEvent());
                 return;
+            }
 
             m_Damageable.ApplyDamage(profile.Damage);
             HitFeedbackContext feedback = new(point, visualPoint, direction, profile.Vfx);
