@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using MotionCore.Gameplay.Character;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -18,8 +19,9 @@ namespace MotionCore.Gameplay.Combat
         [SerializeField, Tooltip("命中查询层，仅勾 Hurtbox")] LayerMask m_TargetLayers;
         public LayerMask TargetLayers => m_TargetLayers;
 
-        [SerializeField, Min(0f), Tooltip("受击僵直强度")] float m_StaggerPower = 0.18f;
-        public float StaggerPower => m_StaggerPower;
+        [SerializeField, FormerlySerializedAs("m_StaggerPower"), Tooltip("技能僵直等级")]
+        StaggerLevel m_StaggerLevel = StaggerLevel.LightAttack;
+        public StaggerLevel StaggerLevel => m_StaggerLevel;
 
         [SerializeField, Min(0f), Tooltip("击退力度")] float m_KnockbackPower;
         public float KnockbackPower => m_KnockbackPower;

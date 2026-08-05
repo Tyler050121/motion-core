@@ -8,10 +8,11 @@ namespace MotionCore.Gameplay.Character
         [SerializeField] TransitionAsset m_Idle;
 
         public override CharacterStateType Type => CharacterStateType.Idle;
+        public override CastPriority CurrentCastPriority => CastPriority.None;
+        public override StaggerLevel CurrentStaggerLevel => StaggerLevel.None;
 
         void OnEnable()
         {
-            ExitOptions = CharacterStateExitOptions.AllActions;
             Character.Animancer.Play(m_Idle);
         }
     }

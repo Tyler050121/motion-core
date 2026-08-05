@@ -999,18 +999,15 @@ MonoBehaviour:
         _Speed: 1
         _Events:
           _NormalizedTimes:
-          - 0
           - 0.27463847
           - 0.30459902
           - 0.7065699
           - 0.9487511
           - NaN
           _Callbacks:
-          - rid: -2
           - rid: 7242315448505597973
           - rid: 7242315448505597952
           _Names:
-          - {fileID: 11400000, guid: 4a89c3d8b61164e93918b42af26e4167, type: 2}
           - {fileID: 11400000, guid: db474a7d5dc1439b9c611867f9f9f67a, type: 2}
           - {fileID: 11400000, guid: 3a1d529c8c244662b3edfc0bd08a8073, type: 2}
           - {fileID: 11400000, guid: 6e5b9143ae79d47aaa31880fa29889d5, type: 2}

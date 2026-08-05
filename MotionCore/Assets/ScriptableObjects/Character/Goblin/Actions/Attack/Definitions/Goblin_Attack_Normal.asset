@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cb680d8f3774e36ac86cfe2484f7f0c, type: 3}
   m_Name: Goblin_Attack_Normal
   m_EditorClassIdentifier: 
-  m_StateType: 7
+  m_StateType: 3
+  m_CastPriority: 10
+  m_StaggerLevel: 10
   m_Steps:
   - m_Track: {fileID: 11400000, guid: 7ff361459ba9e47dfade3b87b16aec02, type: 2}
     m_EndStep: {fileID: 0}

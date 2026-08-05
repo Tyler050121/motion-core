@@ -1,3 +1,4 @@
+using MotionCore.Gameplay.Character;
 using UnityEngine;
 
 namespace MotionCore.Gameplay.Combat
@@ -10,6 +11,7 @@ namespace MotionCore.Gameplay.Combat
             float damage,
             float remainingHealth,
             bool isTargetDepleted,
+            StaggerLevel staggerLevel,
             float knockbackPower)
         {
             Hurtbox = hurtbox;
@@ -17,6 +19,7 @@ namespace MotionCore.Gameplay.Combat
             Damage = damage;
             RemainingHealth = remainingHealth;
             IsTargetDepleted = isTargetDepleted;
+            StaggerLevel = staggerLevel;
             KnockbackPower = knockbackPower;
         }
 
@@ -30,6 +33,7 @@ namespace MotionCore.Gameplay.Combat
         public float Damage { get; }
         public float RemainingHealth { get; }
         public bool IsTargetDepleted { get; }
+        public StaggerLevel StaggerLevel { get; }
         public float KnockbackPower { get; }
     }
 }

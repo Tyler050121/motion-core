@@ -432,7 +432,7 @@ MonoBehaviour:
   m_SnapshotCount: 4
   m_SnapshotInterval: 0.035
   m_Lifetime: 0.4
-  m_TimeScale: 0.3
+  m_TimeScale: 0.4
   m_Duration: 0.5
 --- !u!1 &7822878106139067855
 GameObject:

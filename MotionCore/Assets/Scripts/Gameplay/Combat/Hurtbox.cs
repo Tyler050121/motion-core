@@ -57,6 +57,7 @@ namespace MotionCore.Gameplay.Combat
                 profile.Damage,
                 m_Damageable.CurrentHealth,
                 m_Damageable.IsDepleted,
+                profile.StaggerLevel,
                 profile.KnockbackPower);
             m_EventBus.Publish(m_Damageable, new HitEvent(result, feedback));
         }

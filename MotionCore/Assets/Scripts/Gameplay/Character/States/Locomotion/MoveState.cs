@@ -31,6 +31,8 @@ namespace MotionCore.Gameplay.Character
         Vector2 m_MoveInputVelocity;
 
         public override CharacterStateType Type => CharacterStateType.Move;
+        public override CastPriority CurrentCastPriority => CastPriority.None;
+        public override StaggerLevel CurrentStaggerLevel => StaggerLevel.None;
 
         public void SetContext(
             ITimerService timer,
@@ -46,10 +48,13 @@ namespace MotionCore.Gameplay.Character
         {
             get
             {
-                // 切向 Idle 前先补一段收招动画，收招结束才真正放行。
                 CharacterState nextState = Character.StateMachine.NextState;
                 if (m_Phase != MovePhase.Exiting && nextState.Type == CharacterStateType.Idle)
-                    PlayMoveEnd();
+                {
+                    // 有收招动画时拒绝本次切换，播完后由回调进入 Idle；没有收招动画则直接放行。
+                    m_Phase = MovePhase.Exiting;
+                    return !PlayStage(m_LocomotionProfile.MoveEnd, ReturnToDefaultState);
+                }
 
                 return base.CanExitState;
             }
@@ -57,7 +62,7 @@ namespace MotionCore.Gameplay.Character
 
         void OnEnable()
         {
-            ExitOptions = CharacterStateExitOptions.AllActions;
+            ExitWindows = CharacterExitWindow.None;
             m_Phase = MovePhase.Starting;
 
             // 从当前输入起步，避免重新进入移动时方向参数从上次残留值插值。
@@ -136,15 +141,6 @@ namespace MotionCore.Gameplay.Character
             m_Phase = PlayStage(m_LocomotionProfile.MoveLoop, null)
                 ? MovePhase.Looping
                 : MovePhase.Starting;
-        }
-
-        void PlayMoveEnd()
-        {
-            m_Phase = MovePhase.Exiting;
-
-            // 没有配置收招动画时直接放行回 Idle。
-            if (!PlayStage(m_LocomotionProfile.MoveEnd, ReturnToDefaultState))
-                ExitOptions |= CharacterStateExitOptions.Idle;
         }
 
         void PlayRunTurnBack()

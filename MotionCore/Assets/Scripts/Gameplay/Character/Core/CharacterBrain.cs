@@ -85,9 +85,9 @@ namespace MotionCore.Gameplay.Character
             return m_CommandExecutor.TryBasicAttack();
         }
 
-        public void ReceiveHit(float knockbackPower)
+        public void ReceiveHit(StaggerLevel staggerLevel, float knockbackPower)
         {
-            m_HitReactionHandler.ReceiveHit(knockbackPower);
+            m_HitReactionHandler.ReceiveHit(staggerLevel, knockbackPower);
         }
 
         public void ToggleTargetLock()

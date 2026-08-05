@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using DamageNumbersPro;
+using MotionCore.Gameplay.Character;
 using MotionCore.Gameplay.Common;
 using MotionCore.Infrastructure;
 using UnityEngine;
@@ -17,8 +18,9 @@ namespace MotionCore.Gameplay.Combat
         Hurtbox m_Hurtbox;
         IDamageable m_Damageable;
         IEventBus m_EventBus;
-        IHitReactionHandler m_ReactionHandler; // 受击反应处理器
+        IHitReactionHandler m_ReactionHandler; // 非角色目标可以没有受击状态处理器
         IHitVfxService m_HitVfx;
+        readonly List<StaggerLevel> m_PendingStaggerLevels = new();
         readonly List<float> m_PendingKnockbackPowers = new();
 
         void Awake()
@@ -38,6 +40,7 @@ namespace MotionCore.Gameplay.Combat
         void OnDisable()
         {
             m_EventBus.Unsubscribe<HitEvent>(m_Damageable, this);
+            m_PendingStaggerLevels.Clear();
             m_PendingKnockbackPowers.Clear();
         }
 
@@ -46,12 +49,19 @@ namespace MotionCore.Gameplay.Combat
             if (m_PendingKnockbackPowers.Count == 0)
                 return;
 
+            StaggerLevel staggerLevel = m_PendingStaggerLevels[0];
             float knockbackPower = m_PendingKnockbackPowers[0];
             for (int i = 1; i < m_PendingKnockbackPowers.Count; i++)
+            {
+                if (m_PendingStaggerLevels[i] > staggerLevel)
+                    staggerLevel = m_PendingStaggerLevels[i];
+
                 knockbackPower = Mathf.Max(knockbackPower, m_PendingKnockbackPowers[i]);
+            }
 
-            m_ReactionHandler?.ReceiveHit(knockbackPower);
+            m_ReactionHandler?.ReceiveHit(staggerLevel, knockbackPower);
 
+            m_PendingStaggerLevels.Clear();
             m_PendingKnockbackPowers.Clear();
         }
 
@@ -64,6 +74,7 @@ namespace MotionCore.Gameplay.Combat
             HitFeedbackContext feedback = hitEvent.Feedback;
             ShowDamageNumber(feedback.Point, result.Damage, result.Hurtbox.transform);
             m_HitVfx.Play(feedback);
+            m_PendingStaggerLevels.Add(result.StaggerLevel);
             m_PendingKnockbackPowers.Add(result.KnockbackPower);
         }
 

@@ -17,8 +17,10 @@ namespace MotionCore.Gameplay.Character
 
         IEventBus m_EventBus;
 
-        protected override bool CanInterruptSelf => (ExitOptions & CharacterStateExitOptions.Evade) != 0;
+        protected override bool CanInterruptSelf => (ExitWindows & CharacterExitWindow.Evade) != 0;
         public override CharacterStateType Type => CharacterStateType.Evade;
+        public override CastPriority CurrentCastPriority => CastPriority.Evade;
+        public override StaggerLevel CurrentStaggerLevel => StaggerLevel.None;
 
         void Awake()
         {

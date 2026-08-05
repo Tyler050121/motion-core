@@ -10,6 +10,12 @@ namespace MotionCore.Gameplay.Combat
         [SerializeField] CharacterStateType m_StateType = CharacterStateType.BasicAttack;
         public CharacterStateType StateType => m_StateType;
 
+        [SerializeField, Tooltip("施法优先级")] CastPriority m_CastPriority = CastPriority.BasicAttack;
+        public CastPriority CastPriority => m_CastPriority;
+
+        [SerializeField, Tooltip("人物状态等级")] StaggerLevel m_StaggerLevel = StaggerLevel.LightAttack;
+        public StaggerLevel StaggerLevel => m_StaggerLevel;
+
         [SerializeField] AttackStepDefinition[] m_Steps = Array.Empty<AttackStepDefinition>();
         public AttackStepDefinition[] Steps => m_Steps;
         public int StepCount => m_Steps.Length;
@@ -60,9 +66,9 @@ namespace MotionCore.Gameplay.Combat
 
         public enum ComboGraceStartType
         {
-            Start,
-            Cancel,
-            End
+            Start = 0, // 出手时
+            Cancel = 1, // 取消窗口时
+            End = 2, // 动画结束时
         }
     }
 }

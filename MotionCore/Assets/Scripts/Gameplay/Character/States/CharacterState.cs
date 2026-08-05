@@ -5,37 +5,6 @@ using EventNames = MotionCore.GlobalConfig.AnimationEventNames;
 
 namespace MotionCore.Gameplay.Character
 {
-    public enum CharacterStateType
-    {
-        Idle,
-        Move,
-        Evade,
-        TurnBack,
-        SwitchIn,
-        SwitchOut,
-        QuestStart,
-        BasicAttack,
-        HeavyAttack,
-        Skill,
-        Ultimate,
-        Hit,
-        Dead
-    }
-
-    [System.Flags]
-    public enum CharacterStateExitOptions
-    {
-        None = 0,
-        Move = 1 << 0,
-        Evade = 1 << 1,
-        Attack = 1 << 2,
-        Skill = 1 << 3,
-        Switch = 1 << 4,
-        Idle = 1 << 5,
-        Cancel = Move | Skill | Switch | Attack,
-        AllActions = Evade | Cancel
-    }
-
     public abstract class CharacterState : StateBehaviour
     {
         [SerializeField] Character m_Character;
@@ -44,7 +13,7 @@ namespace MotionCore.Gameplay.Character
         bool m_CanInterruptSelf;
 
         protected Character Character => m_Character;
-        protected CharacterStateExitOptions ExitOptions { get; set; } = CharacterStateExitOptions.AllActions;
+        protected CharacterExitWindow ExitWindows { get; set; } = CharacterExitWindow.None;
 
         /// <summary>
         /// 同状态能否重入。默认由动画上的 CanInterrupt 事件开启，每次播放重置。
@@ -63,25 +32,31 @@ namespace MotionCore.Gameplay.Character
             && AnimancerEvent.Invocation.Current.State == m_CurrentAnimation;
 
         /// <summary>
-        /// 霸体：为真时吸收受击反应（不进入硬直），伤害照常结算。默认无霸体。
+        /// 当前动作的施法优先级。
         /// </summary>
-        public virtual bool AbsorbsHitReaction => false;
+        public abstract CastPriority CurrentCastPriority { get; }
+
+        /// <summary>
+        /// 下一次请求动作的施法优先级。普通状态与当前优先级一致，复用状态实例的动作可重写为待执行动作优先级。
+        /// </summary>
+        public virtual CastPriority RequestedCastPriority => CurrentCastPriority;
+
+        /// <summary>
+        /// 当前人物状态等级。命中僵直等级达到或超过该值时进入受击反应。
+        /// </summary>
+        public abstract StaggerLevel CurrentStaggerLevel { get; }
 
         public abstract CharacterStateType Type { get; }
 
-        protected void OpenCancel() => ExitOptions |= CharacterStateExitOptions.Cancel;
-        protected void OpenEvade() => ExitOptions |= CharacterStateExitOptions.Evade;
-        protected void OpenAttack() => ExitOptions |= CharacterStateExitOptions.Attack;
+        protected void OpenCancel() => ExitWindows |= CharacterExitWindow.Move | CharacterExitWindow.Attack;
+        protected void OpenEvade() => ExitWindows |= CharacterExitWindow.Evade;
+        protected void OpenAttack() => ExitWindows |= CharacterExitWindow.Attack;
         void OpenInterruptSelf() => m_CanInterruptSelf = true;
 
-        protected void ReturnToDefaultState()
-        {
-            ExitOptions |= CharacterStateExitOptions.Idle;
-            Character.StateMachine.TrySetDefaultState();
-        }
+        protected void ReturnToDefaultState() => Character.StateMachine.ForceSetDefaultState();
 
         /// <summary>
-        /// 播放动画、绑定动画事件、按事件算出初始 <see cref="ExitOptions"/>。
+        /// 播放动画、绑定动画事件，并关闭主动退出窗口等待显式 CanX 事件开放。
         /// 事件只在首次播放该动画时绑定一次、之后重播复用，所以回调里不要捕获随播放变化的局部变量，需要的话存成字段。
         /// </summary>
         protected void PlayWithEvents(ITransition transition, System.Action onEnd)
@@ -94,7 +69,8 @@ namespace MotionCore.Gameplay.Character
                     BindEvent(events, i, events.GetName(i));
             }
 
-            ApplyEventGates(events);
+            m_CanInterruptSelf = false;
+            ExitWindows = CharacterExitWindow.None;
 
             // 结束事件同样要过滤：动画被打断后仍在淡出时，Animancer 每帧都会重发它。
             events.OnEnd = () =>
@@ -142,28 +118,6 @@ namespace MotionCore.Gameplay.Character
             });
         }
 
-        /// <summary>
-        /// 每次播放都关闭动画上声明了 CanX 事件的能力，等待对应事件重新开放。
-        /// </summary>
-        void ApplyEventGates(AnimancerEvent.Sequence events)
-        {
-            CharacterStateExitOptions gates = CharacterStateExitOptions.None;
-            m_CanInterruptSelf = false;
-
-            for (int i = 0; i < events.Count; i++)
-            {
-                string name = events.GetName(i);
-                if (name == EventNames.CanCancel)
-                    gates |= CharacterStateExitOptions.Cancel;
-                else if (name == EventNames.CanAttack)
-                    gates |= CharacterStateExitOptions.Attack;
-                else if (name == EventNames.CanEvade)
-                    gates |= CharacterStateExitOptions.Evade;
-            }
-
-            ExitOptions = CharacterStateExitOptions.AllActions & ~gates;
-        }
-
 #if UNITY_EDITOR
         protected override void OnValidate()
         {
@@ -178,9 +132,14 @@ namespace MotionCore.Gameplay.Character
             {
                 CharacterState nextState = m_Character.StateMachine.NextState;
                 if (nextState == this)
-                    return CanInterruptSelf;
+                    return RequestedCastPriority > CurrentCastPriority || CanInterruptSelf;
 
-                return CharacterStateRules.CanExit(Type, nextState.Type, ExitOptions);
+                return CharacterStateRules.CanExit(
+                    Type,
+                    nextState.Type,
+                    CurrentCastPriority,
+                    nextState.RequestedCastPriority,
+                    ExitWindows);
             }
         }
     }

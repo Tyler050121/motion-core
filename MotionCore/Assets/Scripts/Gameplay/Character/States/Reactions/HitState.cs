@@ -12,6 +12,8 @@ namespace MotionCore.Gameplay.Character
         float m_KnockbackPower;
 
         public override CharacterStateType Type => CharacterStateType.Hit;
+        public override CastPriority CurrentCastPriority => CastPriority.None;
+        public override StaggerLevel CurrentStaggerLevel => StaggerLevel.None;
 
         public void SetContext(float knockbackPower)
         {

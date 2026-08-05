@@ -1,8 +1,11 @@
+using System;
 using Animancer;
+using Animancer.FSM;
 using MotionCore.Infrastructure;
 using MotionCore.Gameplay.Combat;
 using UnityEngine;
 using EventNames = MotionCore.GlobalConfig.AnimationEventNames;
+using Random = UnityEngine.Random;
 
 namespace MotionCore.Gameplay.Character
 {
@@ -25,17 +28,18 @@ namespace MotionCore.Gameplay.Character
         float m_ComboExpireTime;
         bool m_IsPerfectVariant;
         bool m_IsPlayingEndStep;
-        bool m_Armored;
         System.Func<Vector3> m_AttackFacingResolver;
         IVfxService m_Vfx;
 
         [SerializeField] MeleeHitbox m_MeleeHitbox;
 
-        protected override bool CanInterruptSelf => (ExitOptions & CharacterStateExitOptions.Attack) != 0;
+        protected override bool CanInterruptSelf => (ExitWindows & CharacterExitWindow.Attack) != 0;
         public override CharacterStateType Type => m_ActionType;
-
-        // 霸体窗口由 ArmorStart/ArmorEnd 事件开关，窗口内吸收受击不进硬直。
-        public override bool AbsorbsHitReaction => m_Armored;
+        public override CastPriority CurrentCastPriority => m_CurrentAttack.CastPriority;
+        public override CastPriority RequestedCastPriority => m_PendingRequest.Definition != null
+            ? m_PendingRequest.Definition.CastPriority
+            : CurrentCastPriority;
+        public override StaggerLevel CurrentStaggerLevel => m_CurrentAttack.StaggerLevel;
 
         public void SetAttackFacingResolver(System.Func<Vector3> resolver)
         {
@@ -51,7 +55,7 @@ namespace MotionCore.Gameplay.Character
         /// 排队一次动作输入。状态未启用时会尝试恢复连段窗口；
         /// 状态播放中且是同一个动作时，会尝试推进到下一段。
         /// </summary>
-        public bool QueueAttack(AttackDefinition definition)
+        public void QueueAttack(AttackDefinition definition)
         {
             if (!enabled)
             {
@@ -64,40 +68,26 @@ namespace MotionCore.Gameplay.Character
                     m_PendingRequest = new AttackRequest(definition);
 
                 m_ActionType = definition.StateType;
-                return true;
+                return;
             }
 
             if (m_CurrentAttack == definition)
             {
-                bool canAttack = (ExitOptions & CharacterStateExitOptions.Attack) != 0;
-
                 int nextStepIndex = m_CurrentStepIndex + 1;
                 if (nextStepIndex >= m_LastStepIndexExclusive)
-                {
-                    AttackRequest restartRequest = new(definition);
-                    if (canAttack)
-                        PlayAttack(restartRequest);
-                    else
-                        m_PendingRequest = restartRequest;
-
-                    return true;
-                }
-
-                AttackRequest nextRequest = new(
-                    definition,
-                    nextStepIndex,
-                    m_LastStepIndexExclusive - nextStepIndex,
-                    ShouldUsePerfectVariant(definition, nextStepIndex));
-
-                if (canAttack)
-                    PlayAttack(nextRequest);
+                    m_PendingRequest = new AttackRequest(definition);
                 else
-                    m_PendingRequest = nextRequest;
-
-                return true;
+                    m_PendingRequest = new AttackRequest(
+                        definition,
+                        nextStepIndex,
+                        m_LastStepIndexExclusive - nextStepIndex,
+                        ShouldUsePerfectVariant(definition, nextStepIndex));
             }
+            else
+                m_PendingRequest = new AttackRequest(definition);
 
-            return false;
+            if (CanInterruptSelf)
+                TryConsumePendingRequest();
         }
 
         void OnEnable()
@@ -107,17 +97,19 @@ namespace MotionCore.Gameplay.Character
 
         void OnDisable()
         {
+            bool isReentering = StateChange<CharacterState>.IsActive
+                && StateChange<CharacterState>.NextState == this;
+
             m_MeleeHitbox.CloseAll();
             if (m_ComboAttack == null)
                 OpenComboGrace(m_CurrentStep.ComboGraceStartType, true);
 
-            m_CurrentAttack = null;
             m_CurrentStep = null;
-            m_PendingRequest = default;
+            if (!isReentering)
+                m_PendingRequest = default;
             m_LastStepIndexExclusive = 0;
             m_IsPerfectVariant = false;
             m_IsPlayingEndStep = false;
-            m_Armored = false;
         }
 
         #region 播放流程
@@ -130,12 +122,14 @@ namespace MotionCore.Gameplay.Character
             m_LastStepIndexExclusive = attackRequest.StepCount < 0
                 ? m_CurrentAttack.StepCount
                 : Mathf.Min(m_CurrentStepIndex + attackRequest.StepCount, m_CurrentAttack.StepCount);
-            m_CurrentAttack.TryGetStep(m_CurrentStepIndex, out m_CurrentStep);
+            if (!m_CurrentAttack.TryGetStep(m_CurrentStepIndex, out m_CurrentStep))
+                throw new InvalidOperationException($"攻击定义 {m_CurrentAttack.name} 的第 {m_CurrentStepIndex} 段未配置。");
+
             m_PendingRequest = default;
             m_IsPlayingEndStep = false;
             m_CurrentStepStartTime = Time.time;
 
-            FaceAttackDirection();
+            Character.Parameters.SetFacing(m_AttackFacingResolver());
             OpenComboGrace(AttackDefinition.ComboGraceStartType.Start);
             PlayStep(m_CurrentStep, attackRequest.UsePerfectVariant);
         }
@@ -156,13 +150,15 @@ namespace MotionCore.Gameplay.Character
 
         void PlayTrack(AttackAnimationTrack track)
         {
-            // 每段重置霸体，霸体窗口仅由本段的 ArmorStart/ArmorEnd 事件界定。
-            m_Armored = false;
             m_MeleeHitbox.CloseAll();
 
             // 事件回调只绑定一次、之后重播复用，所以命中数据只能从字段读、不能被回调捕获。
             m_CurrentTrack = track;
             PlayWithEvents(track.Animation, OnStepEnded);
+
+            // 收招轨道不再承担攻击判定，允许立刻回到移动或衔接其他主动动作。
+            if (m_IsPlayingEndStep)
+                ExitWindows = CharacterExitWindow.Move | CharacterExitWindow.Attack;
         }
 
         protected override void BindEvent(AnimancerEvent.Sequence events, int index, string name)
@@ -177,10 +173,6 @@ namespace MotionCore.Gameplay.Character
                 Bind(events, index, OpenHit);
             else if (name == EventNames.HitEnd)
                 Bind(events, index, m_MeleeHitbox.Close);
-            else if (name == EventNames.ArmorStart)
-                Bind(events, index, () => m_Armored = true);
-            else if (name == EventNames.ArmorEnd)
-                Bind(events, index, () => m_Armored = false);
             else
                 base.BindEvent(events, index, name);
         }
@@ -233,11 +225,6 @@ namespace MotionCore.Gameplay.Character
             return source;
         }
 
-        void FaceAttackDirection()
-        {
-            Character.Parameters.SetFacing(m_AttackFacingResolver());
-        }
-
         /// <summary>
         /// 打开当前段的取消窗口。如果之前已经缓存了下一段输入，
         /// 这里会立即消费并切到下一段。
@@ -246,7 +233,7 @@ namespace MotionCore.Gameplay.Character
         {
             OpenCancel();
 
-            if ((ExitOptions & CharacterStateExitOptions.Attack) == 0)
+            if ((ExitWindows & CharacterExitWindow.Attack) == 0)
                 return;
 
             TryConsumePendingRequest();
@@ -290,8 +277,7 @@ namespace MotionCore.Gameplay.Character
 
             m_MeleeHitbox.CloseAll();
             m_PendingRequest = default;
-            ExitOptions |= CharacterStateExitOptions.Idle;
-            Character.StateMachine.TrySetDefaultState();
+            ReturnToDefaultState();
         }
 
         #endregion

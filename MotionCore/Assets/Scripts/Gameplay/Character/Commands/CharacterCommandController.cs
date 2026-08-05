@@ -200,13 +200,14 @@ namespace MotionCore.Gameplay.Character
         /// </summary>
         public bool TryAttack(AttackDefinition definition)
         {
-            // 如果连招验证不通过则不允许入队
-            if (!m_AttackState.QueueAttack(definition))
-                return false;
+            m_AttackState.QueueAttack(definition);
 
-            // 若当前已经是攻击状态，则成功挂起（等待连招进入下一段）
+            // 同一个 AttackState 复用多种动作：高优先级请求立即重入，其他请求等待 CanAttack/CanCancel。
             if (m_Character.StateMachine.CurrentState == m_AttackState)
+            {
+                m_Character.StateMachine.TryResetState(m_AttackState);
                 return true;
+            }
 
             // 缓冲攻击状态尝试立刻进入
             m_InputBuffer.Buffer(m_AttackState, m_InputTimeOut);
@@ -214,12 +215,14 @@ namespace MotionCore.Gameplay.Character
         }
 
         /// <summary>
-        /// 接收受击指令并强制切断当前动作，进入受击硬直状态。
+        /// 接收受击指令。
         /// </summary>
-        public void ReceiveHit(float knockbackPower)
+        public void ReceiveHit(StaggerLevel staggerLevel, float knockbackPower)
         {
-            // 霸体窗口内吸收受击反应：不进硬直、不打断当前动作（伤害仍由 Health 照常结算）。
-            if (m_Character.StateMachine.CurrentState.AbsorbsHitReaction)
+            CharacterState currentState = m_Character.StateMachine.CurrentState;
+            StaggerLevel currentStaggerLevel = currentState.CurrentStaggerLevel;
+            // 只有技能僵直等级达到当前人物状态等级时才进入受击硬直状态。
+            if (staggerLevel == StaggerLevel.None || staggerLevel < currentStaggerLevel)
                 return;
 
             m_HitState.SetContext(knockbackPower);

@@ -17,7 +17,7 @@ MonoBehaviour:
   m_TargetLayers:
     serializedVersion: 2
     m_Bits: 128
-  m_StaggerPower: 0.18
+  m_StaggerLevel: 10
   m_KnockbackPower: 0
   m_Vfx:
   - m_Preset: {fileID: 11400000, guid: 13d5d8c4f2d2847cfa1a00ba8f0431ec, type: 2}

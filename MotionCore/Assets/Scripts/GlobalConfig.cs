@@ -49,8 +49,6 @@ namespace MotionCore
             public const string Hit = "Hit";
             public const string HitStart = "HitStart";
             public const string HitEnd = "HitEnd";
-            public const string ArmorStart = "ArmorStart";
-            public const string ArmorEnd = "ArmorEnd";
             public const string InvulnerableStart = "InvulnerableStart";
             public const string InvulnerableEnd = "InvulnerableEnd";
             public const string CharacterCollisionOff = "CharacterCollisionOff";

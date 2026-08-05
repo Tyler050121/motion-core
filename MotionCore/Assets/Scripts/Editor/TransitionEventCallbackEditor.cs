@@ -104,8 +104,6 @@ namespace MotionCore.Editor
             GlobalConfig.AnimationEventNames.CanCancel,
             GlobalConfig.AnimationEventNames.CanEvade,
             GlobalConfig.AnimationEventNames.CanInterrupt,
-            GlobalConfig.AnimationEventNames.ArmorStart,
-            GlobalConfig.AnimationEventNames.ArmorEnd,
             GlobalConfig.AnimationEventNames.InvulnerableStart,
             GlobalConfig.AnimationEventNames.InvulnerableEnd,
             GlobalConfig.AnimationEventNames.CharacterCollisionOff,
