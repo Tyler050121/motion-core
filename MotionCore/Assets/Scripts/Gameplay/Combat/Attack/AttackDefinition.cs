@@ -20,6 +20,14 @@ namespace MotionCore.Gameplay.Combat
         public AttackStepDefinition[] Steps => m_Steps;
         public int StepCount => m_Steps.Length;
 
+        [SerializeField, Tooltip("当前攻击结束后可衔接的攻击")]
+        AttackDefinition m_ComboFollowUp;
+        public AttackDefinition ComboFollowUp => m_ComboFollowUp;
+
+        [SerializeField, Min(0), Tooltip("后继攻击起始段索引，0 表示第一段")]
+        int m_ComboFollowUpStepIndex;
+        public int ComboFollowUpStepIndex => m_ComboFollowUpStepIndex;
+
         public bool TryGetStep(int stepIndex, out AttackStepDefinition step)
         {
             if (stepIndex >= 0 && stepIndex < m_Steps.Length)

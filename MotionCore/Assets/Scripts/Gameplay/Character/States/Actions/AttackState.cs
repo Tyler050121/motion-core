@@ -53,7 +53,7 @@ namespace MotionCore.Gameplay.Character
 
         /// <summary>
         /// 排队一次动作输入。状态未启用时会尝试恢复连段窗口；
-        /// 状态播放中且是同一个动作时，会尝试推进到下一段。
+        /// 状态播放中会尝试推进到同一动作的下一段或配置的后继攻击。
         /// </summary>
         public void QueueAttack(AttackDefinition definition)
         {
@@ -82,6 +82,16 @@ namespace MotionCore.Gameplay.Character
                         nextStepIndex,
                         m_LastStepIndexExclusive - nextStepIndex,
                         ShouldUsePerfectVariant(definition, nextStepIndex));
+            }
+            else if (m_CurrentStepIndex + 1 >= m_LastStepIndexExclusive
+                && m_CurrentAttack.ComboFollowUp == definition)
+            {
+                int followUpStepIndex = m_CurrentAttack.ComboFollowUpStepIndex;
+                m_PendingRequest = new AttackRequest(
+                    definition,
+                    followUpStepIndex,
+                    definition.StepCount - followUpStepIndex,
+                    ShouldUsePerfectVariant(definition, followUpStepIndex));
             }
             else
                 m_PendingRequest = new AttackRequest(definition);
@@ -300,13 +310,22 @@ namespace MotionCore.Gameplay.Character
             if (!force && m_CurrentStep.ComboGraceStartType != startType)
                 return;
 
+            AttackDefinition comboAttack = m_CurrentAttack;
             int nextStepIndex = m_CurrentStepIndex + 1;
-            if (nextStepIndex >= m_LastStepIndexExclusive)
-                return;
+            int lastStepIndexExclusive = m_LastStepIndexExclusive;
+            if (nextStepIndex >= lastStepIndexExclusive)
+            {
+                comboAttack = m_CurrentAttack.ComboFollowUp;
+                if (comboAttack == null)
+                    return;
 
-            m_ComboAttack = m_CurrentAttack;
+                nextStepIndex = m_CurrentAttack.ComboFollowUpStepIndex;
+                lastStepIndexExclusive = comboAttack.StepCount;
+            }
+
+            m_ComboAttack = comboAttack;
             m_ComboStepIndex = nextStepIndex;
-            m_ComboLastStepIndexExclusive = m_LastStepIndexExclusive;
+            m_ComboLastStepIndexExclusive = lastStepIndexExclusive;
             m_ComboExpireTime = GetComboGraceStartTime(force) + m_CurrentStep.ComboGraceSeconds;
         }
 

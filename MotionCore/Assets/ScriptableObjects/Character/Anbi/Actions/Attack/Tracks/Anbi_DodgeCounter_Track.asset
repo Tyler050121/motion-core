@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 272e3bd31ff5482fbad71281de2fc1d0, type: 3}
+  m_Name: Anbi_DodgeCounter_Track
+  m_EditorClassIdentifier: 
+  m_Animation: {fileID: -4245902441866364556, guid: 19f7276f66a284cbfa65e2726e1fd573,
+    type: 2}
+  m_Hits:
+  - m_Profile: {fileID: 11400000, guid: c29aed11bb684b2a9d2d0dfde73dc55e, type: 2}
+    m_Anchor: 1
+    m_LocalOffset: {x: 0, y: 0, z: 0}
+    m_Vfx:
+      m_Preset: {fileID: 11400000, guid: 83f36453d052e4b1481e328e35bb7f95, type: 2}
+      m_Scale: 1
+      m_Speed: 1
+      m_SpawnPoint: 1
+      m_FollowMode: 1
+      m_LocalOffset: {x: 0, y: 0.5, z: 0}
+      m_LocalEulerAngles: {x: 7, y: 180, z: 10}
+  - m_Profile: {fileID: 11400000, guid: c29aed11bb684b2a9d2d0dfde73dc55e, type: 2}
+    m_Anchor: 1
+    m_LocalOffset: {x: 0, y: 0, z: 0}
+    m_Vfx:
+      m_Preset: {fileID: 11400000, guid: 83f36453d052e4b1481e328e35bb7f95, type: 2}
+      m_Scale: 1
+      m_Speed: 1
+      m_SpawnPoint: 1
+      m_FollowMode: 1
+      m_LocalOffset: {x: 0, y: 0.5, z: 0}
+      m_LocalEulerAngles: {x: 0, y: 180, z: 0}

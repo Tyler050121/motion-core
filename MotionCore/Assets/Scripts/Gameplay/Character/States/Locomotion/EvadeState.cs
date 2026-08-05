@@ -16,6 +16,7 @@ namespace MotionCore.Gameplay.Character
         [SerializeField, Tooltip("完美闪避反馈")] PerfectDodgeFeedback m_PerfectDodgeFeedback;
 
         IEventBus m_EventBus;
+        bool m_CanDodgeCounter;
 
         protected override bool CanInterruptSelf => (ExitWindows & CharacterExitWindow.Evade) != 0;
         public override CharacterStateType Type => CharacterStateType.Evade;
@@ -29,6 +30,7 @@ namespace MotionCore.Gameplay.Character
 
         void OnEnable()
         {
+            m_CanDodgeCounter = false;
             m_EventBus.Subscribe<HitAvoidedEvent>(m_Hurtbox, this);
             TransitionAsset evade = Character.Parameters.HasMoveInput ? m_EvadeFront : m_EvadeBack;
             PlayWithEvents(evade, ReturnToDefaultState);
@@ -61,7 +63,21 @@ namespace MotionCore.Gameplay.Character
         public void OnEvent(HitAvoidedEvent eventData)
         {
             m_EventBus.Unsubscribe<HitAvoidedEvent>(m_Hurtbox, this);
+            m_CanDodgeCounter = true;
+            OpenAttack();
             m_PerfectDodgeFeedback.Play();
+        }
+
+        /// <summary>
+        /// 消耗本次闪避获得的反击资格。资格仅在当前闪避状态内有效。
+        /// </summary>
+        public bool TryConsumeDodgeCounter()
+        {
+            if (!m_CanDodgeCounter)
+                return false;
+
+            m_CanDodgeCounter = false;
+            return true;
         }
 
         void OpenInvulnerability() => m_Hurtbox.SetInvulnerable(true);

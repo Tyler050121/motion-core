@@ -29,6 +29,7 @@ namespace MotionCore.Gameplay.Character
         StateMachine<CharacterState>.InputBuffer m_InputBuffer;
         MotorConfig m_MotorConfig;
         AttackDefinition m_BasicAttack;
+        AttackDefinition m_DodgeCounterAttack;
         Func<Vector3> m_AttackFacingResolver;
 
         public CharacterStateType CurrentStateType => m_Character.StateMachine.CurrentState.Type;
@@ -48,6 +49,7 @@ namespace MotionCore.Gameplay.Character
         {
             m_MotorConfig = definition.Motor;
             m_BasicAttack = definition.BasicAttack;
+            m_DodgeCounterAttack = definition.DodgeCounterAttack;
 
             ITimerService timer = ServiceLocator.Resolve<ITimerService>();
             m_MoveState.SetContext(timer, m_MotorConfig, definition.LocomotionAnimation);
@@ -192,7 +194,12 @@ namespace MotionCore.Gameplay.Character
 
         public bool TryBasicAttack()
         {
-            return TryAttack(m_BasicAttack);
+            bool useDodgeCounter = m_Character.StateMachine.CurrentState == m_EvadeState
+                && m_EvadeState.TryConsumeDodgeCounter();
+            AttackDefinition attack = useDodgeCounter
+                ? m_DodgeCounterAttack
+                : m_BasicAttack;
+            return TryAttack(attack);
         }
 
         /// <summary>
