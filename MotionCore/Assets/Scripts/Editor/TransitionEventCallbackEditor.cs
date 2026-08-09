@@ -106,6 +106,8 @@ namespace MotionCore.Editor
             GlobalConfig.AnimationEventNames.CanInterrupt,
             GlobalConfig.AnimationEventNames.InvulnerableStart,
             GlobalConfig.AnimationEventNames.InvulnerableEnd,
+            GlobalConfig.AnimationEventNames.ParryStart,
+            GlobalConfig.AnimationEventNames.ParryEnd,
             GlobalConfig.AnimationEventNames.CharacterCollisionOff,
             GlobalConfig.AnimationEventNames.CharacterCollisionOn,
         };

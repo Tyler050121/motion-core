@@ -18,7 +18,13 @@ namespace MotionCore.Gameplay.Character
 
         void SetFacingDirection(Vector3 facingDirection, TurnSpeed turnSpeed = TurnSpeed.General);
 
+        void SetDefenseHeld(bool isHeld);
+
         bool TryEvade();
+
+        bool TryParry();
+
+        bool TryDefense();
 
         bool TryBasicAttack();
 

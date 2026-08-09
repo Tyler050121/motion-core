@@ -56,12 +56,21 @@ namespace MotionCore.Gameplay.Character
         protected void ReturnToDefaultState() => Character.StateMachine.ForceSetDefaultState();
 
         /// <summary>
+        /// 播放并记录当前动画，确保旧动画淡出期间派发的事件会被过滤。
+        /// </summary>
+        protected AnimancerState PlayAnimation(ITransition transition)
+        {
+            m_CurrentAnimation = Character.Animancer.Play(transition);
+            return m_CurrentAnimation;
+        }
+
+        /// <summary>
         /// 播放动画、绑定动画事件，并关闭主动退出窗口等待显式 CanX 事件开放。
         /// 事件只在首次播放该动画时绑定一次、之后重播复用，所以回调里不要捕获随播放变化的局部变量，需要的话存成字段。
         /// </summary>
         protected void PlayWithEvents(ITransition transition, System.Action onEnd)
         {
-            m_CurrentAnimation = Character.Animancer.Play(transition);
+            PlayAnimation(transition);
 
             if (m_CurrentAnimation.Events(this, out AnimancerEvent.Sequence events))
             {

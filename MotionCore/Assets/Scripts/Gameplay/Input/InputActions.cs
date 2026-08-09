@@ -131,6 +131,24 @@ namespace MotionCore.Gameplay.Input
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Parry"",
+                    ""type"": ""Button"",
+                    ""id"": ""00285bcb-d225-4b5f-8e46-1594ce7c8033"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Defense"",
+                    ""type"": ""Button"",
+                    ""id"": ""25e27276-6d4d-40aa-94e1-5c2ec7ce32ea"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Lock"",
                     ""type"": ""Button"",
                     ""id"": ""8fa20564-f1b3-49e5-8353-513d5ccc11f2"",
@@ -348,6 +366,39 @@ namespace MotionCore.Gameplay.Input
                 },
                 {
                     ""name"": """",
+                    ""id"": ""e2eb1d4d-a784-4c32-a46b-62f9baaa30ce"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Parry"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9bf9637b-ca5c-4dd5-ad4a-7b2657cd094b"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Parry"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a59aab96-de12-4a36-9ee5-95e413f2872d"",
+                    ""path"": ""<Mouse>/backButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Defense"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""c766b2bf-fa11-4f98-87a3-86b6054b39e3"",
                     ""path"": ""<Mouse>/middleButton"",
                     ""interactions"": """",
@@ -401,6 +452,8 @@ namespace MotionCore.Gameplay.Input
             m_Character_Run = m_Character.FindAction("Run", throwIfNotFound: true);
             m_Character_Evade = m_Character.FindAction("Evade", throwIfNotFound: true);
             m_Character_BasicAttack = m_Character.FindAction("BasicAttack", throwIfNotFound: true);
+            m_Character_Parry = m_Character.FindAction("Parry", throwIfNotFound: true);
+            m_Character_Defense = m_Character.FindAction("Defense", throwIfNotFound: true);
             m_Character_Lock = m_Character.FindAction("Lock", throwIfNotFound: true);
             m_Character_CycleLockTarget = m_Character.FindAction("CycleLockTarget", throwIfNotFound: true);
             m_Character_Pause = m_Character.FindAction("Pause", throwIfNotFound: true);
@@ -488,6 +541,8 @@ namespace MotionCore.Gameplay.Input
         private readonly InputAction m_Character_Run;
         private readonly InputAction m_Character_Evade;
         private readonly InputAction m_Character_BasicAttack;
+        private readonly InputAction m_Character_Parry;
+        private readonly InputAction m_Character_Defense;
         private readonly InputAction m_Character_Lock;
         private readonly InputAction m_Character_CycleLockTarget;
         private readonly InputAction m_Character_Pause;
@@ -518,6 +573,14 @@ namespace MotionCore.Gameplay.Input
             /// Provides access to the underlying input action "Character/BasicAttack".
             /// </summary>
             public InputAction @BasicAttack => m_Wrapper.m_Character_BasicAttack;
+            /// <summary>
+            /// Provides access to the underlying input action "Character/Parry".
+            /// </summary>
+            public InputAction @Parry => m_Wrapper.m_Character_Parry;
+            /// <summary>
+            /// Provides access to the underlying input action "Character/Defense".
+            /// </summary>
+            public InputAction @Defense => m_Wrapper.m_Character_Defense;
             /// <summary>
             /// Provides access to the underlying input action "Character/Lock".
             /// </summary>
@@ -568,6 +631,12 @@ namespace MotionCore.Gameplay.Input
                 @BasicAttack.started += instance.OnBasicAttack;
                 @BasicAttack.performed += instance.OnBasicAttack;
                 @BasicAttack.canceled += instance.OnBasicAttack;
+                @Parry.started += instance.OnParry;
+                @Parry.performed += instance.OnParry;
+                @Parry.canceled += instance.OnParry;
+                @Defense.started += instance.OnDefense;
+                @Defense.performed += instance.OnDefense;
+                @Defense.canceled += instance.OnDefense;
                 @Lock.started += instance.OnLock;
                 @Lock.performed += instance.OnLock;
                 @Lock.canceled += instance.OnLock;
@@ -600,6 +669,12 @@ namespace MotionCore.Gameplay.Input
                 @BasicAttack.started -= instance.OnBasicAttack;
                 @BasicAttack.performed -= instance.OnBasicAttack;
                 @BasicAttack.canceled -= instance.OnBasicAttack;
+                @Parry.started -= instance.OnParry;
+                @Parry.performed -= instance.OnParry;
+                @Parry.canceled -= instance.OnParry;
+                @Defense.started -= instance.OnDefense;
+                @Defense.performed -= instance.OnDefense;
+                @Defense.canceled -= instance.OnDefense;
                 @Lock.started -= instance.OnLock;
                 @Lock.performed -= instance.OnLock;
                 @Lock.canceled -= instance.OnLock;
@@ -677,6 +752,20 @@ namespace MotionCore.Gameplay.Input
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnBasicAttack(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Parry" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnParry(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Defense" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnDefense(InputAction.CallbackContext context);
             /// <summary>
             /// Method invoked when associated input action "Lock" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
             /// </summary>

@@ -22,3 +22,4 @@ MonoBehaviour:
   bookmarkedScenePaths:
   - Assets/Scenes/SampleScene.unity
   - Assets/Scenes/UIScene.unity
+  - Assets/Scenes/Launch.unity

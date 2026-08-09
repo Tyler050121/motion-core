@@ -19,6 +19,8 @@ namespace MotionCore.Gameplay.Character
         [SerializeField] Character m_Character;
         [SerializeField] MoveState m_MoveState;
         [SerializeField] EvadeState m_EvadeState;
+        [SerializeField] ParryState m_ParryState;
+        [SerializeField] DefenseState m_DefenseState;
         [SerializeField] AttackState m_AttackState;
         [SerializeField] HitState m_HitState;
         
@@ -88,10 +90,14 @@ namespace MotionCore.Gameplay.Character
             // 根据是否有输入以及是否想要奔跑，确定目标速度
             float targetSpeed = hasMoveInput ? (wantsRun ? GlobalConfig.Locomotion.RunSpeed : GlobalConfig.Locomotion.WalkSpeed) : 0f;
 
-            // 根据当前目标速度判断采用何种加速度/减速度（WalkSpeedChangeRate 或 RunSpeedChangeRate）
-            float speedChangeRate = targetSpeed <= GlobalConfig.Locomotion.WalkSpeed
-                ? GlobalConfig.Locomotion.WalkSpeedChangeRate
-                : GlobalConfig.Locomotion.RunSpeedChangeRate;
+            // 跑步降到步行单独放缓，避免卸势过渡进入移动后速度骤降。
+            bool isSlowingToWalk = targetSpeed == GlobalConfig.Locomotion.WalkSpeed
+                && m_Character.Parameters.MoveSpeed > GlobalConfig.Locomotion.WalkSpeed;
+            float speedChangeRate = isSlowingToWalk
+                ? GlobalConfig.Locomotion.RunToWalkSpeedChangeRate
+                : targetSpeed <= GlobalConfig.Locomotion.WalkSpeed
+                    ? GlobalConfig.Locomotion.WalkSpeedChangeRate
+                    : GlobalConfig.Locomotion.RunSpeedChangeRate;
             
             // 平滑计算当前帧的移动速度
             float moveSpeed = Mathf.MoveTowards(m_Character.Parameters.MoveSpeed, targetSpeed, speedChangeRate * Time.deltaTime);
@@ -162,6 +168,12 @@ namespace MotionCore.Gameplay.Character
             m_Character.Parameters.SetFacing(facingDirection, ResolveTurnDuration(turnSpeed));
         }
 
+        public void SetDefenseHeld(bool isHeld)
+        {
+            m_ParryState.SetDefenseHeld(isHeld);
+            m_DefenseState.SetDefenseHeld(isHeld);
+        }
+
         /// <summary>
         /// 把转身速度档位映射到 MotorConfig 上对应的 180 度转身时长。
         /// </summary>
@@ -190,6 +202,23 @@ namespace MotionCore.Gameplay.Character
 
             m_InputBuffer.Buffer(m_EvadeState, m_InputTimeOut);
             return m_InputBuffer.Update(0f);
+        }
+
+        public bool TryParry()
+        {
+            m_InputBuffer.Buffer(m_ParryState, m_InputTimeOut);
+            return m_InputBuffer.Update(0f);
+        }
+
+        public bool TryDefense()
+        {
+            if (m_Character.StateMachine.CurrentState == m_DefenseState)
+            {
+                m_DefenseState.ResumeDefense();
+                return true;
+            }
+
+            return m_Character.StateMachine.TrySetState(m_DefenseState);
         }
 
         public bool TryBasicAttack()

@@ -121,6 +121,8 @@ GameObject:
   - component: {fileID: 9106659566196491888}
   - component: {fileID: 4699053006546641189}
   - component: {fileID: 7471838613926931105}
+  - component: {fileID: 8157349206418823071}
+  - component: {fileID: 340408796640172676}
   - component: {fileID: 6383220402655325866}
   - component: {fileID: 6087151784755445272}
   - component: {fileID: 1068605082628049589}
@@ -225,6 +227,40 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   m_PerfectDodgeFeedback: {fileID: 7120349922114455002}
+--- !u!114 &8157349206418823071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7197192688399526562}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f863fa511c8045a6850ba7dc06cd4f97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Character: {fileID: 5408090951713516069}
+  m_Parry: {fileID: 2117313361578719113, guid: 19f7276f66a284cbfa65e2726e1fd573, type: 2}
+  m_DefenseState: {fileID: 340408796640172676}
+  m_Hurtbox: {fileID: 782638903086812021}
+--- !u!114 &340408796640172676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7197192688399526562}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff71194855f84b099f8dd3a271baa66e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Character: {fileID: 5408090951713516069}
+  m_Loop: {fileID: 7780873543445224334, guid: 19f7276f66a284cbfa65e2726e1fd573, type: 2}
+  m_End: {fileID: -5612479576866074438, guid: 19f7276f66a284cbfa65e2726e1fd573, type: 2}
+  m_MoveState: {fileID: 4699053006546641189}
+  m_Hurtbox: {fileID: 782638903086812021}
+  m_DamageMultiplier: 0.8
 --- !u!114 &6383220402655325866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -271,6 +307,8 @@ MonoBehaviour:
   m_Character: {fileID: 5408090951713516069}
   m_MoveState: {fileID: 4699053006546641189}
   m_EvadeState: {fileID: 7471838613926931105}
+  m_ParryState: {fileID: 8157349206418823071}
+  m_DefenseState: {fileID: 340408796640172676}
   m_AttackState: {fileID: 6383220402655325866}
   m_HitState: {fileID: 6087151784755445272}
   m_InputTimeOut: 0.35

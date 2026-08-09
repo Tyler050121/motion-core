@@ -15,6 +15,7 @@ namespace MotionCore
             public const float WalkSpeed = 1f;
             public const float RunSpeed = 3f;
             public const float WalkSpeedChangeRate = 8f;
+            public const float RunToWalkSpeedChangeRate = 4f;
             public const float RunSpeedChangeRate = 3f;
             public const float RunTurnBackAngle = 135f;
             public const float RunThresholdSpeed = (WalkSpeed + RunSpeed) * 0.5f;
@@ -51,6 +52,8 @@ namespace MotionCore
             public const string HitEnd = "HitEnd";
             public const string InvulnerableStart = "InvulnerableStart";
             public const string InvulnerableEnd = "InvulnerableEnd";
+            public const string ParryStart = "ParryStart";
+            public const string ParryEnd = "ParryEnd";
             public const string CharacterCollisionOff = "CharacterCollisionOff";
             public const string CharacterCollisionOn = "CharacterCollisionOn";
             public const string BranchOpen = "BranchOpen";

@@ -85,6 +85,16 @@ namespace MotionCore.Gameplay.Character
             return m_CommandExecutor.TryBasicAttack();
         }
 
+        public bool TryParry()
+        {
+            return m_CommandExecutor.TryParry();
+        }
+
+        public bool TryDefense()
+        {
+            return m_CommandExecutor.TryDefense();
+        }
+
         public void ReceiveHit(StaggerLevel staggerLevel, float knockbackPower)
         {
             m_HitReactionHandler.ReceiveHit(staggerLevel, knockbackPower);
@@ -112,8 +122,18 @@ namespace MotionCore.Gameplay.Character
 
         void UpdateAction()
         {
+            bool isParryHeld = m_InputActions.Character.Parry.IsPressed();
+            bool isDefenseHeld = m_InputActions.Character.Defense.IsPressed();
+            m_CommandExecutor.SetDefenseHeld(isParryHeld || isDefenseHeld);
+
+            if (m_InputActions.Character.Parry.WasPressedThisFrame())
+                TryParry();
+
             if (m_InputActions.Character.Evade.WasPressedThisFrame())
                 TryEvade();
+
+            if (m_InputActions.Character.Defense.WasPressedThisFrame())
+                TryDefense();
 
             if (m_InputActions.Character.BasicAttack.WasPressedThisFrame())
                 TryNormalAttack();

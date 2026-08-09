@@ -14,6 +14,8 @@ namespace MotionCore.Gameplay.Character
         Ultimate = 6, // 终结技
         Hit = 7, // 受击
         Dead = 8, // 死亡
+        Parry = 9, // 卸势
+        Defense = 10, // 防御
     }
 
     /// <summary>
@@ -38,7 +40,9 @@ namespace MotionCore.Gameplay.Character
         HeavyAttack = 20, // 重击
         Skill = 30, // 战技
         Ultimate = 40, // 终结技
-        Evade = 50, // 闪避
+        Defense = 50, // 防御
+        Evade = 60, // 闪避
+        Parry = 70, // 卸势
     }
 
     /// <summary>
@@ -90,6 +94,8 @@ namespace MotionCore.Gameplay.Character
                 CharacterStateType.HeavyAttack or
                 CharacterStateType.Skill or
                 CharacterStateType.Ultimate => (exitWindows & CharacterExitWindow.Attack) != 0,
+                CharacterStateType.Parry => false,
+                CharacterStateType.Defense => false,
                 CharacterStateType.Hit => false,
                 CharacterStateType.Dead => false,
                 _ => throw new System.ArgumentOutOfRangeException(nameof(nextState), nextState, null)

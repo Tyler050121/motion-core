@@ -563,7 +563,6 @@ GameObject:
   - component: {fileID: 1846869883}
   - component: {fileID: 1846869886}
   - component: {fileID: 1846869885}
-  - component: {fileID: 1846869887}
   m_Layer: 0
   m_Name: GameRoot
   m_TagString: Untagged
@@ -630,18 +629,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Config: {fileID: 11400000, guid: 39d7235eedfd54ced81665b60b4e0350, type: 2}
   m_RuntimeRootName: UIRuntime
---- !u!114 &1846869887
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1846869882}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2cf6deae55024aeeb787efa91f546321, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

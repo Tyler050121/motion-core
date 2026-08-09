@@ -29,6 +29,35 @@ MonoBehaviour:
         _Clip: {fileID: 4298485448582054271, guid: 41515f121fabd40bd9c1ce03d4d0ccdd,
           type: 3}
         _NormalizedStartTime: NaN
+--- !u!114 &-5612479576866074438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
+  m_Name: Anbi_ReflectBullect_End
+  m_EditorClassIdentifier: 
+  _Transition:
+    rid: 2786098844091547649
+  references:
+    version: 2
+    RefIds:
+    - rid: 2786098844091547649
+      type: {class: ClipTransition, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _FadeDuration: 0.25
+        _Speed: 1
+        _Events:
+          _NormalizedTimes: []
+          _Callbacks: []
+          _Names: []
+        _Clip: {fileID: 5716684240098163165, guid: 5ee3048383fd441d5864e3d2ed3aaf00,
+          type: 3}
+        _NormalizedStartTime: NaN
 --- !u!114 &-5368311579530835231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -405,11 +434,11 @@ MonoBehaviour:
     - _Name: Combat
       _Index: 0
       _IsExpanded: 1
-      _TransitionIndices: 0a0000000d0000000c0000000b00000011000000100000000f0000000e00000013000000120000001600000014000000
+      _TransitionIndices: 0a0000000d0000000c0000000b00000011000000100000000f0000000e00000013000000120000001600000018000000190000001700000014000000
     - _Name: Motion
       _Index: 1
       _IsExpanded: 1
-      _TransitionIndices: 000000000100000002000000030000001500000004000000170000000700000005000000080000000600000009000000
+      _TransitionIndices: 0000000001000000020000000300000015000000040000000700000005000000080000000600000009000000
     _TransitionSortMode: 0
 --- !u!114 &-440235273159886873
 MonoBehaviour:
@@ -532,6 +561,9 @@ MonoBehaviour:
     - {fileID: 5907832677288363921}
     - {fileID: 1429764955580758925}
     - {fileID: -4245902441866364556}
+    - {fileID: -5612479576866074438}
+    - {fileID: 2117313361578719113}
+    - {fileID: 7780873543445224334}
     _Modifiers:
     - _From: 0
       _To: 2
@@ -705,6 +737,22 @@ MonoBehaviour:
       _To: 4
       _Fade: 0.1
       _NormalizedStartTime: NaN
+    - _From: 23
+      _To: 3
+      _Fade: 0
+      _NormalizedStartTime: NaN
+    - _From: 24
+      _To: 23
+      _Fade: 0
+      _NormalizedStartTime: NaN
+    - _From: 24
+      _To: 25
+      _Fade: 0
+      _NormalizedStartTime: NaN
+    - _From: 25
+      _To: 23
+      _Fade: 0
+      _NormalizedStartTime: NaN
     _Aliases: []
     _AliasAllTransitions: 1
 --- !u!114 &1429764955580758925
@@ -734,6 +782,40 @@ MonoBehaviour:
           _Callbacks: []
           _Names: []
         _Clip: {fileID: 6032505460816376181, guid: 41515f121fabd40bd9c1ce03d4d0ccdd,
+          type: 3}
+        _NormalizedStartTime: NaN
+--- !u!114 &2117313361578719113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
+  m_Name: Anbi_ReflectBullect
+  m_EditorClassIdentifier: 
+  _Transition:
+    rid: 2786098844091547648
+  references:
+    version: 2
+    RefIds:
+    - rid: 2786098844091547648
+      type: {class: ClipTransition, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _FadeDuration: 0.25
+        _Speed: 1
+        _Events:
+          _NormalizedTimes:
+          - 0
+          - 0.71999997
+          - NaN
+          _Callbacks: []
+          _Names:
+          - {fileID: 11400000, guid: f3fa8c51a12b40a294b09bda37e1f3b8, type: 2}
+          - {fileID: 11400000, guid: 6cbeccbcbcff40149350804e85e2083e, type: 2}
+        _Clip: {fileID: -5555458103761020515, guid: 5ee3048383fd441d5864e3d2ed3aaf00,
           type: 3}
         _NormalizedStartTime: NaN
 --- !u!114 &2360240572361095127
@@ -1028,6 +1110,35 @@ MonoBehaviour:
       type: {class: AnimancerEvent/ParameterInt, ns: Animancer, asm: Kybernetik.Animancer}
       data:
         _Value: 0
+--- !u!114 &7780873543445224334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
+  m_Name: Anbi_ReflectBullect_Loop
+  m_EditorClassIdentifier: 
+  _Transition:
+    rid: 2786098910718328838
+  references:
+    version: 2
+    RefIds:
+    - rid: 2786098910718328838
+      type: {class: ClipTransition, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _FadeDuration: 0.25
+        _Speed: 1
+        _Events:
+          _NormalizedTimes: []
+          _Callbacks: []
+          _Names: []
+        _Clip: {fileID: 7004775523802643021, guid: 5ee3048383fd441d5864e3d2ed3aaf00,
+          type: 3}
+        _NormalizedStartTime: NaN
 --- !u!114 &8520251411256990169
 MonoBehaviour:
   m_ObjectHideFlags: 0

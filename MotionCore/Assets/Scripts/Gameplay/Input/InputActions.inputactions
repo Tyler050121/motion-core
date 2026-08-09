@@ -43,6 +43,24 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Parry",
+                    "type": "Button",
+                    "id": "00285bcb-d225-4b5f-8e46-1594ce7c8033",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Defense",
+                    "type": "Button",
+                    "id": "25e27276-6d4d-40aa-94e1-5c2ec7ce32ea",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Lock",
                     "type": "Button",
                     "id": "8fa20564-f1b3-49e5-8353-513d5ccc11f2",
@@ -255,6 +273,39 @@
                     "processors": "",
                     "groups": "",
                     "action": "BasicAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e2eb1d4d-a784-4c32-a46b-62f9baaa30ce",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Parry",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9bf9637b-ca5c-4dd5-ad4a-7b2657cd094b",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Parry",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a59aab96-de12-4a36-9ee5-95e413f2872d",
+                    "path": "<Mouse>/backButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Defense",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

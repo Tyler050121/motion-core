@@ -15,6 +15,8 @@ namespace MotionCore.Gameplay.Combat
         IEventBus m_EventBus;
         Faction m_Faction;
         bool m_Invulnerable;
+        bool m_Parrying;
+        float m_DamageMultiplier = 1f;
 
         public IDamageable Damageable => m_Damageable;
 
@@ -37,24 +39,41 @@ namespace MotionCore.Gameplay.Combat
             m_Invulnerable = invulnerable;
         }
 
+        public void SetParrying(bool parrying)
+        {
+            m_Parrying = parrying;
+        }
+
+        public void SetDamageMultiplier(float multiplier)
+        {
+            m_DamageMultiplier = multiplier;
+        }
+
         /// <summary>
-        /// 结算一次命中。无敌期间拒绝伤害并广播 HitAvoidedEvent，不广播 HitEvent；
+        /// 结算一次命中。卸势或无敌期间拒绝伤害并广播对应事件，不广播 HitEvent；
         /// 调用方（MeleeHitbox）仍会把本次命中记入攻击窗口。
         /// </summary>
         public void ReceiveHit(HitProfile profile, Vector3 point, Vector3 visualPoint, Vector3 direction, Transform attacker)
         {
+            if (m_Parrying)
+            {
+                m_EventBus.Publish(this, new HitParriedEvent());
+                return;
+            }
+
             if (m_Invulnerable)
             {
                 m_EventBus.Publish(this, new HitAvoidedEvent());
                 return;
             }
 
-            m_Damageable.ApplyDamage(profile.Damage);
+            float damage = profile.Damage * m_DamageMultiplier;
+            m_Damageable.ApplyDamage(damage);
             HitFeedbackContext feedback = new(point, visualPoint, direction, profile.Vfx);
             HitResult result = new(
                 this,
                 attacker,
-                profile.Damage,
+                damage,
                 m_Damageable.CurrentHealth,
                 m_Damageable.IsDepleted,
                 profile.StaggerLevel,
