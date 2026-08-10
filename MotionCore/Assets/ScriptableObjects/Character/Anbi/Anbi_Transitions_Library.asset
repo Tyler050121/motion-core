@@ -810,11 +810,13 @@ MonoBehaviour:
           _NormalizedTimes:
           - 0
           - 0.71999997
+          - 0.74
           - NaN
           _Callbacks: []
           _Names:
           - {fileID: 11400000, guid: f3fa8c51a12b40a294b09bda37e1f3b8, type: 2}
           - {fileID: 11400000, guid: 6cbeccbcbcff40149350804e85e2083e, type: 2}
+          - {fileID: 11400000, guid: 6e5b9143ae79d47aaa31880fa29889d5, type: 2}
         _Clip: {fileID: -5555458103761020515, guid: 5ee3048383fd441d5864e3d2ed3aaf00,
           type: 3}
         _NormalizedStartTime: NaN

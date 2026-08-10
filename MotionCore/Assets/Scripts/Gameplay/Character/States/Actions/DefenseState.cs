@@ -137,6 +137,7 @@ namespace MotionCore.Gameplay.Character
             // TODO: 防御通常应使用原地 Loop；若允许移动防御，应补齐方向和速度 Mixer。
             // 当前暂用资源库仅有的带位移 Loop 动画。
             m_LoopAnimation = PlayAnimation(m_Loop);
+            ExitWindows = CharacterExitWindow.Attack;
         }
 
         void PlayEnd()
@@ -144,6 +145,7 @@ namespace MotionCore.Gameplay.Character
             m_Phase = DefensePhase.Ending;
             m_Hurtbox.SetDamageMultiplier(1f);
             PlayWithEvents(m_End, FinishEnd);
+            ExitWindows = CharacterExitWindow.Attack;
         }
 
         void FinishEnd()
