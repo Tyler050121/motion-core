@@ -21,6 +21,8 @@ namespace MotionCore.Gameplay.Character
         [SerializeField] Hurtbox m_Hurtbox;
         [SerializeField, Range(0f, 1f), Tooltip("防御承受伤害倍率，0.8 表示减伤 20%")]
         float m_DamageMultiplier = 0.8f;
+        [SerializeField, Min(0f), Tooltip("防御承受架势伤害倍率")]
+        float m_PostureDamageMultiplier = 1.1f;
 
         DefensePhase m_Phase;
         AnimancerState m_LoopAnimation;
@@ -112,6 +114,7 @@ namespace MotionCore.Gameplay.Character
         void OnDisable()
         {
             m_Hurtbox.SetDamageMultiplier(1f);
+            m_Hurtbox.SetPostureDamageMultiplier(1f);
         }
 
         /// <summary>
@@ -133,6 +136,7 @@ namespace MotionCore.Gameplay.Character
             m_Phase = DefensePhase.Looping;
             m_IsExitRequested = false;
             m_Hurtbox.SetDamageMultiplier(m_DamageMultiplier);
+            m_Hurtbox.SetPostureDamageMultiplier(m_PostureDamageMultiplier);
 
             // TODO: 防御通常应使用原地 Loop；若允许移动防御，应补齐方向和速度 Mixer。
             // 当前暂用资源库仅有的带位移 Loop 动画。
@@ -144,6 +148,7 @@ namespace MotionCore.Gameplay.Character
         {
             m_Phase = DefensePhase.Ending;
             m_Hurtbox.SetDamageMultiplier(1f);
+            m_Hurtbox.SetPostureDamageMultiplier(1f);
             PlayWithEvents(m_End, FinishEnd);
             ExitWindows = CharacterExitWindow.Attack;
         }

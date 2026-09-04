@@ -14,7 +14,12 @@ namespace MotionCore.Gameplay.Character
     /// 负责接收外部控制指令（玩家输入或AI逻辑），管理输入缓冲，并驱动角色的状态机（移动、闪避、攻击、受击等）。
     /// </summary>
     [DisallowMultipleComponent]
-    public sealed class CharacterCommandController : MonoBehaviour, ICharacterCommandExecutor, IConfigReceiver<CharacterDefinition>, IHitReactionHandler
+    public sealed class CharacterCommandController : MonoBehaviour,
+        ICharacterCommandExecutor,
+        IConfigReceiver<CharacterDefinition>,
+        IHitReactionHandler,
+        IEventListener<PostureChangedEvent>,
+        IEventListener<HealthChangedEvent>
     {
         [SerializeField] Character m_Character;
         [SerializeField] MoveState m_MoveState;
@@ -23,6 +28,9 @@ namespace MotionCore.Gameplay.Character
         [SerializeField] DefenseState m_DefenseState;
         [SerializeField] AttackState m_AttackState;
         [SerializeField] HitState m_HitState;
+        [SerializeField] PostureBreakState m_PostureBreakState;
+        [SerializeField] ExecutionState m_ExecutionState;
+        [SerializeField] DeadState m_DeadState;
         
         [Tooltip("指令输入的缓冲时间")]
         [SerializeField, Seconds] float m_InputTimeOut = 0.35f;
@@ -33,6 +41,10 @@ namespace MotionCore.Gameplay.Character
         AttackDefinition m_BasicAttack;
         AttackDefinition m_DodgeCounterAttack;
         Func<Vector3> m_AttackFacingResolver;
+        Posture m_Posture;
+        Health m_Health;
+        IEventBus m_EventBus;
+        CharacterState m_PendingReactionState;
 
         public CharacterStateType CurrentStateType => m_Character.StateMachine.CurrentState.Type;
         public float MoveSpeed => m_Character.Parameters.MoveSpeed;
@@ -45,6 +57,22 @@ namespace MotionCore.Gameplay.Character
             
             // 实例化输入缓冲区绑定角色的动作状态机
             m_InputBuffer = new StateMachine<CharacterState>.InputBuffer(m_Character.StateMachine);
+            m_Posture = m_Character.GetComponent<Posture>();
+            m_Health = m_Character.GetComponent<Health>();
+            m_EventBus = ServiceLocator.Resolve<IEventBus>();
+        }
+
+        void OnEnable()
+        {
+            m_EventBus.Subscribe<PostureChangedEvent>(m_Posture, this);
+            m_EventBus.Subscribe<HealthChangedEvent>(m_Health, this);
+        }
+
+        void OnDisable()
+        {
+            m_EventBus.Unsubscribe<PostureChangedEvent>(m_Posture, this);
+            m_EventBus.Unsubscribe<HealthChangedEvent>(m_Health, this);
+            m_PendingReactionState = null;
         }
 
         public void Initialize(CharacterDefinition definition)
@@ -65,6 +93,11 @@ namespace MotionCore.Gameplay.Character
 
         void LateUpdate()
         {
+            CharacterState pendingState = m_PendingReactionState;
+            m_PendingReactionState = null;
+            if (pendingState != null)
+                m_Character.StateMachine.ForceSetState(pendingState);
+
             if (!m_Character.Parameters.HasFacingDirection)
                 return;
 
@@ -197,8 +230,7 @@ namespace MotionCore.Gameplay.Character
                 : m_Character.FacingRoot.forward;
 
             evadeFacing.y = 0f;
-            if (evadeFacing.sqrMagnitude > 0.0001f)
-                m_Character.Parameters.SetFacing(evadeFacing, m_MotorConfig.EvadeTurnDuration);
+            m_EvadeState.SetContext(evadeFacing, m_MotorConfig.EvadeTurnDuration);
 
             m_InputBuffer.Buffer(m_EvadeState, m_InputTimeOut);
             return m_InputBuffer.Update(0f);
@@ -219,6 +251,22 @@ namespace MotionCore.Gameplay.Character
             }
 
             return m_Character.StateMachine.TrySetState(m_DefenseState);
+        }
+
+        public bool RefreshExecutionTarget()
+        {
+            bool isUnavailableForExecution = m_Health.IsDead
+                || CurrentStateType == CharacterStateType.Execution
+                || CurrentStateType == CharacterStateType.Executed;
+            if (isUnavailableForExecution)
+                return false;
+
+            return m_ExecutionState.TryPrepare();
+        }
+
+        public bool TryExecution()
+        {
+            return m_Character.StateMachine.TrySetState(m_ExecutionState);
         }
 
         public bool TryBasicAttack()
@@ -256,6 +304,14 @@ namespace MotionCore.Gameplay.Character
         public void ReceiveHit(StaggerLevel staggerLevel, float knockbackPower)
         {
             CharacterState currentState = m_Character.StateMachine.CurrentState;
+
+            if (currentState == m_PostureBreakState)
+            {
+                // 破韧期间保持当前状态，只替换受击表现。
+                m_PostureBreakState.PlayBreakHit();
+                return;
+            }
+
             StaggerLevel currentStaggerLevel = currentState.CurrentStaggerLevel;
             // 只有技能僵直等级达到当前人物状态等级时才进入受击硬直状态。
             if (staggerLevel == StaggerLevel.None || staggerLevel < currentStaggerLevel)
@@ -267,6 +323,26 @@ namespace MotionCore.Gameplay.Character
                 m_Character.StateMachine.TryResetState(m_HitState);
             else
                 m_Character.StateMachine.TrySetState(m_HitState);
+        }
+
+        /// <summary>
+        /// 处理架势破防事件，并只在刚进入破防时开启破防状态或处决窗口。
+        /// </summary>
+        public void OnEvent(PostureChangedEvent eventData)
+        {
+            if (!eventData.IsNewlyBroken)
+                return;
+
+            if (m_PostureBreakState.LocksCharacter)
+                m_PendingReactionState = m_PostureBreakState;
+            else
+                m_PostureBreakState.OpenExecutionWindow();
+        }
+
+        public void OnEvent(HealthChangedEvent eventData)
+        {
+            if (eventData.Source.IsDead)
+                m_PendingReactionState = m_DeadState;
         }
 
         Vector3 GetAttackFacingDirection()

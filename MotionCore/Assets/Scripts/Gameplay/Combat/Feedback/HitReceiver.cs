@@ -16,7 +16,7 @@ namespace MotionCore.Gameplay.Combat
         [SerializeField, Tooltip("弹字跟随受击目标")] bool m_FollowTarget = true;
 
         Hurtbox m_Hurtbox;
-        IDamageable m_Damageable;
+        Health m_Health;
         IEventBus m_EventBus;
         IHitReactionHandler m_ReactionHandler; // 非角色目标可以没有受击状态处理器
         IHitVfxService m_HitVfx;
@@ -26,7 +26,7 @@ namespace MotionCore.Gameplay.Combat
         void Awake()
         {
             m_Hurtbox = GetComponent<Hurtbox>();
-            m_Damageable = GetComponentInParent<IDamageable>();
+            m_Health = GetComponentInParent<Health>();
             m_EventBus = ServiceLocator.Resolve<IEventBus>();
             m_ReactionHandler = transform.parent.GetComponentInChildren<IHitReactionHandler>();
             m_HitVfx = ServiceLocator.Resolve<IHitVfxService>();
@@ -34,12 +34,12 @@ namespace MotionCore.Gameplay.Combat
 
         void OnEnable()
         {
-            m_EventBus.Subscribe<HitEvent>(m_Damageable, this);
+            m_EventBus.Subscribe<HitEvent>(m_Health, this);
         }
 
         void OnDisable()
         {
-            m_EventBus.Unsubscribe<HitEvent>(m_Damageable, this);
+            m_EventBus.Unsubscribe<HitEvent>(m_Health, this);
             m_PendingStaggerLevels.Clear();
             m_PendingKnockbackPowers.Clear();
         }
@@ -74,6 +74,9 @@ namespace MotionCore.Gameplay.Combat
             HitFeedbackContext feedback = hitEvent.Feedback;
             ShowDamageNumber(feedback.Point, result.Damage, result.Hurtbox.transform);
             m_HitVfx.Play(feedback);
+            if (m_Health.IsDead)
+                return;
+
             m_PendingStaggerLevels.Add(result.StaggerLevel);
             m_PendingKnockbackPowers.Add(result.KnockbackPower);
         }

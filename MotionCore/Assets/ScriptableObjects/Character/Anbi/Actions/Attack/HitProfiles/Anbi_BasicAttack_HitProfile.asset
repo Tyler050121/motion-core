@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Anbi_BasicAttack_HitProfile
   m_EditorClassIdentifier: 
   m_Damage: 12
+  m_PostureDamage: 15
   m_Radius: 0.5
   m_TargetLayers:
     serializedVersion: 2

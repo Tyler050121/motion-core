@@ -11,14 +11,14 @@ namespace MotionCore.Gameplay.Combat
         [SerializeField, Min(0f), Tooltip("表现点朝攻击者偏移")] float m_VisualForwardOffset = 0.8f;
         [SerializeField, Min(0f), Tooltip("表现点向上偏移")] float m_VisualHeightOffset = 1f;
 
-        IDamageable m_Damageable;
+        Health m_Health;
+        Posture m_Posture;
         IEventBus m_EventBus;
         Faction m_Faction;
         bool m_Invulnerable;
         bool m_Parrying;
         float m_DamageMultiplier = 1f;
-
-        public IDamageable Damageable => m_Damageable;
+        float m_PostureDamageMultiplier = 1f;
 
         /// <summary>
         /// 所属阵营，启动时从角色的 LockOnTarget 取一次缓存。
@@ -49,15 +49,23 @@ namespace MotionCore.Gameplay.Combat
             m_DamageMultiplier = multiplier;
         }
 
+        public void SetPostureDamageMultiplier(float multiplier)
+        {
+            m_PostureDamageMultiplier = multiplier;
+        }
+
         /// <summary>
         /// 结算一次命中。卸势或无敌期间拒绝伤害并广播对应事件，不广播 HitEvent；
         /// 调用方（MeleeHitbox）仍会把本次命中记入攻击窗口。
         /// </summary>
         public void ReceiveHit(HitProfile profile, Vector3 point, Vector3 visualPoint, Vector3 direction, Transform attacker)
         {
+            if (m_Health.IsDead)
+                return;
+
             if (m_Parrying)
             {
-                m_EventBus.Publish(this, new HitParriedEvent());
+                m_EventBus.Publish(this, new HitParriedEvent(attacker));
                 return;
             }
 
@@ -68,22 +76,22 @@ namespace MotionCore.Gameplay.Combat
             }
 
             float damage = profile.Damage * m_DamageMultiplier;
-            m_Damageable.ApplyDamage(damage);
+            m_Posture?.ApplyDamage(profile.PostureDamage * m_PostureDamageMultiplier);
+            m_Health.ApplyDamage(damage);
             HitFeedbackContext feedback = new(point, visualPoint, direction, profile.Vfx);
             HitResult result = new(
                 this,
                 attacker,
                 damage,
-                m_Damageable.CurrentHealth,
-                m_Damageable.IsDepleted,
                 profile.StaggerLevel,
                 profile.KnockbackPower);
-            m_EventBus.Publish(m_Damageable, new HitEvent(result, feedback));
+            m_EventBus.Publish(m_Health, new HitEvent(result, feedback));
         }
 
         void Awake()
         {
-            m_Damageable = GetComponentInParent<IDamageable>();
+            m_Health = GetComponentInParent<Health>();
+            m_Posture = GetComponentInParent<Posture>();
             m_EventBus = ServiceLocator.Resolve<IEventBus>();
             m_Faction = GetComponentInParent<LockOnTarget>().Faction;
         }

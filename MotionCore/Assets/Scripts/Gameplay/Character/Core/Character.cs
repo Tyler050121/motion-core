@@ -2,6 +2,7 @@ using System;
 using Animancer;
 using Animancer.FSM;
 using MotionCore.Gameplay.Common;
+using MotionCore.Gameplay.Combat;
 using UnityEngine;
 using MotionCore.Infrastructure;
 #if UNITY_EDITOR
@@ -28,6 +29,7 @@ namespace MotionCore.Gameplay.Character
 
         [SerializeField] CharacterDefinition m_CharacterDefinition;
         [SerializeField] HealthConfig m_Health = new();
+        [SerializeField] PostureConfig m_Posture = new();
         [SerializeField, ReadOnly] MonoBehaviour[] m_ConfigReceivers = System.Array.Empty<MonoBehaviour>();
 
         CharacterParameters m_Parameters;
@@ -48,6 +50,8 @@ namespace MotionCore.Gameplay.Character
                     characterReceiver.Initialize(m_CharacterDefinition);
                 if (receiver is IConfigReceiver<HealthConfig> healthReceiver)
                     healthReceiver.Initialize(m_Health);
+                if (receiver is IConfigReceiver<PostureConfig> postureReceiver)
+                    postureReceiver.Initialize(m_Posture);
             }
         }
 
@@ -79,12 +83,16 @@ namespace MotionCore.Gameplay.Character
                 GetComponentsInChildren<IConfigReceiver<CharacterDefinition>>(true);
             IConfigReceiver<HealthConfig>[] healthReceivers =
                 GetComponentsInChildren<IConfigReceiver<HealthConfig>>(true);
+            IConfigReceiver<PostureConfig>[] postureReceivers =
+                GetComponentsInChildren<IConfigReceiver<PostureConfig>>(true);
 
             HashSet<MonoBehaviour> receivers = new();
             for (int i = 0; i < characterReceivers.Length; i++)
                 receivers.Add((MonoBehaviour)characterReceivers[i]);
             for (int i = 0; i < healthReceivers.Length; i++)
                 receivers.Add((MonoBehaviour)healthReceivers[i]);
+            for (int i = 0; i < postureReceivers.Length; i++)
+                receivers.Add((MonoBehaviour)postureReceivers[i]);
 
             m_ConfigReceivers = new List<MonoBehaviour>(receivers).ToArray();
         }

@@ -26,6 +26,10 @@ namespace MotionCore.Gameplay.Character
 
         bool TryDefense();
 
+        bool RefreshExecutionTarget();
+
+        bool TryExecution();
+
         bool TryBasicAttack();
 
         bool TryAttack(AttackDefinition definition);

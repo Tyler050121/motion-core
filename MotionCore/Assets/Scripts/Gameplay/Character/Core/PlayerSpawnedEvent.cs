@@ -1,3 +1,4 @@
+using MotionCore.Gameplay.Combat;
 using MotionCore.Gameplay.Common;
 using MotionCore.Infrastructure;
 
@@ -8,11 +9,13 @@ namespace MotionCore.Gameplay.Character
     /// </summary>
     public readonly struct PlayerSpawnedEvent : IEvent
     {
-        public PlayerSpawnedEvent(Health health)
+        public PlayerSpawnedEvent(Health health, Posture posture)
         {
             Health = health;
+            Posture = posture;
         }
 
         public Health Health { get; }
+        public Posture Posture { get; }
     }
 }

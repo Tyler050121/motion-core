@@ -1,4 +1,5 @@
 using MotionCore.Infrastructure;
+using UnityEngine;
 
 namespace MotionCore.Gameplay.Combat
 {
@@ -7,5 +8,11 @@ namespace MotionCore.Gameplay.Combat
     /// </summary>
     public readonly struct HitParriedEvent : IEvent
     {
+        public HitParriedEvent(Transform attacker)
+        {
+            Attacker = attacker;
+        }
+
+        public Transform Attacker { get; }
     }
 }

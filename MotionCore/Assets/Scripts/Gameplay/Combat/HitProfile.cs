@@ -12,6 +12,9 @@ namespace MotionCore.Gameplay.Combat
         [SerializeField, Min(0f)] float m_Damage = 10f;
         public float Damage => m_Damage;
 
+        [SerializeField, Min(0f), Tooltip("架势伤害")] float m_PostureDamage = 10f;
+        public float PostureDamage => m_PostureDamage;
+
         [SerializeField, Min(0.01f)] float m_Radius = 0.75f;
         public float Radius => m_Radius;
 

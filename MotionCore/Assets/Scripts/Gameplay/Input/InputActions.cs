@@ -131,6 +131,15 @@ namespace MotionCore.Gameplay.Input
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Execution"",
+                    ""type"": ""Button"",
+                    ""id"": ""cacccbc5-3412-4bbb-bbf9-5c516e9d5c29"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Parry"",
                     ""type"": ""Button"",
                     ""id"": ""00285bcb-d225-4b5f-8e46-1594ce7c8033"",
@@ -366,6 +375,17 @@ namespace MotionCore.Gameplay.Input
                 },
                 {
                     ""name"": """",
+                    ""id"": ""a20f387b-3957-4ab6-a6de-f61737263220"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Execution"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""e2eb1d4d-a784-4c32-a46b-62f9baaa30ce"",
                     ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
@@ -452,6 +472,7 @@ namespace MotionCore.Gameplay.Input
             m_Character_Run = m_Character.FindAction("Run", throwIfNotFound: true);
             m_Character_Evade = m_Character.FindAction("Evade", throwIfNotFound: true);
             m_Character_BasicAttack = m_Character.FindAction("BasicAttack", throwIfNotFound: true);
+            m_Character_Execution = m_Character.FindAction("Execution", throwIfNotFound: true);
             m_Character_Parry = m_Character.FindAction("Parry", throwIfNotFound: true);
             m_Character_Defense = m_Character.FindAction("Defense", throwIfNotFound: true);
             m_Character_Lock = m_Character.FindAction("Lock", throwIfNotFound: true);
@@ -541,6 +562,7 @@ namespace MotionCore.Gameplay.Input
         private readonly InputAction m_Character_Run;
         private readonly InputAction m_Character_Evade;
         private readonly InputAction m_Character_BasicAttack;
+        private readonly InputAction m_Character_Execution;
         private readonly InputAction m_Character_Parry;
         private readonly InputAction m_Character_Defense;
         private readonly InputAction m_Character_Lock;
@@ -573,6 +595,10 @@ namespace MotionCore.Gameplay.Input
             /// Provides access to the underlying input action "Character/BasicAttack".
             /// </summary>
             public InputAction @BasicAttack => m_Wrapper.m_Character_BasicAttack;
+            /// <summary>
+            /// Provides access to the underlying input action "Character/Execution".
+            /// </summary>
+            public InputAction @Execution => m_Wrapper.m_Character_Execution;
             /// <summary>
             /// Provides access to the underlying input action "Character/Parry".
             /// </summary>
@@ -631,6 +657,9 @@ namespace MotionCore.Gameplay.Input
                 @BasicAttack.started += instance.OnBasicAttack;
                 @BasicAttack.performed += instance.OnBasicAttack;
                 @BasicAttack.canceled += instance.OnBasicAttack;
+                @Execution.started += instance.OnExecution;
+                @Execution.performed += instance.OnExecution;
+                @Execution.canceled += instance.OnExecution;
                 @Parry.started += instance.OnParry;
                 @Parry.performed += instance.OnParry;
                 @Parry.canceled += instance.OnParry;
@@ -669,6 +698,9 @@ namespace MotionCore.Gameplay.Input
                 @BasicAttack.started -= instance.OnBasicAttack;
                 @BasicAttack.performed -= instance.OnBasicAttack;
                 @BasicAttack.canceled -= instance.OnBasicAttack;
+                @Execution.started -= instance.OnExecution;
+                @Execution.performed -= instance.OnExecution;
+                @Execution.canceled -= instance.OnExecution;
                 @Parry.started -= instance.OnParry;
                 @Parry.performed -= instance.OnParry;
                 @Parry.canceled -= instance.OnParry;
@@ -752,6 +784,13 @@ namespace MotionCore.Gameplay.Input
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnBasicAttack(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Execution" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnExecution(InputAction.CallbackContext context);
             /// <summary>
             /// Method invoked when associated input action "Parry" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
             /// </summary>

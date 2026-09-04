@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cb680d8f3774e36ac86cfe2484f7f0c, type: 3}
+  m_Name: Anbi_Execution_Definition
+  m_EditorClassIdentifier:
+  m_StateType: 12
+  m_CastPriority: 80
+  m_StaggerLevel: 90
+  m_Steps:
+  - m_Track: {fileID: 11400000, guid: b718318e4c324104a64b46207a326ff8, type: 2}
+    m_EndStep: {fileID: 0}
+    m_PerfectVariant:
+      m_Track: {fileID: 0}
+      m_EndStep: {fileID: 0}
+    m_ComboGraceSeconds: 0
+    m_ComboGraceStartType: 2
+  m_ComboFollowUp: {fileID: 0}
+  m_ComboFollowUpStepIndex: 0

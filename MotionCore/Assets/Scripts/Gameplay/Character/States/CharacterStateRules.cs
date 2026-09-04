@@ -16,6 +16,9 @@ namespace MotionCore.Gameplay.Character
         Dead = 8, // 死亡
         Parry = 9, // 卸势
         Defense = 10, // 防御
+        PostureBreak = 11, // 破韧
+        Execution = 12, // 处决
+        Executed = 13, // 被处决
     }
 
     /// <summary>
@@ -43,6 +46,7 @@ namespace MotionCore.Gameplay.Character
         Defense = 50, // 防御
         Evade = 60, // 闪避
         Parry = 70, // 卸势
+        Execution = 80, // 处决
     }
 
     /// <summary>
@@ -65,7 +69,7 @@ namespace MotionCore.Gameplay.Character
     public static class CharacterStateRules
     {
         /// <summary>
-        /// 判断当前状态能否切换到目标状态。受击与死亡强制进入；其余动作先比较施法优先级，再检查显式退出窗口。
+        /// 判断当前状态能否切换到目标状态。处决、受击与死亡优先进入；其余动作先比较施法优先级，再检查显式退出窗口。
         /// </summary>
         public static bool CanExit(
             CharacterStateType currentState,
@@ -74,10 +78,25 @@ namespace MotionCore.Gameplay.Character
             CastPriority nextPriority,
             CharacterExitWindow exitWindows)
         {
+            if (currentState == CharacterStateType.Dead)
+                return false;
+
+            if (nextState == CharacterStateType.Dead)
+                return true;
+
+            if (currentState == CharacterStateType.Executed)
+                return false;
+
+            if (nextState == CharacterStateType.Execution)
+                return true;
+
+            if (currentState == CharacterStateType.PostureBreak)
+                return false;
+
             if (currentState == CharacterStateType.Idle)
                 return true;
 
-            if (nextState == CharacterStateType.Hit || nextState == CharacterStateType.Dead)
+            if (nextState == CharacterStateType.Hit || nextState == CharacterStateType.PostureBreak)
                 return true;
 
             if (currentState != CharacterStateType.Hit
@@ -96,6 +115,9 @@ namespace MotionCore.Gameplay.Character
                 CharacterStateType.Ultimate => (exitWindows & CharacterExitWindow.Attack) != 0,
                 CharacterStateType.Parry => false,
                 CharacterStateType.Defense => false,
+                CharacterStateType.PostureBreak => false,
+                CharacterStateType.Execution => false,
+                CharacterStateType.Executed => false,
                 CharacterStateType.Hit => false,
                 CharacterStateType.Dead => false,
                 _ => throw new System.ArgumentOutOfRangeException(nameof(nextState), nextState, null)

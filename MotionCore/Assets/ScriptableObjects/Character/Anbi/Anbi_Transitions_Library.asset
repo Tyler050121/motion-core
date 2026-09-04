@@ -29,6 +29,43 @@ MonoBehaviour:
         _Clip: {fileID: 4298485448582054271, guid: 41515f121fabd40bd9c1ce03d4d0ccdd,
           type: 3}
         _NormalizedStartTime: NaN
+--- !u!114 &-6602118053483417129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a8877f26e7a6a43aaf06fade1a064a, type: 3}
+  m_Name: Anbi_Execution
+  m_EditorClassIdentifier: 
+  _Transition:
+    rid: 2786099067663417348
+  references:
+    version: 2
+    RefIds:
+    - rid: 2786099067663417348
+      type: {class: ClipTransition, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _FadeDuration: 0.25
+        _Speed: 1
+        _Events:
+          _NormalizedTimes:
+          - 0.34873995
+          - NaN
+          _Callbacks:
+          - rid: 2786099067663417349
+          _Names:
+          - {fileID: 11400000, guid: ea075a32c5b64350915583e7f695aacc, type: 2}
+        _Clip: {fileID: -6078921812650038246, guid: 5ee3048383fd441d5864e3d2ed3aaf00,
+          type: 3}
+        _NormalizedStartTime: NaN
+    - rid: 2786099067663417349
+      type: {class: AnimancerEvent/ParameterInt, ns: Animancer, asm: Kybernetik.Animancer}
+      data:
+        _Value: 0
 --- !u!114 &-5612479576866074438
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -434,7 +471,7 @@ MonoBehaviour:
     - _Name: Combat
       _Index: 0
       _IsExpanded: 1
-      _TransitionIndices: 0a0000000d0000000c0000000b00000011000000100000000f0000000e00000013000000120000001600000018000000190000001700000014000000
+      _TransitionIndices: 0a0000000d0000000c0000000b00000011000000100000000f0000000e0000001300000012000000160000001a00000018000000190000001700000014000000
     - _Name: Motion
       _Index: 1
       _IsExpanded: 1
@@ -564,6 +601,7 @@ MonoBehaviour:
     - {fileID: -5612479576866074438}
     - {fileID: 2117313361578719113}
     - {fileID: 7780873543445224334}
+    - {fileID: -6602118053483417129}
     _Modifiers:
     - _From: 0
       _To: 2

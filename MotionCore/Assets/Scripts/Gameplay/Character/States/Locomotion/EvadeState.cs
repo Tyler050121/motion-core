@@ -16,6 +16,8 @@ namespace MotionCore.Gameplay.Character
         [SerializeField, Tooltip("完美闪避反馈")] PerfectDodgeFeedback m_PerfectDodgeFeedback;
 
         IEventBus m_EventBus;
+        Vector3 m_FacingDirection;
+        float m_FacingTurnDuration;
         bool m_CanDodgeCounter;
 
         protected override bool CanInterruptSelf => (ExitWindows & CharacterExitWindow.Evade) != 0;
@@ -31,9 +33,16 @@ namespace MotionCore.Gameplay.Character
         void OnEnable()
         {
             m_CanDodgeCounter = false;
+            Character.Parameters.SetFacing(m_FacingDirection, m_FacingTurnDuration);
             m_EventBus.Subscribe<HitAvoidedEvent>(m_Hurtbox, this);
             TransitionAsset evade = Character.Parameters.HasMoveInput ? m_EvadeFront : m_EvadeBack;
             PlayWithEvents(evade, ReturnToDefaultState);
+        }
+
+        public void SetContext(Vector3 facingDirection, float turnDuration)
+        {
+            m_FacingDirection = facingDirection;
+            m_FacingTurnDuration = turnDuration;
         }
 
         protected override void BindEvent(AnimancerEvent.Sequence events, int index, string name)

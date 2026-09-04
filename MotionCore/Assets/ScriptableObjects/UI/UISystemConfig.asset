@@ -64,6 +64,14 @@ MonoBehaviour:
     IsPooled: 1
     InitialCapacity: 5
     MinCachedCount: 5
+  - Id: OverheadPostureBar
+    AssetKey: OverheadPostureBar
+    PrefabType: 1
+    LayerId: WorldOverlay
+    IsEscapable: 1
+    IsPooled: 1
+    InitialCapacity: 5
+    MinCachedCount: 5
   PrefabSearchPath: Assets/ResourcesAssets/UI
   GlobalElements: []
   ScopeElements:

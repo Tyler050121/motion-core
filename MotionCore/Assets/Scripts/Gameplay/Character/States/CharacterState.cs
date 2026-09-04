@@ -90,6 +90,14 @@ namespace MotionCore.Gameplay.Character
         }
 
         /// <summary>
+        /// 从头重播当前动画。用于同一状态被重置时重新开始事件驱动的动画。
+        /// </summary>
+        protected void RestartAnimation()
+        {
+            m_CurrentAnimation.Time = 0;
+        }
+
+        /// <summary>
         /// 绑定单个动画事件。基类处理各状态通用的能力窗口事件，子类重写后把未命中的交回 base。
         /// 一律用 Bind 绑定，不要直接 SetCallback，否则拿不到旧动画事件的过滤。
         /// </summary>

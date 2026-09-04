@@ -33,7 +33,7 @@ namespace MotionCore.Gameplay.UI
         void Awake()
         {
             m_Target = GetComponent<LockOnTarget>();
-            m_Health = m_Target.Health;
+            m_Health = GetComponentInParent<Health>();
             m_UIService = ServiceLocator.Resolve<IUIService>();
             m_EventBus = ServiceLocator.Resolve<IEventBus>();
         }

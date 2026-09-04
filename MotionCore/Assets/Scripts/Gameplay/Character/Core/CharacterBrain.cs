@@ -19,6 +19,8 @@ namespace MotionCore.Gameplay.Character
         IHitReactionHandler m_HitReactionHandler;
         ICameraService m_Camera;
         IGameTimeService m_GameTime;
+        IEventBus m_EventBus;
+        bool m_IsExecutionAvailable;
 
         void Awake()
         {
@@ -26,6 +28,7 @@ namespace MotionCore.Gameplay.Character
             m_HitReactionHandler = GetComponentInChildren<IHitReactionHandler>();
             m_InputActions = new InputActions();
             m_GameTime = ServiceLocator.Resolve<IGameTimeService>();
+            m_EventBus = ServiceLocator.Resolve<IEventBus>();
             m_CommandExecutor.SetAttackFacingResolver(GetAttackFacingDirection);
         }
 
@@ -37,13 +40,16 @@ namespace MotionCore.Gameplay.Character
         void OnDisable()
         {
             m_InputActions?.Disable();
+            SetExecutionAvailability(false);
         }
 
         void Start()
         {
             m_Camera = ServiceLocator.Resolve<ICameraService>();
             // TODO: 接入玩家生成流程后由生成器发布。
-            ServiceLocator.Resolve<IEventBus>().Publish(new PlayerSpawnedEvent(GetComponentInParent<Health>()));
+            m_EventBus.Publish(new PlayerSpawnedEvent(
+                GetComponentInParent<Health>(),
+                GetComponentInParent<Posture>()));
         }
 
         void OnDestroy()
@@ -57,6 +63,7 @@ namespace MotionCore.Gameplay.Character
             if (m_GameTime.IsPaused)
                 return;
 
+            SetExecutionAvailability(m_CommandExecutor.RefreshExecutionTarget());
             UpdateMovement();
             UpdateAction();
         }
@@ -83,6 +90,15 @@ namespace MotionCore.Gameplay.Character
         public bool TryNormalAttack()
         {
             return m_CommandExecutor.TryBasicAttack();
+        }
+
+        public bool TryExecution()
+        {
+            if (!m_IsExecutionAvailable || !m_CommandExecutor.TryExecution())
+                return false;
+
+            SetExecutionAvailability(false);
+            return true;
         }
 
         public bool TryParry()
@@ -126,6 +142,9 @@ namespace MotionCore.Gameplay.Character
             bool isDefenseHeld = m_InputActions.Character.Defense.IsPressed();
             m_CommandExecutor.SetDefenseHeld(isParryHeld || isDefenseHeld);
 
+            if (m_InputActions.Character.Execution.WasPressedThisFrame() && TryExecution())
+                return;
+
             if (m_InputActions.Character.Parry.WasPressedThisFrame())
                 TryParry();
 
@@ -143,6 +162,15 @@ namespace MotionCore.Gameplay.Character
 
             if (m_InputActions.Character.Lock.WasPressedThisFrame())
                 ToggleTargetLock();
+        }
+
+        void SetExecutionAvailability(bool isAvailable)
+        {
+            if (m_IsExecutionAvailable == isAvailable)
+                return;
+
+            m_IsExecutionAvailable = isAvailable;
+            m_EventBus.Publish(new ExecutionAvailabilityChangedEvent(isAvailable));
         }
 
         Vector3 GetAttackFacingDirection()

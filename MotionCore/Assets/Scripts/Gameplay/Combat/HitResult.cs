@@ -9,16 +9,12 @@ namespace MotionCore.Gameplay.Combat
             Hurtbox hurtbox,
             Transform attacker,
             float damage,
-            float remainingHealth,
-            bool isTargetDepleted,
             StaggerLevel staggerLevel,
             float knockbackPower)
         {
             Hurtbox = hurtbox;
             Attacker = attacker;
             Damage = damage;
-            RemainingHealth = remainingHealth;
-            IsTargetDepleted = isTargetDepleted;
             StaggerLevel = staggerLevel;
             KnockbackPower = knockbackPower;
         }
@@ -31,8 +27,6 @@ namespace MotionCore.Gameplay.Combat
         public Transform Attacker { get; }
 
         public float Damage { get; }
-        public float RemainingHealth { get; }
-        public bool IsTargetDepleted { get; }
         public StaggerLevel StaggerLevel { get; }
         public float KnockbackPower { get; }
     }

@@ -14,6 +14,8 @@ namespace MotionCore.Gameplay.Character
         [SerializeField] TransitionAsset m_Parry;
         [SerializeField] DefenseState m_DefenseState;
         [SerializeField] Hurtbox m_Hurtbox;
+        [SerializeField, Min(0f), Tooltip("卸势成功对攻击者造成的架势伤害")]
+        float m_PostureDamage = 25f;
 
         IEventBus m_EventBus;
         bool m_IsDefenseHeld;
@@ -87,6 +89,8 @@ namespace MotionCore.Gameplay.Character
         {
             m_EventBus.Unsubscribe<HitParriedEvent>(m_Hurtbox, this);
             CloseParry();
+
+            eventData.Attacker.root.GetComponent<Posture>().ApplyDamage(m_PostureDamage);
         }
 
         void OpenParry() => m_Hurtbox.SetParrying(true);

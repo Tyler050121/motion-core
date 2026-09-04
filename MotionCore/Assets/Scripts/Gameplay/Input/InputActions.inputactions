@@ -43,6 +43,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Execution",
+                    "type": "Button",
+                    "id": "cacccbc5-3412-4bbb-bbf9-5c516e9d5c29",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Parry",
                     "type": "Button",
                     "id": "00285bcb-d225-4b5f-8e46-1594ce7c8033",
@@ -273,6 +282,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "BasicAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a20f387b-3957-4ab6-a6de-f61737263220",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Execution",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

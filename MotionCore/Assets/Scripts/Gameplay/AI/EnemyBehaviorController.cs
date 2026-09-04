@@ -19,7 +19,7 @@ namespace MotionCore.Gameplay.AI
         CharacterContext m_Character;
 
         ICharacterCommandExecutor m_CommandExecutor;
-        IDamageable m_Damageable;
+        Health m_Health;
         IEventBus m_EventBus;
         Vector3 m_HomePosition;
         Transform m_Target;
@@ -75,7 +75,7 @@ namespace MotionCore.Gameplay.AI
         void Awake()
         {
             m_CommandExecutor = GetComponentInChildren<ICharacterCommandExecutor>();
-            m_Damageable = GetComponentInParent<IDamageable>();
+            m_Health = GetComponentInParent<Health>();
             m_EventBus = ServiceLocator.Resolve<IEventBus>();
             m_HomePosition = m_Character.transform.position;
 
@@ -85,12 +85,12 @@ namespace MotionCore.Gameplay.AI
 
         void OnEnable()
         {
-            m_EventBus.Subscribe<HitEvent>(m_Damageable, this);
+            m_EventBus.Subscribe<HitEvent>(m_Health, this);
         }
 
         void OnDisable()
         {
-            m_EventBus.Unsubscribe<HitEvent>(m_Damageable, this);
+            m_EventBus.Unsubscribe<HitEvent>(m_Health, this);
 
             m_CommandExecutor.StopMove();
             m_Target = null;

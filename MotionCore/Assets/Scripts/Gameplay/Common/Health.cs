@@ -4,7 +4,7 @@ using UnityEngine;
 namespace MotionCore.Gameplay.Common
 {
     [DisallowMultipleComponent]
-    public sealed class Health : MonoBehaviour, IDamageable, IConfigReceiver<HealthConfig>
+    public sealed class Health : MonoBehaviour, IConfigReceiver<HealthConfig>
     {
         [SerializeField, ReadOnly] float m_MaxHealth = 100f;
 
@@ -13,7 +13,7 @@ namespace MotionCore.Gameplay.Common
 
         public float CurrentHealth => m_CurrentHealth;
         public float MaxHealth => m_MaxHealth;
-        public bool IsDepleted => m_CurrentHealth <= 0f;
+        public bool IsDead => m_CurrentHealth <= 0f;
 
         // TODO: 此处 Awake 留给没有走 IConfigReceiver 初始化的情况，之后可以考虑去掉
         void Awake()
