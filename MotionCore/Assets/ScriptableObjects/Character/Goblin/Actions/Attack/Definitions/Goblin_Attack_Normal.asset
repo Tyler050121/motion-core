@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_StateType: 3
   m_CastPriority: 10
-  m_StaggerLevel: 10
+  m_StaggerLevel: 50
   m_Steps:
   - m_Track: {fileID: 11400000, guid: 7ff361459ba9e47dfade3b87b16aec02, type: 2}
     m_EndStep: {fileID: 0}

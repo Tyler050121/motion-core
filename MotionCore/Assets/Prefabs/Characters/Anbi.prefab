@@ -226,11 +226,6 @@ MonoBehaviour:
   m_EvadeBack: {fileID: -3357782011662745360, guid: 19f7276f66a284cbfa65e2726e1fd573,
     type: 2}
   m_Hurtbox: {fileID: 782638903086812021}
-  m_PostureDamage: 25
-  m_Controller: {fileID: 6808166811772849021}
-  m_CharacterCollisionLayers:
-    serializedVersion: 2
-    m_Bits: 64
   m_PerfectDodgeFeedback: {fileID: 7120349922114455002}
 --- !u!114 &8157349206418823071
 MonoBehaviour:

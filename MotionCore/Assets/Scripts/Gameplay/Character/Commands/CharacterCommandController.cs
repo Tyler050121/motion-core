@@ -280,7 +280,7 @@ namespace MotionCore.Gameplay.Character
         }
 
         /// <summary>
-        /// 尝试执行任意攻击动作。处理连招排列与动作排队逻辑。
+        /// 提交任意攻击请求。处于攻击状态时，根据优先级立即重入或延后至可用窗口处理。
         /// </summary>
         public bool TryAttack(AttackDefinition definition)
         {

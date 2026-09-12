@@ -61,6 +61,7 @@ namespace MotionCore.Gameplay.UI
         {
             m_Bar = instance.GetComponent<HealthBar>();
             m_Bar.SetHealthImmediate(m_Health.CurrentHealth, m_Health.MaxHealth);
+            m_Bar.gameObject.SetActive(!m_Health.IsDead);
             m_EventBus.Subscribe<HealthChangedEvent>(m_Health, this);
         }
 
@@ -70,6 +71,7 @@ namespace MotionCore.Gameplay.UI
         public void Unbind()
         {
             m_EventBus.Unsubscribe<HealthChangedEvent>(m_Health, this);
+            m_Bar.gameObject.SetActive(false);
             m_Bar = null;
         }
 
@@ -78,7 +80,14 @@ namespace MotionCore.Gameplay.UI
         /// </summary>
         public void OnEvent(HealthChangedEvent eventData)
         {
+            if (eventData.Source.IsDead)
+            {
+                m_Bar.gameObject.SetActive(false);
+                return;
+            }
+
             m_Bar.SetHealth(eventData.CurrentHealth, eventData.MaxHealth);
+            m_Bar.gameObject.SetActive(true);
         }
     }
 }

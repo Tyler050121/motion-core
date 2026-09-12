@@ -79,6 +79,8 @@ namespace MotionCore.Infrastructure
             float interval = duration <= 0f ? 0f : duration;
             TimerTask timer = new TimerTask(m_NextId++, owner, interval, repeat, handle, callback);
             handle.Id = timer.Id;
+            handle.Duration = interval;
+            handle.RemainingTime = interval;
             m_Timers.Add(timer);
         }
 
@@ -137,11 +139,16 @@ namespace MotionCore.Infrastructure
                 }
 
                 RemainingTime -= deltaTime;
+                Handle.RemainingTime = RemainingTime;
                 if (RemainingTime > 0f)
                     return;
 
+                RemainingTime = 0f;
                 if (Repeat)
+                {
                     RemainingTime = Interval;
+                    Handle.RemainingTime = RemainingTime;
+                }
                 else
                     Remove();
 

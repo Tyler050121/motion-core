@@ -34,11 +34,15 @@ namespace MotionCore.Gameplay.Character
 
         CharacterParameters m_Parameters;
         public CharacterParameters Parameters => m_Parameters;
+        CharacterController m_Controller;
+        int m_CharacterCollisionLayers;
 
         void Awake()
         {
             m_StateMachine.InitializeAfterDeserialize();
             m_Parameters = new CharacterParameters();
+            m_Controller = GetComponentInChildren<CharacterController>(true);
+            m_CharacterCollisionLayers = LayerMask.GetMask(GlobalConfig.LayerNames.Character);
         }
 
         void Start()
@@ -74,6 +78,17 @@ namespace MotionCore.Gameplay.Character
             source = null;
             Debug.LogError($"角色挂点 {anchor} 未配置。", this);
             return false;
+        }
+
+        /// <summary>
+        /// 开关角色身体碰撞。
+        /// </summary>
+        public void SetCollisionEnabled(bool enabled)
+        {
+            if (enabled)
+                m_Controller.excludeLayers &= ~m_CharacterCollisionLayers;
+            else
+                m_Controller.excludeLayers |= m_CharacterCollisionLayers;
         }
 
 #if UNITY_EDITOR

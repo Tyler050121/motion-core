@@ -1,3 +1,4 @@
+using MotionCore.Gameplay.Common;
 using MotionCore.Gameplay.Combat;
 using MotionCore.Gameplay.Targeting;
 using MotionCore.Infrastructure;
@@ -11,7 +12,10 @@ namespace MotionCore.Gameplay.UI
     [DisallowMultipleComponent]
     [RequireComponent(typeof(LockOnTarget))]
     [RequireComponent(typeof(Posture))]
-    public sealed class OverheadPostureBar : MonoBehaviour, IWorldWidget, IEventListener<PostureChangedEvent>
+    public sealed class OverheadPostureBar : MonoBehaviour,
+        IWorldWidget,
+        IEventListener<PostureChangedEvent>,
+        IEventListener<HealthChangedEvent>
     {
         const string k_WidgetId = "OverheadPostureBar";
 
@@ -19,6 +23,7 @@ namespace MotionCore.Gameplay.UI
         Vector3 m_Offset;
 
         LockOnTarget m_Target;
+        Health m_Health;
         Posture m_Posture;
         PostureBar m_Bar;
         IUIService m_UIService;
@@ -34,6 +39,7 @@ namespace MotionCore.Gameplay.UI
         void Awake()
         {
             m_Target = GetComponent<LockOnTarget>();
+            m_Health = GetComponentInParent<Health>();
             m_Posture = GetComponent<Posture>();
             m_UIService = ServiceLocator.Resolve<IUIService>();
             m_EventBus = ServiceLocator.Resolve<IEventBus>();
@@ -62,7 +68,9 @@ namespace MotionCore.Gameplay.UI
         {
             m_Bar = instance.GetComponent<PostureBar>();
             m_Bar.SetPostureImmediate(m_Posture.CurrentPosture, m_Posture.MaxPosture);
+            m_Bar.gameObject.SetActive(!m_Health.IsDead);
             m_EventBus.Subscribe<PostureChangedEvent>(m_Posture, this);
+            m_EventBus.Subscribe<HealthChangedEvent>(m_Health, this);
         }
 
         /// <summary>
@@ -71,6 +79,8 @@ namespace MotionCore.Gameplay.UI
         public void Unbind()
         {
             m_EventBus.Unsubscribe<PostureChangedEvent>(m_Posture, this);
+            m_EventBus.Unsubscribe<HealthChangedEvent>(m_Health, this);
+            m_Bar.gameObject.SetActive(false);
             m_Bar = null;
         }
 
@@ -79,7 +89,25 @@ namespace MotionCore.Gameplay.UI
         /// </summary>
         public void OnEvent(PostureChangedEvent eventData)
         {
+            if (m_Health.IsDead)
+                return;
+
             m_Bar.SetPosture(eventData.CurrentPosture, eventData.MaxPosture);
+        }
+
+        /// <summary>
+        /// 生命归零时隐藏架势条，未来复活时恢复并刷新显示。
+        /// </summary>
+        public void OnEvent(HealthChangedEvent eventData)
+        {
+            if (eventData.Source.IsDead)
+            {
+                m_Bar.gameObject.SetActive(false);
+                return;
+            }
+
+            m_Bar.SetPostureImmediate(m_Posture.CurrentPosture, m_Posture.MaxPosture);
+            m_Bar.gameObject.SetActive(true);
         }
     }
 }

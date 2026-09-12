@@ -30,6 +30,9 @@ namespace MotionCore.Gameplay.Character
 
         void OnAnimatorMove()
         {
+            if (!m_Controller.enabled)
+                return;
+
             Vector3 displacement = ResolveDisplacement(m_Animator.deltaPosition);
 
             // 仅移动态按系数缩放水平位移调整移动速度；保留竖直分量不影响重力，攻击/受击位移不缩放。

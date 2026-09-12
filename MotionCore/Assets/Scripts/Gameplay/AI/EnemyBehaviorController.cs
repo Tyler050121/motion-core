@@ -10,7 +10,7 @@ namespace MotionCore.Gameplay.AI
 {
     /// <summary>
     /// 敌人行为的集成入口。持有角色引用与行为参数，向行为树节点暴露最小移动原语。
-    /// 不承载任何行为决策——巡逻/追击等逻辑由行为树节点编排，本类只负责把意图下发给命令控制器。
+    /// 不承载任何行为决策——巡逻/追击和反应让位均由行为树节点编排，本类只负责把意图下发给命令控制器。
     /// </summary>
     [DisallowMultipleComponent]
     public sealed class EnemyBehaviorController : MonoBehaviour, IEventListener<HitEvent>
@@ -51,9 +51,14 @@ namespace MotionCore.Gameplay.AI
         public Vector3 Forward => m_Character.FacingRoot.forward;
 
         /// <summary>
-        /// 是否处于受击硬直，BT 应在此期间让位、不下发移动。
+        /// 当前角色状态，供行为树条件读取；是否让位由行为树决定。
         /// </summary>
-        public bool IsStaggered => m_Character.StateMachine.CurrentState.Type == CharacterStateType.Hit;
+        public CharacterStateType CurrentStateType => m_Character.StateMachine.CurrentState.Type;
+
+        /// <summary>
+        /// 是否处于普通受击状态。保留该窄查询以兼容旧调用；行为树让位判断统一读取 CurrentStateType。
+        /// </summary>
+        public bool IsStaggered => CurrentStateType == CharacterStateType.Hit;
 
         /// <summary>
         /// 是否正在攻击，BT 据此等待攻击播完。
@@ -156,7 +161,7 @@ namespace MotionCore.Gameplay.AI
         }
 
         /// <summary>
-        /// 触发一次攻击，attack 为空则用角色默认普攻；返回是否成功进入攻击。
+        /// 触发一次攻击。attack 为空时使用角色默认普攻，并返回攻击请求是否已被接收。
         /// </summary>
         public bool TryAttack(AttackDefinition attack)
         {

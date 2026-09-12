@@ -11,8 +11,6 @@ namespace MotionCore.Gameplay.Character
         [SerializeField] TransitionAsset m_EvadeFront;
         [SerializeField] TransitionAsset m_EvadeBack;
         [SerializeField] Hurtbox m_Hurtbox;
-        [SerializeField] CharacterController m_Controller;
-        [SerializeField, Tooltip("闪避期间忽略的角色实体碰撞层")] LayerMask m_CharacterCollisionLayers;
         [SerializeField, Tooltip("完美闪避反馈")] PerfectDodgeFeedback m_PerfectDodgeFeedback;
 
         IEventBus m_EventBus;
@@ -51,10 +49,6 @@ namespace MotionCore.Gameplay.Character
                 Bind(events, index, OpenInvulnerability);
             else if (name == EventNames.InvulnerableEnd)
                 Bind(events, index, CloseInvulnerability);
-            else if (name == EventNames.CharacterCollisionOff)
-                Bind(events, index, DisableCharacterCollision);
-            else if (name == EventNames.CharacterCollisionOn)
-                Bind(events, index, RestoreCharacterCollision);
             else
                 base.BindEvent(events, index, name);
         }
@@ -63,7 +57,6 @@ namespace MotionCore.Gameplay.Character
         {
             m_EventBus.Unsubscribe<HitAvoidedEvent>(m_Hurtbox, this);
             CloseInvulnerability();
-            RestoreCharacterCollision();
         }
 
         /// <summary>
@@ -91,16 +84,5 @@ namespace MotionCore.Gameplay.Character
 
         void OpenInvulnerability() => m_Hurtbox.SetInvulnerable(true);
         void CloseInvulnerability() => m_Hurtbox.SetInvulnerable(false);
-
-        // 只增删自己负责的位，不整体覆盖 excludeLayers，避免抹掉其他系统的修改。
-        void DisableCharacterCollision()
-        {
-            m_Controller.excludeLayers |= m_CharacterCollisionLayers.value;
-        }
-
-        void RestoreCharacterCollision()
-        {
-            m_Controller.excludeLayers &= ~m_CharacterCollisionLayers.value;
-        }
     }
 }

@@ -1,3 +1,4 @@
+using MotionCore.Gameplay.Configs;
 using MotionCore.Infrastructure;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -39,6 +40,7 @@ namespace MotionCore.ApplicationLifecycle
         IGameTimeService m_GameTime;
         IEventBus m_EventBus;
         IAssetProvider m_Assets;
+        IConfigProvider m_Configs;
         VfxService m_Vfx;
         SceneNavigator m_SceneNavigator;
         UIRuntimeBootstrap m_UiBootstrap;
@@ -46,7 +48,7 @@ namespace MotionCore.ApplicationLifecycle
 
         void Awake()
         {
-            // 先把运行时基础服务准备好，再交给 UI 启动器接管界面。
+            // 初始化运行时基础服务，并交由 UI 启动器启动界面。
             Application.runInBackground = GlobalConfig.Application.RunInBackground;
             DontDestroyOnLoad(gameObject);
             m_Cursor = new CursorService();
@@ -71,9 +73,13 @@ namespace MotionCore.ApplicationLifecycle
             m_Cursor.ApplyStartupState();
             if (m_Assets is YooAssetProvider yooAssetProvider)
             {
-                // YooAsset 场景下，先等资源侧初始化完成再启动 UI。
+                // YooAsset 模式需在资源包初始化完成后启动 UI。
                 await yooAssetProvider.InitializationTask;
             }
+
+            // 配置表加载依赖资源提供器，需在 YooAsset 初始化完成后执行。
+            m_Configs = CreateConfigProvider();
+            ServiceLocator.Register<IConfigProvider>(m_Configs);
 
             m_UiBootstrap.Boot();
             m_RuntimeStarted = true;
@@ -107,6 +113,7 @@ namespace MotionCore.ApplicationLifecycle
             ServiceLocator.Unregister(m_GameTime);
             ServiceLocator.Unregister(m_EventBus);
             ServiceLocator.Unregister(m_Assets);
+            ServiceLocator.Unregister<IConfigProvider>(m_Configs);
             ServiceLocator.Unregister<IVfxService>(m_Vfx);
             ServiceLocator.Unregister<ISceneNavigator>(m_SceneNavigator);
             m_SceneNavigator.Dispose();
@@ -127,6 +134,14 @@ namespace MotionCore.ApplicationLifecycle
             }
 
             return new ResourcesAssetProvider();
+        }
+
+        IConfigProvider CreateConfigProvider()
+        {
+            LubanBinaryConfigLoader loader = new(m_Assets);
+            Tables tables = new(loader.Load);
+
+            return new RuntimeConfigProvider(tables.GetAllTables());
         }
 
         YooAssetProvider CreateYooAssetProvider()
