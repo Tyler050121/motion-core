@@ -2,6 +2,7 @@ using System;
 using MotionCore;
 using Animancer.FSM;
 using Animancer.Units;
+using MotionCore.Gameplay.Configs;
 using MotionCore.Gameplay.Common;
 using MotionCore.Gameplay.Combat;
 using MotionCore.Infrastructure;
@@ -16,7 +17,6 @@ namespace MotionCore.Gameplay.Character
     [DisallowMultipleComponent]
     public sealed class CharacterCommandController : MonoBehaviour,
         ICharacterCommandExecutor,
-        IConfigReceiver<CharacterDefinition>,
         IHitReactionHandler,
         IEventListener<PostureChangedEvent>,
         IEventListener<HealthChangedEvent>
@@ -37,7 +37,7 @@ namespace MotionCore.Gameplay.Character
 
         // 状态机输入缓冲区，管理带有效期的指令队列
         StateMachine<CharacterState>.InputBuffer m_InputBuffer;
-        MotorConfig m_MotorConfig;
+        CharacterStat m_Stat;
         AttackDefinition m_BasicAttack;
         AttackDefinition m_DodgeCounterAttack;
         Func<Vector3> m_AttackFacingResolver;
@@ -75,14 +75,14 @@ namespace MotionCore.Gameplay.Character
             m_PendingReactionState = null;
         }
 
-        public void Initialize(CharacterDefinition definition)
+        public void Initialize(CharacterDefinition definition, CharacterStat stat)
         {
-            m_MotorConfig = definition.Motor;
+            m_Stat = stat;
             m_BasicAttack = definition.BasicAttack;
             m_DodgeCounterAttack = definition.DodgeCounterAttack;
 
             ITimerService timer = ServiceLocator.Resolve<ITimerService>();
-            m_MoveState.SetContext(timer, m_MotorConfig, definition.LocomotionAnimation);
+            m_MoveState.SetContext(timer, stat, definition.LocomotionAnimation);
         }
 
         void Update()
@@ -208,15 +208,15 @@ namespace MotionCore.Gameplay.Character
         }
 
         /// <summary>
-        /// 把转身速度档位映射到 MotorConfig 上对应的 180 度转身时长。
+        /// 把转身速度档位映射到角色数值表对应的 180 度转身时长。
         /// </summary>
         float ResolveTurnDuration(TurnSpeed turnSpeed)
         {
             return turnSpeed switch
             {
-                TurnSpeed.Locomotion => m_MotorConfig.LocomotionTurnDuration,
-                TurnSpeed.Combat => m_MotorConfig.CombatTurnDuration,
-                _ => m_MotorConfig.FacingTurnDuration,
+                TurnSpeed.Locomotion => m_Stat.LocomotionTurnDuration,
+                TurnSpeed.Combat => m_Stat.CombatTurnDuration,
+                _ => m_Stat.FacingTurnDuration,
             };
         }
 
@@ -230,7 +230,7 @@ namespace MotionCore.Gameplay.Character
                 : m_Character.FacingRoot.forward;
 
             evadeFacing.y = 0f;
-            m_EvadeState.SetContext(evadeFacing, m_MotorConfig.EvadeTurnDuration);
+            m_EvadeState.SetContext(evadeFacing, m_Stat.EvadeTurnDuration);
 
             m_InputBuffer.Buffer(m_EvadeState, m_InputTimeOut);
             return m_InputBuffer.Update(0f);
@@ -386,7 +386,7 @@ namespace MotionCore.Gameplay.Character
             // 优先用本次设置的转身时长（如移动用更慢的 locomotion 速度），未指定则回落到配置默认
             float turnDuration = m_Character.Parameters.FacingTurnDuration >= 0f
                 ? m_Character.Parameters.FacingTurnDuration
-                : m_MotorConfig.FacingTurnDuration;
+                : m_Stat.FacingTurnDuration;
 
             // 如果旋转持续时间小等于0，则瞬间完成转向并清除朝向标志
             if (turnDuration <= 0f)

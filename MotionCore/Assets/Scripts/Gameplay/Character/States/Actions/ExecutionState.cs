@@ -52,12 +52,12 @@ namespace MotionCore.Gameplay.Character
 
             foreach (LockOnTarget target in LockOnTarget.Targets)
             {
-                if (target.transform.root == Character.transform.root || !target.IsAvailable)
+                if (!target.IsAvailable)
                     continue;
 
                 Character targetCharacter = target.GetComponentInParent<Character>();
                 // LockOnTarget 也用于不可处决的场景物体，例如训练假人。
-                if (targetCharacter == null)
+                if (targetCharacter == null || targetCharacter == Character)
                     continue;
 
                 IExecutionTarget targetExecution = targetCharacter.GetComponentInChildren<IExecutionTarget>(true);
@@ -65,8 +65,7 @@ namespace MotionCore.Gameplay.Character
                 // 目标处于可处决窗口内
                 if (!targetExecution.CanBeExecuted)
                     continue;
-                if (!targetCharacter.TryGetAnchor(CharacterAnchor.Execution, out Transform executionAnchor))
-                    continue;
+                Transform executionAnchor = targetCharacter.GetAnchor(CharacterAnchor.Execution);
 
                 // 距离
                 Vector3 toAnchor = executionAnchor.position - Character.transform.position;

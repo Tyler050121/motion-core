@@ -1,4 +1,5 @@
 using MotionCore.Gameplay.Common;
+using MotionCore.Gameplay.Configs;
 using MotionCore.Infrastructure;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ namespace MotionCore.Gameplay.Combat
     /// 角色独立架势资源，负责受损、恢复与破韧周期。
     /// </summary>
     [DisallowMultipleComponent]
-    public sealed class Posture : MonoBehaviour, IConfigReceiver<PostureConfig>
+    public sealed class Posture : MonoBehaviour
     {
         float m_CurrentPosture;
         float m_MaxPosture;
@@ -32,13 +33,13 @@ namespace MotionCore.Gameplay.Combat
         }
 
         /// <summary>
-        /// 使用角色配置初始化架势资源。
+        /// 使用角色数值初始化架势资源。
         /// </summary>
-        public void Initialize(PostureConfig config)
+        public void Initialize(CharacterStat stat)
         {
-            m_MaxPosture = config.MaxPosture;
-            m_RecoveryDelay = config.RecoveryDelay;
-            m_RecoveryPerSecond = config.RecoveryPerSecond;
+            m_MaxPosture = stat.MaxPosture;
+            m_RecoveryDelay = stat.PostureRegenDelay;
+            m_RecoveryPerSecond = stat.PostureRegenRate;
             m_CurrentPosture = m_MaxPosture;
             m_RecoveryRemaining = 0f;
             PublishChanged(false);

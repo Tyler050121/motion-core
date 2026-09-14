@@ -90,7 +90,7 @@ namespace MotionCore.Gameplay.Character
             m_EventBus.Unsubscribe<HitParriedEvent>(m_Hurtbox, this);
             CloseParry();
 
-            eventData.Attacker.root.GetComponent<Posture>().ApplyDamage(m_PostureDamage);
+            eventData.Attacker.GetComponentInParent<Posture>().ApplyDamage(m_PostureDamage);
         }
 
         void OpenParry() => m_Hurtbox.SetParrying(true);

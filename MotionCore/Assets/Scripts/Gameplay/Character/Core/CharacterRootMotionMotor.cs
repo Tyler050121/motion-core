@@ -1,5 +1,5 @@
 using MotionCore.Gameplay.Combat;
-using MotionCore.Gameplay.Common;
+using MotionCore.Gameplay.Configs;
 using UnityEngine;
 
 namespace MotionCore.Gameplay.Character
@@ -9,7 +9,7 @@ namespace MotionCore.Gameplay.Character
     /// 并在攻击态按前探结果修正水平位移。
     /// </summary>
     [RequireComponent(typeof(Animator))]
-    public sealed class CharacterRootMotionMotor : MonoBehaviour, IConfigReceiver<CharacterDefinition>
+    public sealed class CharacterRootMotionMotor : MonoBehaviour
     {
         const int MaxAttackBlockers = 8;
 
@@ -21,12 +21,9 @@ namespace MotionCore.Gameplay.Character
         [SerializeField, Tooltip("应用动画根旋转")] bool m_ApplyRootRotation = true;
 
         readonly Collider[] m_AttackBlockers = new Collider[MaxAttackBlockers];
-        float m_MoveSpeedScale = 1f;
+        float m_MoveSpeedScale;
 
-        public void Initialize(CharacterDefinition definition)
-        {
-            m_MoveSpeedScale = definition.Motor.MoveSpeedScale;
-        }
+        public void Initialize(CharacterStat stat) => m_MoveSpeedScale = stat.MoveSpeedScale;
 
         void OnAnimatorMove()
         {
@@ -88,11 +85,10 @@ namespace MotionCore.Gameplay.Character
                 m_AttackBlockLayers,
                 QueryTriggerInteraction.Collide);
 
-            Transform ownerRoot = m_Controller.transform.root;
             for (int i = 0; i < count; i++)
             {
                 Collider target = m_AttackBlockers[i];
-                if (target.transform.root == ownerRoot)
+                if (target.GetComponentInParent<Character>() == m_Character)
                     continue;
 
                 if (target.GetComponentInParent<Hurtbox>() != null)

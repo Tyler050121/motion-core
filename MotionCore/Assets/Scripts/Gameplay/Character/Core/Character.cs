@@ -3,11 +3,8 @@ using Animancer;
 using Animancer.FSM;
 using MotionCore.Gameplay.Common;
 using MotionCore.Gameplay.Combat;
+using MotionCore.Gameplay.Configs;
 using UnityEngine;
-using MotionCore.Infrastructure;
-#if UNITY_EDITOR
-using System.Collections.Generic;
-#endif
 
 namespace MotionCore.Gameplay.Character
 {
@@ -28,9 +25,6 @@ namespace MotionCore.Gameplay.Character
         public StateMachine<CharacterState>.WithDefault StateMachine => m_StateMachine;
 
         [SerializeField] CharacterDefinition m_CharacterDefinition;
-        [SerializeField] HealthConfig m_Health = new();
-        [SerializeField] PostureConfig m_Posture = new();
-        [SerializeField, ReadOnly] MonoBehaviour[] m_ConfigReceivers = System.Array.Empty<MonoBehaviour>();
 
         CharacterParameters m_Parameters;
         public CharacterParameters Parameters => m_Parameters;
@@ -41,43 +35,34 @@ namespace MotionCore.Gameplay.Character
         {
             m_StateMachine.InitializeAfterDeserialize();
             m_Parameters = new CharacterParameters();
-            m_Controller = GetComponentInChildren<CharacterController>(true);
+            m_Controller = GetComponent<CharacterController>();
             m_CharacterCollisionLayers = LayerMask.GetMask(GlobalConfig.LayerNames.Character);
         }
 
-        void Start()
+        /// <summary>
+        /// 初始化角色运行参数。
+        /// </summary>
+        public void Initialize(CharacterStat stat)
         {
-            for (int i = 0; i < m_ConfigReceivers.Length; i++)
-            {
-                MonoBehaviour receiver = m_ConfigReceivers[i];
-                if (receiver is IConfigReceiver<CharacterDefinition> characterReceiver)
-                    characterReceiver.Initialize(m_CharacterDefinition);
-                if (receiver is IConfigReceiver<HealthConfig> healthReceiver)
-                    healthReceiver.Initialize(m_Health);
-                if (receiver is IConfigReceiver<PostureConfig> postureReceiver)
-                    postureReceiver.Initialize(m_Posture);
-            }
+            GetComponent<Health>().Initialize(stat);
+            GetComponent<Posture>().Initialize(stat);
+            GetComponentInChildren<CharacterRootMotionMotor>(true).Initialize(stat);
+            GetComponentInChildren<CharacterCommandController>(true).Initialize(m_CharacterDefinition, stat);
         }
 
-        public bool TryGetAnchor(CharacterAnchor anchor, out Transform source)
+        /// <summary>
+        /// 获取必需的角色挂点。
+        /// </summary>
+        public Transform GetAnchor(CharacterAnchor anchor)
         {
             for (int i = 0; i < m_Anchors.Length; i++)
             {
                 AnchorBinding binding = m_Anchors[i];
-                if (binding.Anchor != anchor)
-                    continue;
-
-                source = binding.Source;
-                if (source != null)
-                    return true;
-
-                Debug.LogError($"角色挂点 {anchor} 未绑定 Transform。", this);
-                return false;
+                if (binding.Anchor == anchor && binding.Source != null)
+                    return binding.Source;
             }
 
-            source = null;
-            Debug.LogError($"角色挂点 {anchor} 未配置。", this);
-            return false;
+            throw new InvalidOperationException($"角色挂点未配置：{name}/{anchor}");
         }
 
         /// <summary>
@@ -90,28 +75,6 @@ namespace MotionCore.Gameplay.Character
             else
                 m_Controller.excludeLayers |= m_CharacterCollisionLayers;
         }
-
-#if UNITY_EDITOR
-        void OnValidate()
-        {
-            IConfigReceiver<CharacterDefinition>[] characterReceivers =
-                GetComponentsInChildren<IConfigReceiver<CharacterDefinition>>(true);
-            IConfigReceiver<HealthConfig>[] healthReceivers =
-                GetComponentsInChildren<IConfigReceiver<HealthConfig>>(true);
-            IConfigReceiver<PostureConfig>[] postureReceivers =
-                GetComponentsInChildren<IConfigReceiver<PostureConfig>>(true);
-
-            HashSet<MonoBehaviour> receivers = new();
-            for (int i = 0; i < characterReceivers.Length; i++)
-                receivers.Add((MonoBehaviour)characterReceivers[i]);
-            for (int i = 0; i < healthReceivers.Length; i++)
-                receivers.Add((MonoBehaviour)healthReceivers[i]);
-            for (int i = 0; i < postureReceivers.Length; i++)
-                receivers.Add((MonoBehaviour)postureReceivers[i]);
-
-            m_ConfigReceivers = new List<MonoBehaviour>(receivers).ToArray();
-        }
-#endif
 
         [Serializable]
         struct AnchorBinding

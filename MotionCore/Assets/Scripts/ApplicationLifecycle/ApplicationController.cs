@@ -1,3 +1,4 @@
+using MotionCore.Gameplay.Character;
 using MotionCore.Gameplay.Configs;
 using MotionCore.Infrastructure;
 using UnityEngine;
@@ -41,6 +42,7 @@ namespace MotionCore.ApplicationLifecycle
         IEventBus m_EventBus;
         IAssetProvider m_Assets;
         IConfigProvider m_Configs;
+        CharacterSpawner m_CharacterSpawner;
         VfxService m_Vfx;
         SceneNavigator m_SceneNavigator;
         UIRuntimeBootstrap m_UiBootstrap;
@@ -80,6 +82,8 @@ namespace MotionCore.ApplicationLifecycle
             // 配置表加载依赖资源提供器，需在 YooAsset 初始化完成后执行。
             m_Configs = CreateConfigProvider();
             ServiceLocator.Register<IConfigProvider>(m_Configs);
+            m_CharacterSpawner = new CharacterSpawner(m_Configs, m_Assets);
+            ServiceLocator.Register(m_CharacterSpawner);
 
             m_UiBootstrap.Boot();
             m_RuntimeStarted = true;
@@ -114,6 +118,7 @@ namespace MotionCore.ApplicationLifecycle
             ServiceLocator.Unregister(m_EventBus);
             ServiceLocator.Unregister(m_Assets);
             ServiceLocator.Unregister<IConfigProvider>(m_Configs);
+            ServiceLocator.Unregister(m_CharacterSpawner);
             ServiceLocator.Unregister<IVfxService>(m_Vfx);
             ServiceLocator.Unregister<ISceneNavigator>(m_SceneNavigator);
             m_SceneNavigator.Dispose();

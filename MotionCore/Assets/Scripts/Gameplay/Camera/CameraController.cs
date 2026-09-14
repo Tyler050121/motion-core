@@ -54,6 +54,12 @@ namespace MotionCore.Gameplay.Cameras
             ServiceLocator.Unregister<ICameraService>(this);
         }
 
+        public void SetFollowTarget(Transform target)
+        {
+            m_FreeLookCamera.Follow = target;
+            m_FreeLookCamera.LookAt = target;
+        }
+
         public void SetLockTarget(Transform target)
         {
             m_LockTarget = target;

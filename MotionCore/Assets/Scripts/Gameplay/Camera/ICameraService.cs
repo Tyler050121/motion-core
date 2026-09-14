@@ -9,6 +9,7 @@ namespace MotionCore.Gameplay.Cameras
 
         Vector3 WorldToViewportPoint(Vector3 worldPosition);
 
+        void SetFollowTarget(Transform target);
         void SetLockTarget(Transform target);
         void ClearLockTarget();
     }

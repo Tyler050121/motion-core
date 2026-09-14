@@ -23,6 +23,7 @@ namespace MotionCore.Gameplay.AI
         IEventBus m_EventBus;
         Vector3 m_HomePosition;
         Transform m_Target;
+        LockOnTarget m_OwnerTarget;
         float m_NextAttackTime;
 
         /// <summary>
@@ -39,6 +40,11 @@ namespace MotionCore.Gameplay.AI
         /// 当前索敌得到的目标（如玩家的锁定点）；未锁定时为 null。
         /// </summary>
         public Transform Target => m_Target;
+
+        /// <summary>
+        /// 敌人所属的锁定目标组件，供行为节点过滤自身目标。
+        /// </summary>
+        public LockOnTarget OwnerTarget => m_OwnerTarget;
 
         /// <summary>
         /// 是否已有有效目标。
@@ -83,6 +89,7 @@ namespace MotionCore.Gameplay.AI
             m_Health = GetComponentInParent<Health>();
             m_EventBus = ServiceLocator.Resolve<IEventBus>();
             m_HomePosition = m_Character.transform.position;
+            m_OwnerTarget = m_Character.GetComponentInChildren<LockOnTarget>(true);
 
             // 攻击朝向对准当前目标，无目标则维持正面。
             m_CommandExecutor.SetAttackFacingResolver(ResolveAttackFacing);
@@ -108,7 +115,8 @@ namespace MotionCore.Gameplay.AI
         {
             Transform attacker = hitEvent.Result.Attacker;
 
-            LockOnTarget lockOn = attacker.root.GetComponentInChildren<LockOnTarget>();
+            CharacterContext attackerCharacter = attacker.GetComponentInParent<CharacterContext>();
+            LockOnTarget lockOn = attackerCharacter.GetComponentInChildren<LockOnTarget>();
             SetTarget(lockOn.LockPoint);
         }
 

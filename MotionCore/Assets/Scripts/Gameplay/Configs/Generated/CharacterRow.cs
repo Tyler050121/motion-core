@@ -10,51 +10,54 @@
 using Luban;
 
 
-namespace MotionCore.Gameplay.Configs.Test
+namespace MotionCore.Gameplay.Configs
 {
 /// <summary>
-/// 配置框架测试数据
+/// 可复用角色原型
 /// </summary>
-public sealed partial class ConfigTest : Luban.BeanBase
+public sealed partial class CharacterRow : Luban.BeanBase
 {
-    public ConfigTest(ByteBuf _buf) 
+    public CharacterRow(ByteBuf _buf) 
     {
         Id = _buf.ReadInt();
-        Value = _buf.ReadInt();
-        Label = _buf.ReadString();
+        ResKey = _buf.ReadString();
+        StatId = _buf.ReadInt();
+        StatId_Ref = null;
     }
 
-    public static ConfigTest DeserializeConfigTest(ByteBuf _buf)
+    public static CharacterRow DeserializeCharacterRow(ByteBuf _buf)
     {
-        return new Test.ConfigTest(_buf);
+        return new CharacterRow(_buf);
     }
 
     /// <summary>
-    /// 测试行编号
+    /// 稳定角色 ID（1xxx 段）
     /// </summary>
     public readonly int Id;
     /// <summary>
-    /// 测试值
+    /// 角色 Prefab 的 YooAsset 资源地址
     /// </summary>
-    public readonly int Value;
+    public readonly string ResKey;
     /// <summary>
-    /// 测试标签
+    /// 基础数值表 ID
     /// </summary>
-    public readonly string Label;
+    public readonly int StatId;
+    public CharacterStat StatId_Ref;
    
-    public const int __ID__ = -1554773552;
+    public const int __ID__ = -1278894575;
     public override int GetTypeId() => __ID__;
 
     public  void ResolveRef(Tables tables)
     {
+        StatId_Ref = tables.TbCharacterStat.GetOrDefault(StatId);
     }
 
     public override string ToString()
     {
         return "{ "
         + "id:" + Id + ","
-        + "value:" + Value + ","
-        + "label:" + Label + ","
+        + "resKey:" + ResKey + ","
+        + "statId:" + StatId + ","
         + "}";
     }
 }

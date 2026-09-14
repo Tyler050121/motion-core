@@ -1,34 +1,35 @@
+using MotionCore.Gameplay.Configs;
 using MotionCore.Infrastructure;
 using UnityEngine;
 
 namespace MotionCore.Gameplay.Common
 {
     [DisallowMultipleComponent]
-    public sealed class Health : MonoBehaviour, IConfigReceiver<HealthConfig>
+    public sealed class Health : MonoBehaviour
     {
-        [SerializeField, ReadOnly] float m_MaxHealth = 100f;
+        float m_MaxHealth;
 
         float m_CurrentHealth;
         IEventBus m_EventBus;
+        bool m_IsInitialized;
 
         public float CurrentHealth => m_CurrentHealth;
         public float MaxHealth => m_MaxHealth;
-        public bool IsDead => m_CurrentHealth <= 0f;
+        public bool IsDead => m_IsInitialized && m_CurrentHealth <= 0f;
 
-        // TODO: 此处 Awake 留给没有走 IConfigReceiver 初始化的情况，之后可以考虑去掉
         void Awake()
         {
             m_EventBus = ServiceLocator.Resolve<IEventBus>();
-            m_CurrentHealth = m_MaxHealth;
         }
 
         /// <summary>
-        /// 使用角色配置初始化生命值。
+        /// 使用角色数值初始化生命资源。
         /// </summary>
-        public void Initialize(HealthConfig config)
+        public void Initialize(CharacterStat stat)
         {
-            m_MaxHealth = config.MaxHealth;
+            m_MaxHealth = stat.MaxHp;
             m_CurrentHealth = m_MaxHealth;
+            m_IsInitialized = true;
             m_EventBus.Publish(this, new HealthChangedEvent(this));
         }
 

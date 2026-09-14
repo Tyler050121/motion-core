@@ -24,10 +24,11 @@ namespace MotionCore.Gameplay.Combat
         /// 所属阵营，启动时从角色的 LockOnTarget 取一次缓存。
         /// </summary>
         public Faction Faction => m_Faction;
+        public Health Health => m_Health;
 
         public Vector3 ResolveVisualPoint(Transform attacker)
         {
-            Vector3 toAttacker = attacker.root.position - transform.position;
+            Vector3 toAttacker = attacker.position - transform.position;
             toAttacker.y = 0f;
             return transform.position
                 + toAttacker.normalized * m_VisualForwardOffset

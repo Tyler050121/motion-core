@@ -205,17 +205,6 @@ MonoBehaviour:
     _DefaultState: {fileID: 5453529004559671413}
   m_CharacterDefinition: {fileID: 11400000, guid: 39b89fdc4218444fbb1f6215ecb28824,
     type: 2}
-  m_Health:
-    m_MaxHealth: 1000
-  m_Posture:
-    m_MaxPosture: 100
-    m_RecoveryDelay: 3
-    m_RecoveryPerSecond: 10
-  m_ConfigReceivers:
-  - {fileID: 4378358469696398247}
-  - {fileID: 3518702131146598990}
-  - {fileID: 5858993967822498649}
-  - {fileID: 264561760}
 --- !u!114 &5858993967822498649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -228,7 +217,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 382efa1e954f4a02bca03328d20cf2b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MaxHealth: 100
 --- !u!114 &264561760
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -22,7 +22,7 @@ namespace MotionCore.Gameplay.Combat
         public Hurtbox Hurtbox { get; }
 
         /// <summary>
-        /// 发起本次攻击的来源（攻击者武器/骨骼节点），可用 root 取其角色根；供受击方仇恨反击。
+        /// 发起本次攻击的来源（攻击者武器/骨骼节点）
         /// </summary>
         public Transform Attacker { get; }
 

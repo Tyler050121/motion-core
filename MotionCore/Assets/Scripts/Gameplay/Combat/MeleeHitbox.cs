@@ -17,6 +17,15 @@ namespace MotionCore.Gameplay.Combat
         readonly List<HitWindow> m_ActiveWindows = new();
         readonly List<HitWindow> m_WindowPool = new();
         readonly List<GizmoSample> m_GizmoSamples = new();
+        Health m_AttackerHealth;
+        Hurtbox m_AttackerHurtbox;
+
+        // TODO: 接入角色动态生成后，由统一初始化流程注入攻击者上下文，避免各命中组件独立查询层级。
+        void Awake()
+        {
+            m_AttackerHealth = GetComponentInParent<Health>();
+            m_AttackerHurtbox = m_AttackerHealth.GetComponentInChildren<Hurtbox>();
+        }
 
         /// <summary>
         /// 打开一个持续命中窗口，同一个窗口在关闭前只会命中同一目标一次。
@@ -136,13 +145,12 @@ namespace MotionCore.Gameplay.Combat
                 profile.TargetLayers,
                 QueryTriggerInteraction.Collide);
 
-            // 攻击者阵营，用于跳过同阵营友伤。
-            Faction attackerFaction = source.root.GetComponentInChildren<Hurtbox>().Faction;
+            Faction attackerFaction = m_AttackerHurtbox.Faction;
 
             for (int i = 0; i < count; i++)
             {
                 Hurtbox hurtbox = m_Results[i].GetComponentInParent<Hurtbox>();
-                if (hurtbox == null || hurtbox.transform.root == source.root)
+                if (hurtbox == null || hurtbox.Health == m_AttackerHealth)
                     continue;
 
                 // 同阵营友伤跳过。

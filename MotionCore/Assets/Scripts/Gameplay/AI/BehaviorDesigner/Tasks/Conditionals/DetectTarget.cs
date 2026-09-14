@@ -25,7 +25,7 @@ namespace MotionCore.Gameplay.AI.BehaviorDesigner.Tasks.Conditionals
             if (LockOnTargetQuery.TryFindNearestTarget(
                     LockOnTarget.Targets,
                     Controller.Position,
-                    transform.root,
+                    Controller.OwnerTarget,
                     m_DetectionRadius,
                     m_TargetFaction,
                     out LockOnTarget target))

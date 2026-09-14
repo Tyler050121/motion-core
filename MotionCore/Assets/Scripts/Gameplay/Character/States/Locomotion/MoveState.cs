@@ -1,6 +1,7 @@
 using MotionCore;
 using Animancer;
 using Animancer.FSM;
+using MotionCore.Gameplay.Configs;
 using MotionCore.Infrastructure;
 using UnityEngine;
 
@@ -20,7 +21,7 @@ namespace MotionCore.Gameplay.Character
         }
 
         ITimerService m_Timer;
-        MotorConfig m_MotorConfig;
+        CharacterStat m_Stat;
         LocomotionAnimationProfile m_LocomotionProfile;
         readonly TimerHandle m_RunTurnBackTimer = new();
 
@@ -36,11 +37,11 @@ namespace MotionCore.Gameplay.Character
 
         public void SetContext(
             ITimerService timer,
-            MotorConfig motorConfig,
+            CharacterStat stat,
             LocomotionAnimationProfile locomotionProfile)
         {
             m_Timer = timer;
-            m_MotorConfig = motorConfig;
+            m_Stat = stat;
             m_LocomotionProfile = locomotionProfile;
         }
 
@@ -99,7 +100,7 @@ namespace MotionCore.Gameplay.Character
             // 转身时长优先用本次移动指定的（如追击更快），未指定才回落配置默认。
             float turnDuration = Character.Parameters.LocomotionTurnDuration >= 0f
                 ? Character.Parameters.LocomotionTurnDuration
-                : m_MotorConfig.LocomotionTurnDuration;
+                : m_Stat.LocomotionTurnDuration;
             Character.Parameters.SetFacing(Character.Parameters.MoveDirection, turnDuration);
         }
 
@@ -147,7 +148,7 @@ namespace MotionCore.Gameplay.Character
         {
             m_Phase = MovePhase.TurningBack;
             Character.Parameters.ClearFacing();
-            m_Timer.Delay(this, m_MotorConfig.RunTurnBackCooldown, m_RunTurnBackTimer);
+            m_Timer.Delay(this, m_Stat.RunTurnBackCooldown, m_RunTurnBackTimer);
 
             AnimancerState state = Character.Animancer.Play(m_LocomotionProfile.RunTurnBack);
             state.Events(this).OnEnd = PlayMoveLoop;

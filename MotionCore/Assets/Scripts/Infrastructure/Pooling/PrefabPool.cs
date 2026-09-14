@@ -37,7 +37,7 @@ namespace MotionCore.Infrastructure
             int minCachedCount = 0,
             string instanceName = null)
         {
-            m_AssetProvider = assetProvider ?? throw new ArgumentNullException(nameof(assetProvider));
+            m_AssetProvider = assetProvider;
             if (string.IsNullOrWhiteSpace(assetKey))
                 throw new ArgumentException("资源 key 不能为空。", nameof(assetKey));
             if (initialCapacity < 0)

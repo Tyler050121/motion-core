@@ -46,7 +46,7 @@ namespace MotionCore.Gameplay.Character
         void Start()
         {
             m_Camera = ServiceLocator.Resolve<ICameraService>();
-            // TODO: 接入玩家生成流程后由生成器发布。
+            m_Camera.SetFollowTarget(m_Character.GetAnchor(CharacterAnchor.CameraTarget));
             m_EventBus.Publish(new PlayerSpawnedEvent(
                 GetComponentInParent<Health>(),
                 GetComponentInParent<Posture>()));

@@ -16,6 +16,7 @@ namespace MotionCore.Gameplay.Targeting
         [SerializeField, Range(0f, 1f), Tooltip("屏幕中心半径")] float m_CenterLockRadius = 0.25f;
 
         ICameraService m_Camera;
+        LockOnTarget m_OwnerTarget;
         LockOnTarget m_CurrentTarget;
 
         public LockOnTarget CurrentTarget => m_CurrentTarget;
@@ -23,6 +24,7 @@ namespace MotionCore.Gameplay.Targeting
 
         void Start()
         {
+            m_OwnerTarget = m_Character.GetComponentInChildren<LockOnTarget>(true);
             m_Camera = ServiceLocator.Resolve<ICameraService>();
         }
 
@@ -51,7 +53,7 @@ namespace MotionCore.Gameplay.Targeting
             bool foundTarget = LockOnTargetQuery.TryFindLockTarget(
                 LockOnTarget.Targets,
                 m_Character.FacingRoot.position,
-                m_Character.transform.root,
+                m_OwnerTarget,
                 m_MaxLockDistance,
                 m_CenterLockRadius,
                 m_Camera,
@@ -70,7 +72,7 @@ namespace MotionCore.Gameplay.Targeting
                     LockOnTarget.Targets,
                     m_CurrentTarget,
                     m_Character.FacingRoot.position,
-                    m_Character.transform.root,
+                    m_OwnerTarget,
                     m_MaxLockDistance,
                     m_Camera.PlanarForward,
                     out LockOnTarget nextTarget))

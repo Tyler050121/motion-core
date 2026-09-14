@@ -26,7 +26,7 @@ namespace MotionCore.Gameplay.Targeting
         public static bool TryFindNearestTarget(
             IReadOnlyCollection<LockOnTarget> targets,
             Vector3 origin,
-            Transform ownerRoot,
+            LockOnTarget ownerTarget,
             float maxDistance,
             Faction targetFaction,
             out LockOnTarget bestTarget)
@@ -37,7 +37,7 @@ namespace MotionCore.Gameplay.Targeting
 
             foreach (LockOnTarget candidate in targets)
             {
-                if (!IsSelectable(candidate, ownerRoot))
+                if (!IsSelectable(candidate, ownerTarget))
                     continue;
 
                 if (candidate.Faction != targetFaction)
@@ -64,7 +64,7 @@ namespace MotionCore.Gameplay.Targeting
         public static bool TryFindLockTarget(
             IReadOnlyCollection<LockOnTarget> targets,
             Vector3 origin,
-            Transform ownerRoot,
+            LockOnTarget ownerTarget,
             float maxDistance,
             float centerRadius,
             ICameraService camera,
@@ -82,7 +82,7 @@ namespace MotionCore.Gameplay.Targeting
 
             foreach (LockOnTarget candidate in targets)
             {
-                if (!IsSelectable(candidate, ownerRoot))
+                if (!IsSelectable(candidate, ownerTarget))
                     continue;
 
                 Vector3 offset = candidate.LockPoint.position - origin;
@@ -119,13 +119,13 @@ namespace MotionCore.Gameplay.Targeting
             IReadOnlyCollection<LockOnTarget> targets,
             LockOnTarget currentTarget,
             Vector3 origin,
-            Transform ownerRoot,
+            LockOnTarget ownerTarget,
             float maxDistance,
             Vector3 referenceForward,
             out LockOnTarget nextTarget)
         {
             nextTarget = null;
-            if (!IsSelectable(currentTarget, ownerRoot))
+            if (!IsSelectable(currentTarget, ownerTarget))
                 return false;
 
             float maxDistanceSqr = maxDistance * maxDistance;
@@ -133,7 +133,7 @@ namespace MotionCore.Gameplay.Targeting
 
             foreach (LockOnTarget candidate in targets)
             {
-                if (!IsSelectable(candidate, ownerRoot))
+                if (!IsSelectable(candidate, ownerTarget))
                     continue;
 
                 Vector3 offset = candidate.LockPoint.position - origin;
@@ -163,11 +163,11 @@ namespace MotionCore.Gameplay.Targeting
         }
 
         /// <summary>
-        /// 过滤掉空目标、无效目标和同根节点目标。
+        /// 过滤掉空目标、无效目标和自身目标。
         /// </summary>
-        static bool IsSelectable(LockOnTarget target, Transform ownerRoot)
+        static bool IsSelectable(LockOnTarget target, LockOnTarget ownerTarget)
         {
-            return IsUsableTarget(target) && target.transform.root != ownerRoot;
+            return IsUsableTarget(target) && target != ownerTarget;
         }
 
         /// <summary>

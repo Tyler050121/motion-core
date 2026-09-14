@@ -190,20 +190,18 @@ namespace MotionCore.Gameplay.Character
         void Hit(int index)
         {
             AttackHitDefinition hit = m_CurrentTrack.GetHitDefinition(index);
-            if (!Character.TryGetAnchor(hit.Anchor, out Transform source))
-                return;
-
-            m_MeleeHitbox.Hit(index, hit.Profile, source, hit.LocalOffset, ResolveImpactRayOrigin(source));
+            Transform source = Character.GetAnchor(hit.Anchor);
+            Transform rayOrigin = Character.GetAnchor(CharacterAnchor.CameraTarget);
+            m_MeleeHitbox.Hit(index, hit.Profile, source, hit.LocalOffset, rayOrigin);
             PlayVfx(source, hit.Vfx);
         }
 
         void OpenHit(int index)
         {
             AttackHitDefinition hit = m_CurrentTrack.GetHitDefinition(index);
-            if (!Character.TryGetAnchor(hit.Anchor, out Transform source))
-                return;
-
-            m_MeleeHitbox.Open(index, hit.Profile, source, hit.LocalOffset, ResolveImpactRayOrigin(source));
+            Transform source = Character.GetAnchor(hit.Anchor);
+            Transform rayOrigin = Character.GetAnchor(CharacterAnchor.CameraTarget);
+            m_MeleeHitbox.Open(index, hit.Profile, source, hit.LocalOffset, rayOrigin);
             PlayVfx(source, hit.Vfx);
         }
 
@@ -225,14 +223,6 @@ namespace MotionCore.Gameplay.Character
                 definition.Speed,
                 spawnSource,
                 definition.FollowMode));
-        }
-
-        Transform ResolveImpactRayOrigin(Transform source)
-        {
-            if (Character.TryGetAnchor(CharacterAnchor.CameraTarget, out Transform rayOrigin))
-                return rayOrigin;
-
-            return source;
         }
 
         /// <summary>

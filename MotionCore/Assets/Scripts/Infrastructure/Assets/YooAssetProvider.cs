@@ -20,8 +20,6 @@ namespace MotionCore.Infrastructure
         /// </summary>
         public YooAssetProvider(YooAssetProviderSettings settings)
         {
-            if (settings == null)
-                throw new ArgumentNullException(nameof(settings));
             if (string.IsNullOrWhiteSpace(settings.PackageName))
                 throw new ArgumentException("YooAsset 包名不能为空。", nameof(settings.PackageName));
             if (YooAssets.Initialized)

@@ -1,7 +1,7 @@
 namespace MotionCore.Gameplay.Character
 {
     /// <summary>
-    /// 转身速度选择，映射到 MotorConfig 上的三个转身时长。
+    /// 转身速度选择，映射到 CharacterStat 的转身时长。
     /// </summary>
     public enum TurnSpeed
     {

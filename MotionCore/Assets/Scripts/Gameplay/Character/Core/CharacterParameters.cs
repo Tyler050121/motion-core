@@ -15,7 +15,7 @@ namespace MotionCore.Gameplay.Character
 
         float m_LocomotionTurnDuration = -1f;
         /// <summary>
-        /// 本次移动指定的转身时长（180° 秒数）。小于 0 表示沿用 MotorConfig 默认。
+        /// 本次移动指定的转身时长（180° 秒数）。小于 0 表示沿用 CharacterStat 默认。
         /// </summary>
         public float LocomotionTurnDuration => m_LocomotionTurnDuration;
 
@@ -24,7 +24,7 @@ namespace MotionCore.Gameplay.Character
 
         float m_FacingTurnDuration = -1f;
         /// <summary>
-        /// 本次转身的目标时长（180° 秒数）。小于 0 表示沿用 MotorConfig 的默认转身时长。
+        /// 本次转身的目标时长（180° 秒数）。小于 0 表示沿用 CharacterStat 的默认转身时长。
         /// </summary>
         public float FacingTurnDuration => m_FacingTurnDuration;
 
@@ -43,7 +43,7 @@ namespace MotionCore.Gameplay.Character
         }
 
         /// <summary>
-        /// 设置朝向目标，并指定本次转身时长（180° 秒数）；turnDuration 小于 0 表示沿用 MotorConfig 默认。
+        /// 设置朝向目标，并指定本次转身时长（180° 秒数）；turnDuration 小于 0 表示沿用 CharacterStat 默认。
         /// </summary>
         public void SetFacing(Vector3 facingDirection, float turnDuration = -1f)
         {

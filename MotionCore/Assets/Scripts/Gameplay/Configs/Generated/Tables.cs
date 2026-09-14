@@ -14,25 +14,41 @@ namespace MotionCore.Gameplay.Configs
 public partial class Tables
 {
     /// <summary>
-    /// 配置框架测试表
+    /// 角色原型表
     /// </summary>
-    public Test.TbConfigTest TbConfigTest {get; }
+    public TbCharacter TbCharacter {get; }
+    /// <summary>
+    /// 角色基础数值表
+    /// </summary>
+    public TbCharacterStat TbCharacterStat {get; }
+    /// <summary>
+    /// 角色生成表
+    /// </summary>
+    public TbCharacterSpawn TbCharacterSpawn {get; }
 
     public Tables(System.Func<string, ByteBuf> loader)
     {
-        TbConfigTest = new Test.TbConfigTest(loader("test_tbconfigtest"));
+        TbCharacter = new TbCharacter(loader("tbcharacter"));
+        TbCharacterStat = new TbCharacterStat(loader("tbcharacterstat"));
+        TbCharacterSpawn = new TbCharacterSpawn(loader("tbcharacterspawn"));
         ResolveRef();
     }
     
     private void ResolveRef()
     {
-        TbConfigTest.ResolveRef(this);
+        TbCharacter.ResolveRef(this);
+        TbCharacterStat.ResolveRef(this);
+        TbCharacterSpawn.ResolveRef(this);
     }
 
     public System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<System.Type, object>> GetAllTables()
     {
         yield return new System.Collections.Generic.KeyValuePair<System.Type, object>(
-            typeof(Test.TbConfigTest), TbConfigTest);
+            typeof(TbCharacter), TbCharacter);
+        yield return new System.Collections.Generic.KeyValuePair<System.Type, object>(
+            typeof(TbCharacterStat), TbCharacterStat);
+        yield return new System.Collections.Generic.KeyValuePair<System.Type, object>(
+            typeof(TbCharacterSpawn), TbCharacterSpawn);
     }
 }
 

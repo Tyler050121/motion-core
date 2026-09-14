@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e38aedd991864f269cde63c7c3053bc5, type: 3}
   m_Name: Goblin_CharacterDefinition
   m_EditorClassIdentifier: 
-  m_Motor: {fileID: 11400000, guid: c903a11e71af14a0eb5bbc2de02e504c, type: 2}
   m_LocomotionAnimation: {fileID: 11400000, guid: 4d3345db41b041f7a05328afab01be25,
     type: 2}
   m_BasicAttack: {fileID: 11400000, guid: cb9de60b0f8f1456c81dd15ae508af7b, type: 2}
