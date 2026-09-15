@@ -7,7 +7,7 @@ namespace MotionCore.Gameplay.Targeting
 {
     /// <summary>
     /// 锁定目标查询工具。
-    /// 统一处理可用性过滤、首次锁定选择和环绕切换顺序。
+    /// 统一处理可用性过滤、首次锁定选择和单轮切换顺序。
     /// </summary>
     public static class LockOnTargetQuery
     {
@@ -16,7 +16,7 @@ namespace MotionCore.Gameplay.Targeting
         /// </summary>
         public static bool IsUsableTarget(LockOnTarget target)
         {
-            return target != null && target.IsAvailable && target.LockPoint != null;
+            return target != null && target.IsAvailable;
         }
 
         /// <summary>
@@ -37,17 +37,15 @@ namespace MotionCore.Gameplay.Targeting
 
             foreach (LockOnTarget candidate in targets)
             {
-                if (!IsSelectable(candidate, ownerTarget))
-                    continue;
-
-                if (candidate.Faction != targetFaction)
+                if (!IsSelectable(candidate, ownerTarget, targetFaction))
                     continue;
 
                 Vector3 offset = candidate.LockPoint.position - origin;
                 offset.y = 0f;
 
                 float distanceSqr = offset.sqrMagnitude;
-                if (distanceSqr > maxDistanceSqr || distanceSqr >= bestDistanceSqr)
+                if (distanceSqr > maxDistanceSqr ||
+                    !IsPreferredTarget(candidate, distanceSqr, bestTarget, bestDistanceSqr))
                     continue;
 
                 bestTarget = candidate;
@@ -67,6 +65,7 @@ namespace MotionCore.Gameplay.Targeting
             LockOnTarget ownerTarget,
             float maxDistance,
             float centerRadius,
+            Faction targetFaction,
             ICameraService camera,
             out LockOnTarget target)
         {
@@ -82,7 +81,7 @@ namespace MotionCore.Gameplay.Targeting
 
             foreach (LockOnTarget candidate in targets)
             {
-                if (!IsSelectable(candidate, ownerTarget))
+                if (!IsSelectable(candidate, ownerTarget, targetFaction))
                     continue;
 
                 Vector3 offset = candidate.LockPoint.position - origin;
@@ -92,16 +91,15 @@ namespace MotionCore.Gameplay.Targeting
                 if (distanceSqr > maxDistanceSqr)
                     continue;
 
-                if (!TryGetViewportDistanceSqr(camera, candidate, out float viewportDistanceSqr))
-                    continue;
-
-                if (viewportDistanceSqr <= centerRadiusSqr && viewportDistanceSqr < centerTargetSqr)
+                if (TryGetViewportDistanceSqr(camera, candidate, out float viewportDistanceSqr) &&
+                    viewportDistanceSqr <= centerRadiusSqr &&
+                    IsPreferredTarget(candidate, viewportDistanceSqr, centerTarget, centerTargetSqr))
                 {
                     centerTarget = candidate;
                     centerTargetSqr = viewportDistanceSqr;
                 }
 
-                if (distanceSqr < nearestTargetSqr)
+                if (IsPreferredTarget(candidate, distanceSqr, nearestTarget, nearestTargetSqr))
                 {
                     nearestTarget = candidate;
                     nearestTargetSqr = distanceSqr;
@@ -113,27 +111,23 @@ namespace MotionCore.Gameplay.Targeting
         }
 
         /// <summary>
-        /// 在当前锁定基础上，按环绕顺序切换到下一个目标。
+        /// 构建以当前目标为起点的单轮锁定切换序列。
         /// </summary>
-        public static bool TryFindNextTargetInRing(
+        public static void FillTargetCycle(
             IReadOnlyCollection<LockOnTarget> targets,
             LockOnTarget currentTarget,
             Vector3 origin,
             LockOnTarget ownerTarget,
             float maxDistance,
-            Vector3 referenceForward,
-            out LockOnTarget nextTarget)
+            Faction targetFaction,
+            List<LockOnTarget> results)
         {
-            nextTarget = null;
-            if (!IsSelectable(currentTarget, ownerTarget))
-                return false;
-
+            results.Clear();
             float maxDistanceSqr = maxDistance * maxDistance;
-            List<LockOnTarget> selectableTargets = new();
 
             foreach (LockOnTarget candidate in targets)
             {
-                if (!IsSelectable(candidate, ownerTarget))
+                if (!IsSelectable(candidate, ownerTarget, targetFaction))
                     continue;
 
                 Vector3 offset = candidate.LockPoint.position - origin;
@@ -142,41 +136,43 @@ namespace MotionCore.Gameplay.Targeting
                 if (offset.sqrMagnitude > maxDistanceSqr)
                     continue;
 
-                selectableTargets.Add(candidate);
+                results.Add(candidate);
             }
 
-            if (selectableTargets.Count <= 1)
-                return false;
-
-            selectableTargets.Sort((left, right) => CompareRingOrder(left, right, origin, referenceForward));
-
-            int currentIndex = selectableTargets.IndexOf(currentTarget);
-            if (currentIndex < 0)
-                return false;
-
-            int nextIndex = (currentIndex + 1) % selectableTargets.Count;
-            if (nextIndex == currentIndex)
-                return false;
-
-            nextTarget = selectableTargets[nextIndex];
-            return true;
+            Vector3 cycleStart = currentTarget.LockPoint.position - origin;
+            cycleStart.y = 0f;
+            results.Sort((left, right) => CompareCycleOrder(left, right, currentTarget, origin, cycleStart));
         }
 
         /// <summary>
-        /// 过滤掉空目标、无效目标和自身目标。
+        /// 过滤掉空目标、无效目标、自身目标和非目标阵营。
         /// </summary>
-        static bool IsSelectable(LockOnTarget target, LockOnTarget ownerTarget)
+        static bool IsSelectable(LockOnTarget target, LockOnTarget ownerTarget, Faction targetFaction)
         {
-            return IsUsableTarget(target) && target != ownerTarget;
+            return IsUsableTarget(target) && target != ownerTarget && target.Faction == targetFaction;
         }
 
         /// <summary>
-        /// 先按环绕角度排序，再按距离做二级排序。
+        /// 当前目标始终在首位；其余目标先按环绕角度，再按距离排序。
         /// </summary>
-        static int CompareRingOrder(LockOnTarget left, LockOnTarget right, Vector3 origin, Vector3 referenceForward)
+        static int CompareCycleOrder(
+            LockOnTarget left,
+            LockOnTarget right,
+            LockOnTarget currentTarget,
+            Vector3 origin,
+            Vector3 cycleStart)
         {
-            float leftAngle = GetRingAngle(left, origin, referenceForward);
-            float rightAngle = GetRingAngle(right, origin, referenceForward);
+            if (left == right)
+                return 0;
+
+            if (left == currentTarget)
+                return -1;
+
+            if (right == currentTarget)
+                return 1;
+
+            float leftAngle = GetCycleAngle(left, origin, cycleStart);
+            float rightAngle = GetCycleAngle(right, origin, cycleStart);
 
             int angleCompare = leftAngle.CompareTo(rightAngle);
             if (angleCompare != 0)
@@ -184,20 +180,39 @@ namespace MotionCore.Gameplay.Targeting
 
             float leftDistance = GetHorizontalDistanceSqr(left, origin);
             float rightDistance = GetHorizontalDistanceSqr(right, origin);
-            return leftDistance.CompareTo(rightDistance);
+            int distanceCompare = leftDistance.CompareTo(rightDistance);
+            if (distanceCompare != 0)
+                return distanceCompare;
+
+            return left.GetInstanceID().CompareTo(right.GetInstanceID());
+        }
+
+        /// <summary>
+        /// 比较同一查询中的目标，避免集合遍历顺序影响最终选择。
+        /// </summary>
+        static bool IsPreferredTarget(
+            LockOnTarget candidate,
+            float candidateScore,
+            LockOnTarget current,
+            float currentScore)
+        {
+            if (current == null)
+                return true;
+
+            int scoreComparison = candidateScore.CompareTo(currentScore);
+            return scoreComparison < 0 ||
+                   scoreComparison == 0 && candidate.GetInstanceID() < current.GetInstanceID();
         }
 
         /// <summary>
         /// 计算目标相对参考前方的水平夹角。
         /// </summary>
-        static float GetRingAngle(LockOnTarget target, Vector3 origin, Vector3 referenceForward)
+        static float GetCycleAngle(LockOnTarget target, Vector3 origin, Vector3 cycleStart)
         {
             Vector3 offset = target.LockPoint.position - origin;
             offset.y = 0f;
-            if (offset.sqrMagnitude <= 0f)
-                return 0f;
-
-            return Vector3.SignedAngle(referenceForward, offset, Vector3.up);
+            float angle = Vector3.SignedAngle(cycleStart, offset, Vector3.up);
+            return angle < 0f ? angle + 360f : angle;
         }
 
         /// <summary>

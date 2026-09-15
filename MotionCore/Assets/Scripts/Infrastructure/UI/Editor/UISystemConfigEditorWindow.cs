@@ -689,6 +689,14 @@ namespace MotionCore.Editor
                 configHeader.style.flexShrink = 0f;
                 header.Add(configHeader);
 
+                if (type == UISystemConfig.UIPrefabType.Widget)
+                {
+                    var depthHeader = CreateColumnHeader("No Z", true);
+                    depthHeader.style.width = 70f;
+                    depthHeader.style.flexShrink = 0f;
+                    header.Add(depthHeader);
+                }
+
                 tableRows.Add(header);
 
                 if (list.Count == 0)
@@ -953,6 +961,30 @@ namespace MotionCore.Editor
                         }
 
                         line.Add(toggleCell);
+
+                        if (type == UISystemConfig.UIPrefabType.Widget)
+                        {
+                            var widget = (UISystemConfig.UIWidgetEntry)entryBase;
+                            var depthCell = new VisualElement();
+                            depthCell.style.width = 70f;
+                            depthCell.style.flexShrink = 0f;
+                            depthCell.style.flexDirection = FlexDirection.Row;
+                            depthCell.style.justifyContent = Justify.Center;
+                            depthCell.style.alignItems = Align.Center;
+
+                            var depthToggle = new Toggle { value = widget.IgnoreDepth };
+                            depthToggle.labelElement.style.display = DisplayStyle.None;
+                            depthToggle.tooltip = "忽略场景深度测试，始终显示在 Mesh 前；也会穿透墙体和地形。";
+                            depthToggle.RegisterValueChangedCallback(evt =>
+                            {
+                                RecordConfig("Edit Widget Depth");
+                                widget.IgnoreDepth = evt.newValue;
+                                SaveConfig();
+                            });
+                            depthCell.Add(depthToggle);
+                            line.Add(depthCell);
+                        }
+
                         row.Add(line);
                         element.Add(row);
                     };
@@ -1071,6 +1103,7 @@ namespace MotionCore.Editor
                     if (source is UISystemConfig.UIWidgetEntry sourceWidget)
                     {
                         widget.IsPooled = sourceWidget.IsPooled;
+                        widget.IgnoreDepth = sourceWidget.IgnoreDepth;
                         widget.InitialCapacity = sourceWidget.InitialCapacity;
                         widget.MinCachedCount = sourceWidget.MinCachedCount;
                     }

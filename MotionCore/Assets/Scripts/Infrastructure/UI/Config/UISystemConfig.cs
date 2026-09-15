@@ -134,6 +134,9 @@ namespace MotionCore.Infrastructure
             [Tooltip("是否开启对象池")]
             public bool IsPooled;
 
+            [Tooltip("是否忽略场景深度测试，始终显示在 Mesh 前")]
+            public bool IgnoreDepth;
+
             [Tooltip("初始预热容量")]
             [Min(0)]
             public int InitialCapacity = 5;

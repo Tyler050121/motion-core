@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -194,19 +195,35 @@ namespace MotionCore.Infrastructure
                 return null;
 
             RectTransform parent = m_LayerRoots[entry.LayerId];
+            GameObject instance;
 
             if (entry.IsPooled)
             {
                 PrefabPool<RectTransform> pool = GetOrCreateWidgetPool(entry);
                 RectTransform widget = pool.Get(parent);
-                m_PooledWidgetInstances[widget.gameObject] = pool;
-                return widget.gameObject;
+                instance = widget.gameObject;
+                m_PooledWidgetInstances[instance] = pool;
+            }
+            else
+            {
+                GameObject prefab = m_AssetProvider.Load<GameObject>(entry.AssetKey);
+                instance = Instantiate(prefab, parent, false);
+                instance.name = widgetId;
+                m_TransientWidgetInstances.Add(instance);
             }
 
-            GameObject prefab = m_AssetProvider.Load<GameObject>(entry.AssetKey);
-            GameObject instance = Instantiate(prefab, parent, false);
-            instance.name = widgetId;
-            m_TransientWidgetInstances.Add(instance);
+            if (entry.IgnoreDepth)
+            {
+                UIWidgetRenderSettings renderSettings = instance.GetComponent<UIWidgetRenderSettings>();
+                if (!renderSettings)
+                {
+                    throw new InvalidOperationException(
+                        $"Widget '{widgetId}' 启用了 IgnoreDepth，但 prefab 根节点缺少 UIWidgetRenderSettings。");
+                }
+
+                renderSettings.Apply();
+            }
+
             return instance;
         }
 

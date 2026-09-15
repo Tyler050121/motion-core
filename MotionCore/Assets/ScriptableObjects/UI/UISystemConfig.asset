@@ -62,6 +62,7 @@ MonoBehaviour:
     LayerId: WorldOverlay
     IsEscapable: 1
     IsPooled: 1
+    IgnoreDepth: 0
     InitialCapacity: 5
     MinCachedCount: 5
   - Id: OverheadPostureBar
@@ -70,8 +71,18 @@ MonoBehaviour:
     LayerId: WorldOverlay
     IsEscapable: 1
     IsPooled: 1
+    IgnoreDepth: 0
     InitialCapacity: 5
     MinCachedCount: 5
+  - Id: TargetLockMarker
+    AssetKey: TargetLockMarker
+    PrefabType: 1
+    LayerId: WorldOverlay
+    IsEscapable: 0
+    IsPooled: 1
+    IgnoreDepth: 1
+    InitialCapacity: 1
+    MinCachedCount: 1
   PrefabSearchPath: Assets/ResourcesAssets/UI
   GlobalElements: []
   ScopeElements:
