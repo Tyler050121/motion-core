@@ -66,10 +66,10 @@ namespace Animancer
         {
             var typeName = $"{DefaultFadeDurationNamespace}.{DefaultFadeDurationClass}";
 
-            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            var assemblies = UnityEngine.Assemblies.CurrentAssemblies.GetLoadedAssemblies();
 
             // Iterate backwards since it's more likely to be towards the end.
-            for (int iAssembly = assemblies.Length - 1; iAssembly >= 0; iAssembly--)
+            for (int iAssembly = assemblies.Count - 1; iAssembly >= 0; iAssembly--)
             {
                 var type = assemblies[iAssembly].GetType(typeName);
                 if (type != null)

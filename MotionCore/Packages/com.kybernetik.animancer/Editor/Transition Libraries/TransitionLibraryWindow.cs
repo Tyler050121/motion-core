@@ -34,7 +34,11 @@ namespace Animancer.Editor.TransitionLibraries
         /// opens it in the <see cref="TransitionLibraryWindow"/>.
         /// </summary>
         [OnOpenAsset]
+#if UNITY_6000_3_OR_NEWER
+        private static bool OnOpenAsset(EntityId instanceID, int line)
+#else
         private static bool OnOpenAsset(int instanceID, int line)
+#endif
         {
 #if UNITY_6000_3_OR_NEWER
             var asset = EditorUtility.EntityIdToObject(instanceID);

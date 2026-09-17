@@ -73,7 +73,7 @@ namespace MotionCore.Editor
 
             for (var i = 0; i < targets.Length; i++)
             {
-                key += $"|{targets[i].GetInstanceID()}";
+                key += $"|{EntityId.ToULong(targets[i].GetEntityId())}";
             }
 
             return key;

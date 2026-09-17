@@ -1,4 +1,6 @@
 ﻿#if GRAPH_DESIGNER
+#pragma warning disable CS0618
+#pragma warning disable CS0619
 /// ---------------------------------------------
 /// Behavior Designer
 /// Copyright (c) Opsive. All Rights Reserved.
@@ -265,7 +267,7 @@ namespace Opsive.BehaviorDesigner.Editor.Controls.NodeViews
                     foreach (var defaultEntity in defaultEntities) {
                         if (worlds[i].EntityManager.HasComponent<EntityGuid>(defaultEntity)) {
                             var entityGuid = worlds[i].EntityManager.GetComponentData<EntityGuid>(defaultEntity);
-                            if (originalGuid.OriginatingId == entityGuid.OriginatingId) {
+                            if (originalGuid.OriginatingEntityId == entityGuid.OriginatingEntityId) {
                                 m_BehaviorTree.World = worlds[i];
                                 m_BehaviorTree.Entity = defaultEntity;
                                 foundEntity = true;

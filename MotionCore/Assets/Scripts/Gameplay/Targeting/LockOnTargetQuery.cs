@@ -184,7 +184,7 @@ namespace MotionCore.Gameplay.Targeting
             if (distanceCompare != 0)
                 return distanceCompare;
 
-            return left.GetInstanceID().CompareTo(right.GetInstanceID());
+            return EntityId.ToULong(left.GetEntityId()).CompareTo(EntityId.ToULong(right.GetEntityId()));
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace MotionCore.Gameplay.Targeting
 
             int scoreComparison = candidateScore.CompareTo(currentScore);
             return scoreComparison < 0 ||
-                   scoreComparison == 0 && candidate.GetInstanceID() < current.GetInstanceID();
+                   scoreComparison == 0 && EntityId.ToULong(candidate.GetEntityId()) < EntityId.ToULong(current.GetEntityId());
         }
 
         /// <summary>

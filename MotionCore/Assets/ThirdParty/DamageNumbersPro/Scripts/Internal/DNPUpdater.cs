@@ -20,8 +20,8 @@ namespace DamageNumbersPro.Internal
         //Settings:
         public bool isUnscaled = false;
         public float updateDelay = 0.0125f;
-        public HashSet<DamageNumber> activePopups;
-        public HashSet<DamageNumber> removedPopups;
+        [System.NonSerialized] public HashSet<DamageNumber> activePopups;
+        [System.NonSerialized] public HashSet<DamageNumber> removedPopups;
 
         //Internal:
         float lastUpdateTime = 0;

@@ -12,6 +12,7 @@ namespace Animancer
         /// to avoid re-boxing them every <see cref="Invoke"/>.
         /// </summary>
         /// https://kybernetik.com.au/animancer/api/Animancer/ParameterBoxed_1
+        [System.Serializable]
         public abstract class ParameterBoxed<T> : Parameter<T>,
         IParameter
 #if UNITY_EDITOR

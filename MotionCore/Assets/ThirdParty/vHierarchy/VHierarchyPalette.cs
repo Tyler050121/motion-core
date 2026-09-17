@@ -205,7 +205,12 @@ namespace VHierarchy
 
             var iconPaths = iconRows.SelectMany(r => r.customIcons).Select(r => r.ToPath()).Where(r => !r.IsNullOrEmpty());
 
-            AssetDatabase.ExportPackage(iconPaths.Append(this.GetPath()).ToArray(), packagePath);
+            var exportParameters = new UnityEditor.AssetPackage.ExportPackageParameters(
+                iconPaths.Append(this.GetPath()).ToArray(),
+                packagePath,
+                null,
+                ExportPackageOptions.Default);
+            UnityEditor.AssetPackage.Package.Export(exportParameters);
 
             EditorUtility.RevealInFinder(packagePath);
 

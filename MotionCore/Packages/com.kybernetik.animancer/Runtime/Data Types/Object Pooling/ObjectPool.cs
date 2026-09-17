@@ -318,8 +318,8 @@ namespace Animancer
 
                 _BaseToDerivedPoolType = new();
 
-                var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-                for (int iAssembly = 0; iAssembly < assemblies.Length; iAssembly++)
+                var assemblies = UnityEngine.Assemblies.CurrentAssemblies.GetLoadedAssemblies();
+                for (int iAssembly = 0; iAssembly < assemblies.Count; iAssembly++)
                 {
                     var types = assemblies[iAssembly].GetTypes();
                     for (int iType = 0; iType < types.Length; iType++)

@@ -43,7 +43,7 @@ namespace Opsive.BehaviorDesigner.Runtime.Components
         //public ushort m_BranchIndex;
         //public ushort BranchIndex { get { return m_BranchIndex; } set { UnityEngine.Debug.Log(Index + " branch: " + value); m_BranchIndex = value; } }
         [Tooltip("The component type responsible for indicating that the task is active.")]
-        public ComponentType FlagComponentType;
+        [System.NonSerialized] public ComponentType FlagComponentType;
         [Tooltip("Can the task be reevaluated with conditional aborts?")]
         [MarshalAs(UnmanagedType.U1)]
         public bool CanReevaluate;
@@ -167,7 +167,7 @@ namespace Opsive.BehaviorDesigner.Runtime.Components
         [Tooltip("The index of the last active task.")]
         public ushort LastActiveIndex;
         [Tooltip("The component tag that is active.")]
-        public ComponentType ActiveFlagComponentType;
+        [System.NonSerialized] public ComponentType ActiveFlagComponentType;
         //public ComponentType m_ActiveFlagComponentType;
         //public ComponentType ActiveFlagComponentType { get { return m_ActiveFlagComponentType; } set { Debug.Log(string.Format("Tag: {0}", value)); m_ActiveFlagComponentType = value; } }
         [Tooltip("Specifies how the branch is interrupted.")]
@@ -226,7 +226,7 @@ namespace Opsive.BehaviorDesigner.Runtime.Components
         [Tooltip("The original status of the task.")]
         public TaskStatus OriginalStatus;
         [Tooltip("The tag specifiying the task should be reevaluated.")]
-        public ComponentType ReevaluateFlagComponentType;
+        [System.NonSerialized] public ComponentType ReevaluateFlagComponentType;
         [Tooltip("The current reevaluation status of the task.")]
         public ReevaluateStatus ReevaluateStatus;
     }

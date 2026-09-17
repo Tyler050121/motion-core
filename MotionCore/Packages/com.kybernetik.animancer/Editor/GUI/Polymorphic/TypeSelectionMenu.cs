@@ -248,8 +248,8 @@ namespace Animancer.Editor
             {
                 if (AllTypes.Count == 0)
                 {
-                    var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-                    for (int iAssembly = 0; iAssembly < assemblies.Length; iAssembly++)
+                    var assemblies = UnityEngine.Assemblies.CurrentAssemblies.GetLoadedAssemblies();
+                    for (int iAssembly = 0; iAssembly < assemblies.Count; iAssembly++)
                     {
                         var assembly = assemblies[iAssembly];
                         if (assembly.IsDynamic)

@@ -153,7 +153,7 @@ namespace MotionCore.Editor
             if (s_Character != null && s_Character.isActiveAndEnabled)
                 return s_Character;
 
-            CharacterBrain playerBrain = Object.FindFirstObjectByType<CharacterBrain>();
+            CharacterBrain playerBrain = Object.FindAnyObjectByType<CharacterBrain>();
             if (playerBrain != null)
             {
                 Character playerCharacter = playerBrain.GetComponentInParent<Character>();
@@ -163,7 +163,7 @@ namespace MotionCore.Editor
                     return playerCharacter;
             }
 
-            return Object.FindFirstObjectByType<Character>();
+            return Object.FindAnyObjectByType<Character>();
         }
 
         static AnimancerState ResolveAnimation(Character character)

@@ -42,7 +42,7 @@ public static class StandardToUrpLitMaterialConverter
     private static void ConvertOpenSceneMaterials()
     {
         var materials = new HashSet<Material>();
-        foreach (var renderer in Object.FindObjectsByType<Renderer>(FindObjectsSortMode.None))
+        foreach (var renderer in Object.FindObjectsByType<Renderer>())
         {
             AddRendererMaterials(renderer, materials);
         }

@@ -1,9 +1,12 @@
 #if UNITY_EDITOR
+#pragma warning disable CS0618
+#pragma warning disable CS0619
 using Type = System.Type;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEditor;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -18,6 +21,21 @@ namespace VHierarchy.Libs
 {
     public static class VUtils
     {
+
+        public static int GetObjectInstanceId(Object obj)
+            => unchecked((int)EntityId.ToULong(obj.GetEntityId()));
+
+        public static EntityId ToEntityId(int id)
+            => EntityId.FromULong(unchecked((uint)id));
+
+        public static int GetSceneId(SceneHandle handle)
+            => unchecked((int)handle.GetRawData());
+
+        public static EntityId GetSceneEntityId(SceneHandle handle)
+            => EntityId.FromULong(handle.GetRawData());
+
+        public static Object ObjectFromInstanceId(int id)
+            => EditorUtility.EntityIdToObject(ToEntityId(id));
 
         #region Reflection
 
@@ -1287,7 +1305,8 @@ namespace VHierarchy.Libs
         public struct GlobalID : System.IEquatable<GlobalID>
         {
             public Object GetObject() => GlobalObjectId.GlobalObjectIdentifierToObjectSlow(globalObjectId);
-            public int GetObjectInstanceId() => GlobalObjectId.GlobalObjectIdentifierToInstanceIDSlow(globalObjectId);
+            public int GetObjectInstanceId()
+                => unchecked((int)EntityId.ToULong(GlobalObjectId.GlobalObjectIdentifierToEntityIdSlow(globalObjectId)));
 
 
             public int idType => globalObjectId.identifierType;
@@ -1339,8 +1358,9 @@ namespace VHierarchy.Libs
         public static GlobalID[] GetGlobalIDs(this IEnumerable<int> instanceIds)
         {
             var unityGlobalIds = new GlobalObjectId[instanceIds.Count()];
+            var entityIds = instanceIds.Select(ToEntityId).ToArray();
 
-            GlobalObjectId.GetGlobalObjectIdsSlow(instanceIds.ToArray(), unityGlobalIds);
+            GlobalObjectId.GetGlobalObjectIdsSlow(entityIds, unityGlobalIds);
 
             var globalIds = unityGlobalIds.Select(r => new GlobalID(r.ToString()));
 
@@ -1363,9 +1383,9 @@ namespace VHierarchy.Libs
         {
             var goids = globalIDs.Select(r => r.globalObjectId).ToArray();
 
-            var iids = new int[goids.Length];
-
-            GlobalObjectId.GlobalObjectIdentifiersToInstanceIDsSlow(goids, iids);
+            var entityIds = new EntityId[goids.Length];
+            GlobalObjectId.GlobalObjectIdentifiersToEntityIdsSlow(goids, entityIds);
+            var iids = entityIds.Select(id => unchecked((int)EntityId.ToULong(id))).ToArray();
 
             return iids;
 
@@ -1396,7 +1416,7 @@ namespace VHierarchy.Libs
 
                 var m_ListAreaState = t.GetField("m_ListAreaState", maxBindingFlags).GetValue(w);
 
-                m_ListAreaState.GetType().GetField("m_SelectedInstanceIDs").SetValue(m_ListAreaState, new List<int> { folder.GetInstanceID() });
+                m_ListAreaState.GetType().GetField("m_SelectedInstanceIDs").SetValue(m_ListAreaState, new List<int> { GetObjectInstanceId(folder) });
 
                 t.GetMethod("OpenSelectedFolders", maxBindingFlags).Invoke(null, null);
 

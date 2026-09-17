@@ -1833,6 +1833,7 @@ namespace Opsive.BehaviorDesigner.Runtime
                             }
                         }
 
+#pragma warning disable CS0618 // BakedBehaviorTree is a managed IComponentData and requires AddComponentObject in this package version.
                         AddComponentObject<BakedBehaviorTree>(entity, new BakedBehaviorTree
                         {
                             StartEventConnectedIndex = connectedIndex,
@@ -1843,6 +1844,7 @@ namespace Opsive.BehaviorDesigner.Runtime
                             TagStableTypeHashes = tagStableTypeHash,
                             ReevaluateFlagStableTypeHashes = ReevaluateFlagStableTypeHash,
                         });
+#pragma warning restore CS0618
                         behaviorTree.Baked = true;
                     }
                 }

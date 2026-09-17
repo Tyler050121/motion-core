@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿#pragma warning disable CS0618
+#pragma warning disable CS0619
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -40,7 +42,7 @@ namespace DamageNumbersPro
             //Only damage numbers of the same parent can interact with each other.
             if(spamGroup != "" && transform.parent != null)
             {
-                spamGroup += transform.parent.GetInstanceID();
+                spamGroup += EntityId.ToULong(transform.parent.GetEntityId());
             }
 
             //GUI Alpha Fix:

@@ -1,4 +1,4 @@
-using Cinemachine;
+using Unity.Cinemachine;
 using MotionCore.Infrastructure;
 using UnityEngine;
 
@@ -8,7 +8,8 @@ namespace MotionCore.Gameplay.Cameras
     public sealed class CameraController : MonoBehaviour, ICameraService
     {
         [SerializeField, Tooltip("视图相机")] Camera m_ViewCamera;
-        [SerializeField, Tooltip("自由视角相机")] CinemachineFreeLook m_FreeLookCamera;
+        [SerializeField, Tooltip("自由视角相机")] CinemachineCamera m_FreeLookCamera;
+        [SerializeField, Tooltip("自由视角轨道控制")] CinemachineOrbitalFollow m_OrbitalFollow;
         [SerializeField, Min(0f), Tooltip("锁定转向速度")] float m_LockYawSpeed = 280f;
         [SerializeField, Min(0f), Tooltip("锁定死区角度")] float m_LockYawDeadZone = 7f;
         [SerializeField, Min(0.01f), Tooltip("锁定平滑时间")] float m_LockYawSmoothTime = 0.12f;
@@ -81,7 +82,7 @@ namespace MotionCore.Gameplay.Cameras
                 return;
 
             float targetYaw = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
-            float yawDelta = Mathf.DeltaAngle(m_FreeLookCamera.m_XAxis.Value, targetYaw);
+            float yawDelta = Mathf.DeltaAngle(m_OrbitalFollow.HorizontalAxis.Value, targetYaw);
             if (Mathf.Abs(yawDelta) <= m_LockYawDeadZone)
             {
                 m_LockYawVelocity = 0f;
@@ -90,8 +91,8 @@ namespace MotionCore.Gameplay.Cameras
 
             float distanceT = Mathf.InverseLerp(m_CloseLockDistance, m_FarLockDistance, distance);
             float yawSpeedScale = Mathf.Lerp(m_CloseLockYawSpeedScale, 1f, distanceT);
-            m_FreeLookCamera.m_XAxis.Value = Mathf.SmoothDampAngle(
-                m_FreeLookCamera.m_XAxis.Value,
+            m_OrbitalFollow.HorizontalAxis.Value = Mathf.SmoothDampAngle(
+                m_OrbitalFollow.HorizontalAxis.Value,
                 targetYaw,
                 ref m_LockYawVelocity,
                 m_LockYawSmoothTime,

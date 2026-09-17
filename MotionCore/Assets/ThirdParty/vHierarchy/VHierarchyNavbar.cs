@@ -1,4 +1,6 @@
 #if UNITY_EDITOR
+#pragma warning disable CS0618
+#pragma warning disable CS0619
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -131,7 +133,7 @@ namespace VHierarchy
 
                 var sceneHierarchy = window.GetMemberValue("m_SceneHierarchy");
                 var m_CustomParentForNewGameObjects = window.GetMemberValue("m_SceneHierarchy").GetMemberValue<Transform>("m_CustomParentForNewGameObjects");
-                var targetSceneHandle = m_CustomParentForNewGameObjects != null ? (int)m_CustomParentForNewGameObjects.gameObject.scene.handle : 0;
+                var targetSceneHandle = m_CustomParentForNewGameObjects != null ? GetSceneId(m_CustomParentForNewGameObjects.gameObject.scene.handle) : 0;
 
 
                 var menu = new GenericMenu();

@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿#pragma warning disable CS0618
+#pragma warning disable CS0619
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -436,7 +438,7 @@ namespace DamageNumbersPro
         public DamageNumber Spawn()
         {
             DamageNumber newDN = default;
-            int instanceID = GetInstanceID();
+            int instanceID = unchecked((int)EntityId.ToULong(GetEntityId()));
 
             //Check Pool:
             if (enablePooling && PoolAvailable(instanceID))
@@ -837,7 +839,7 @@ namespace DamageNumbersPro
             followedTarget = followedTransform;
 
             //Spam Group:
-            spamGroup += followedTransform.GetInstanceID();
+            spamGroup += EntityId.ToULong(followedTransform.GetEntityId());
         }
         public void SetColor(Color newColor)
         {
@@ -1148,7 +1150,7 @@ namespace DamageNumbersPro
         {
             if (enablePooling)
             {
-                int instanceId = GetInstanceID();
+                int instanceId = unchecked((int)EntityId.ToULong(GetEntityId()));
 
                 //Initialize Dictionary:
                 if (pools == null)

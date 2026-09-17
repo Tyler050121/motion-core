@@ -8,6 +8,7 @@ namespace VoxelLabs.UltimatePreview
         public object[] containers = null;
         
 #if UNITY_2022_2_OR_NEWER
+        [System.Obsolete]
         protected override void ResetValues() => DiscardChanges();
 
         public override void DiscardChanges()

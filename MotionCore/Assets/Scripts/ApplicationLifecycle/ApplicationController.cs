@@ -87,7 +87,7 @@ namespace MotionCore.ApplicationLifecycle
 
             m_UiBootstrap.Boot();
             m_RuntimeStarted = true;
-            m_SceneNavigator.LoadScene(m_StartupSceneName, LoadSceneMode.Single);
+            await m_SceneNavigator.LoadScene(m_StartupSceneName, LoadSceneMode.Single);
         }
 
         void Update()

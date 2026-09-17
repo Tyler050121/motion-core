@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 namespace MotionCore.Infrastructure
@@ -45,7 +46,7 @@ namespace MotionCore.Infrastructure
             if (!m_EnableEscapeBack)
                 return;
 
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (Keyboard.current.escapeKey.wasPressedThisFrame)
                 m_ElementManager.TryCloseTopEscapable();
         }
 

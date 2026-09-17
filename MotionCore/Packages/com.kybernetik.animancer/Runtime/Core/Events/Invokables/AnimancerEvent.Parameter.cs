@@ -27,6 +27,7 @@ namespace Animancer
         /// instead of this if <typeparamref name="T"/> is a value type to avoid repeated boxing costs.
         /// </remarks>
         /// https://kybernetik.com.au/animancer/api/Animancer/Parameter_1
+        [System.Serializable]
         public abstract class Parameter<T> :
             IParameter,
             IInvokable

@@ -45,8 +45,8 @@ namespace Animancer.Editor
         /// <summary>Gathers all instances of this attribute in all currently loaded assemblies.</summary>
         static PolymorphicDrawerDetails()
         {
-            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-            for (int iAssembly = 0; iAssembly < assemblies.Length; iAssembly++)
+            var assemblies = UnityEngine.Assemblies.CurrentAssemblies.GetLoadedAssemblies();
+            for (int iAssembly = 0; iAssembly < assemblies.Count; iAssembly++)
             {
                 var assembly = assemblies[iAssembly];
                 if (!assembly.IsDefined(typeof(PolymorphicDrawerDetails), false))

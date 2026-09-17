@@ -31,6 +31,7 @@ namespace Opsive.BehaviorDesigner.Editor.Controls.NodeViews
 
             private int m_Index;
             private Image m_ActiveImage;
+            private float m_Rotation;
 
             /// <summary>
             /// TaskView constructor.
@@ -66,11 +67,12 @@ namespace Opsive.BehaviorDesigner.Editor.Controls.NodeViews
                 m_ActiveImage.style.display = (m_Index == activeIndex ? DisplayStyle.Flex : DisplayStyle.None);
                 if (m_Index == activeIndex) {
                     if (Application.isPlaying) {
-                        var eulerAngles = m_ActiveImage.transform.rotation.eulerAngles;
-                        m_ActiveImage.transform.rotation = Quaternion.Euler(eulerAngles.x, eulerAngles.y, eulerAngles.z + c_ActiveIconRotationSpeed);
+                        m_Rotation = (m_Rotation + c_ActiveIconRotationSpeed) % 360f;
+                        m_ActiveImage.style.rotate = new Rotate(m_Rotation);
                     }
                 } else {
-                    m_ActiveImage.transform.rotation = Quaternion.identity;
+                    m_Rotation = 0f;
+                    m_ActiveImage.style.rotate = Rotate.None();
                 }
             }
         }

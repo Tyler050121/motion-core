@@ -104,8 +104,10 @@ namespace VInspector
                 typeof(ParticleSystem),
                 typeof(TrailRenderer),
                 typeof(LineRenderer),
+#if !UNITY_6000_5_OR_NEWER
                 typeof(LensFlare),
                 typeof(Projector),
+#endif
                 typeof(AudioReverbZone),
                 typeof(AudioEchoFilter),
                 typeof(Terrain),
@@ -150,7 +152,7 @@ namespace VInspector
             if (state != PlayModeStateChange.EnteredEditMode) return;
 
             foreach (var data in instance.savedComponentDatas)
-                if (EditorUtility.InstanceIDToObject(data.sourceComponent.GetInstanceID()) is Component sourceComponent)
+                if (ObjectFromInstanceId(GetObjectInstanceId(data.sourceComponent)) is Component sourceComponent)
                     ApplyComponentData(data, sourceComponent);
                 else if (data.globalId.GetObject() is Component sourceComponent_)
                     ApplyComponentData(data, sourceComponent_);
@@ -196,7 +198,7 @@ namespace VInspector
         {
             foreach (var key in componentData.serializedPropertyValues_byPath.Keys.ToList())
                 if (componentData.serializedPropertyValues_byPath[key] is Object unityObject && !unityObject) // sometimes object references become null after playmode in unity 6, so we have to restore them by instanceId
-                    componentData.serializedPropertyValues_byPath[key] = EditorUtility.InstanceIDToObject(unityObject.GetInstanceID());
+                    componentData.serializedPropertyValues_byPath[key] = ObjectFromInstanceId(GetObjectInstanceId(unityObject));
 
             foreach (var kvp in componentData.serializedPropertyValues_byPath)
             {
@@ -219,7 +221,7 @@ namespace VInspector
         public class ComponentData
         {
             public Component sourceComponent;
-            public Dictionary<string, object> serializedPropertyValues_byPath = new();
+            [System.NonSerialized] public Dictionary<string, object> serializedPropertyValues_byPath = new();
 
             public GlobalID globalId;
 

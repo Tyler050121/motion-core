@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace MotionCore.Infrastructure
 {
@@ -13,7 +14,8 @@ namespace MotionCore.Infrastructure
 
         public void Tick()
         {
-            bool showCursor = Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt);
+            Keyboard keyboard = Keyboard.current;
+            bool showCursor = keyboard.leftAltKey.isPressed || keyboard.rightAltKey.isPressed;
 
             if (showCursor && IsLocked)
                 Unlock();

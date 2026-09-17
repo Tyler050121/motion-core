@@ -20,6 +20,23 @@ namespace VInspector.Libs
     public static class VUtils
     {
 
+#if UNITY_6000_3_OR_NEWER
+        public static int GetObjectInstanceId(Object obj)
+            => unchecked((int)EntityId.ToULong(obj.GetEntityId()));
+
+        public static EntityId ToEntityId(int id)
+            => EntityId.FromULong(unchecked((uint)id));
+
+        public static Object ObjectFromInstanceId(int id)
+            => EditorUtility.EntityIdToObject(ToEntityId(id));
+#else
+        public static int GetObjectInstanceId(Object obj)
+            => obj.GetInstanceID();
+
+        public static Object ObjectFromInstanceId(int id)
+            => EditorUtility.InstanceIDToObject(id);
+#endif
+
         #region Reflection
 
 
@@ -1244,7 +1261,12 @@ namespace VInspector.Libs
         public struct GlobalID : System.IEquatable<GlobalID>
         {
             public Object GetObject() => GlobalObjectId.GlobalObjectIdentifierToObjectSlow(globalObjectId);
-            public int GetObjectInstanceId() => GlobalObjectId.GlobalObjectIdentifierToInstanceIDSlow(globalObjectId);
+            public int GetObjectInstanceId()
+#if UNITY_6000_3_OR_NEWER
+                => unchecked((int)EntityId.ToULong(GlobalObjectId.GlobalObjectIdentifierToEntityIdSlow(globalObjectId)));
+#else
+                => GlobalObjectId.GlobalObjectIdentifierToInstanceIDSlow(globalObjectId);
+#endif
 
 
             public int idType => globalObjectId.identifierType;
@@ -1297,7 +1319,12 @@ namespace VInspector.Libs
         {
             var unityGlobalIds = new GlobalObjectId[instanceIds.Count()];
 
+#if UNITY_6000_3_OR_NEWER
+            var entityIds = instanceIds.Select(ToEntityId).ToArray();
+            GlobalObjectId.GetGlobalObjectIdsSlow(entityIds, unityGlobalIds);
+#else
             GlobalObjectId.GetGlobalObjectIdsSlow(instanceIds.ToArray(), unityGlobalIds);
+#endif
 
             var globalIds = unityGlobalIds.Select(r => new GlobalID(r.ToString()));
 
@@ -1320,9 +1347,14 @@ namespace VInspector.Libs
         {
             var goids = globalIDs.Select(r => r.globalObjectId).ToArray();
 
+#if UNITY_6000_3_OR_NEWER
+            var entityIds = new EntityId[goids.Length];
+            GlobalObjectId.GlobalObjectIdentifiersToEntityIdsSlow(goids, entityIds);
+            var iids = entityIds.Select(id => unchecked((int)EntityId.ToULong(id))).ToArray();
+#else
             var iids = new int[goids.Length];
-
             GlobalObjectId.GlobalObjectIdentifiersToInstanceIDsSlow(goids, iids);
+#endif
 
             return iids;
 
@@ -1353,7 +1385,7 @@ namespace VInspector.Libs
 
                 var m_ListAreaState = t.GetField("m_ListAreaState", maxBindingFlags).GetValue(w);
 
-                m_ListAreaState.GetType().GetField("m_SelectedInstanceIDs").SetValue(m_ListAreaState, new List<int> { folder.GetInstanceID() });
+                m_ListAreaState.GetType().GetField("m_SelectedInstanceIDs").SetValue(m_ListAreaState, new List<int> { GetObjectInstanceId(folder) });
 
                 t.GetMethod("OpenSelectedFolders", maxBindingFlags).Invoke(null, null);
 

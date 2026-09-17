@@ -1,4 +1,6 @@
 ﻿#if UNITY_EDITOR
+#pragma warning disable CS0618
+#pragma warning disable CS0619
 
 using System.Collections;
 using System.Collections.Generic;
@@ -948,7 +950,7 @@ namespace DamageNumbersPro.Internal {
             tmp.verticalAlignment = VerticalAlignmentOptions.Middle;
             tmp.horizontalAlignment = HorizontalAlignmentOptions.Center;
             tmp.text = "1";
-            tmp.enableWordWrapping = false;
+            tmp.textWrappingMode = TextWrappingModes.NoWrap;
 
             //Size Delta:
             RectTransform rectTransform = tmp.GetComponent<RectTransform>();
@@ -978,7 +980,7 @@ namespace DamageNumbersPro.Internal {
             tmp.verticalAlignment = VerticalAlignmentOptions.Middle;
             tmp.horizontalAlignment = HorizontalAlignmentOptions.Center;
             tmp.text = "1";
-            tmp.enableWordWrapping = false;
+            tmp.textWrappingMode = TextWrappingModes.NoWrap;
             tmp.raycastTarget = false;
 
             //Size Delta:

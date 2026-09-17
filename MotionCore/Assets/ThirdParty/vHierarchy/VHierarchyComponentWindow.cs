@@ -1,4 +1,6 @@
 #if UNITY_EDITOR
+#pragma warning disable CS0618
+#pragma warning disable CS0619
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,7 +25,7 @@ namespace VHierarchy
 
         void OnGUI()
         {
-            if (!component) component = EditorUtility.InstanceIDToObject(componentIid) as Component;
+            if (!component) component = ObjectFromInstanceId(componentIid) as Component;
             if (!component) { Close(); return; }
 
             if (!editor) Init(component);
@@ -544,7 +546,7 @@ namespace VHierarchy
                 editor.DestroyImmediate();
 
             this.component = component;
-            this.componentIid = component.GetInstanceID();
+            this.componentIid = GetObjectInstanceId(component);
             this.editor = Editor.CreateEditor(component);
 
         }

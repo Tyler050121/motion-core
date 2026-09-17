@@ -43,7 +43,8 @@ namespace Animancer.Editor
                 if (source == null && _SourceGameObject != null)
                 {
 #if UNITY_6000_3_OR_NEWER
-                    var component = EditorUtility.EntityIdToObject(_SourceComponentInstanceID);
+                    var component = EditorUtility.EntityIdToObject(
+                        EntityId.FromULong(unchecked((uint)_SourceComponentInstanceID)));
 #else
                     var component = EditorUtility.InstanceIDToObject(_SourceComponentInstanceID);
 #endif
@@ -70,7 +71,7 @@ namespace Animancer.Editor
             if (SourceObject != null)
             {
                 _SourceGameObject = SourceObject.gameObject;
-                _SourceComponentInstanceID = SourceObject.GetInstanceID();
+                _SourceComponentInstanceID = unchecked((int)EntityId.ToULong(SourceObject.GetEntityId()));
             }
         }
 

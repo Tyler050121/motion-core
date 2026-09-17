@@ -24,7 +24,7 @@ namespace VInspector
 
         void OnGUI()
         {
-            if (!component) component = EditorUtility.InstanceIDToObject(componentIid) as Component;
+            if (!component) component = ObjectFromInstanceId(componentIid) as Component;
             if (!component) { Close(); return; }
             if (!editor) { Init(component); skipHeightUpdate = true; }
 
@@ -425,7 +425,7 @@ namespace VInspector
             this.component = component;
             this.editor = Editor.CreateEditor(component);
 
-            this.componentIid = component.GetInstanceID();
+            this.componentIid = GetObjectInstanceId(component);
 
             hasCustomUITKEditor = editor.GetType().GetMethod("CreateInspectorGUI", maxBindingFlags) != null;
 
@@ -455,7 +455,7 @@ namespace VInspector
 
         public Component component;
         public Editor editor;
-        public InspectorElement inspectorElement;
+        [System.NonSerialized] public InspectorElement inspectorElement;
 
         public int componentIid;
 
