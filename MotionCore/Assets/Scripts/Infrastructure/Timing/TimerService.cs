@@ -41,7 +41,7 @@ namespace MotionCore.Infrastructure
             int removed = 0;
             for (int i = 0; i < m_Timers.Count; i++)
             {
-                if (!ReferenceEquals(m_Timers[i].Owner, owner))
+                if (m_Timers[i].Removed || !ReferenceEquals(m_Timers[i].Owner, owner))
                     continue;
 
                 m_Timers[i].Remove();

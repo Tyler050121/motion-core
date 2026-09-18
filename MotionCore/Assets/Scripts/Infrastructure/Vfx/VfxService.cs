@@ -32,6 +32,9 @@ namespace MotionCore.Infrastructure
 
         public void Dispose()
         {
+            foreach (KeyValuePair<PooledVfx, TimerHandle> pair in m_ReleaseTimers)
+                m_Timer.Remove(pair.Value);
+
             foreach (KeyValuePair<string, PrefabPool<PooledVfx>> pair in m_Pools)
                 pair.Value.Dispose();
 
@@ -79,6 +82,12 @@ namespace MotionCore.Infrastructure
         void ScheduleRelease(PooledVfx instance, float releaseDelay, Action release)
         {
             TimerHandle timer = GetTimerHandle(instance);
+            Action releaseInstance = () =>
+            {
+                release();
+                m_ReleaseTimers.Remove(instance);
+            };
+
             m_Timer.Every(instance, 0.05f, timer, () =>
             {
                 if (instance && instance.IsAlive())
@@ -87,11 +96,11 @@ namespace MotionCore.Infrastructure
                 m_Timer.Remove(timer);
                 if (releaseDelay <= 0f)
                 {
-                    release();
+                    releaseInstance();
                     return;
                 }
 
-                m_Timer.Delay(instance, releaseDelay, timer, release);
+                m_Timer.Delay(instance, releaseDelay, timer, releaseInstance);
             });
         }
 

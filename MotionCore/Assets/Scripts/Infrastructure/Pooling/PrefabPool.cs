@@ -22,6 +22,7 @@ namespace MotionCore.Infrastructure
         readonly int m_MinCachedCount;
         readonly Stack<T> m_FreeItems;
         readonly List<T> m_ClonedItems;
+        readonly HashSet<T> m_RentedItems;
 
         bool m_Prewarmed;
         int m_ActiveCount;
@@ -53,6 +54,7 @@ namespace MotionCore.Infrastructure
             m_TargetCachedCount = Mathf.Max(m_InitialCapacity, m_MinCachedCount);
             m_FreeItems = new Stack<T>(m_InitialCapacity);
             m_ClonedItems = new List<T>(m_InitialCapacity);
+            m_RentedItems = new HashSet<T>();
         }
 
         public void Prewarm()
@@ -75,6 +77,8 @@ namespace MotionCore.Infrastructure
             T item = m_FreeItems.Count > 0
                 ? m_FreeItems.Pop()
                 : CreateClone();
+
+            m_RentedItems.Add(item);
             m_ActiveCount++;
             RaiseCachedTarget();
             item.transform.SetParent(parent, false);
@@ -88,7 +92,10 @@ namespace MotionCore.Infrastructure
             if (!item)
                 return;
 
-            m_ActiveCount = Mathf.Max(0, m_ActiveCount - 1);
+            if (!m_RentedItems.Remove(item))
+                throw new InvalidOperationException($"{nameof(PrefabPool<T>)} 收到未租借或重复归还的实例：{item.name}");
+
+            m_ActiveCount--;
             DecayCachedTarget();
             NotifyReturn(item);
             item.gameObject.SetActive(false);
@@ -112,6 +119,7 @@ namespace MotionCore.Infrastructure
 
             m_ClonedItems.Clear();
             m_FreeItems.Clear();
+            m_RentedItems.Clear();
 
             m_Prewarmed = false;
             m_ActiveCount = 0;

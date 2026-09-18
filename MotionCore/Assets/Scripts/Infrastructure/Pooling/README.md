@@ -4,7 +4,7 @@
 
 ## 基础用法
 
-当前 `ApplicationController` 会默认注册 `ResourcesAssetProvider`。资源 key 使用 `Resources` 下不带扩展名的 prefab 路径，例如 `Resources/VFX/HitSpark.prefab` 对应 `VFX/HitSpark`。
+当前 `ApplicationController` 默认注册 `YooAssetProvider`，也可切换为只读取真实 `Assets/Resources` 布局的 `ResourcesAssetProvider`。资源 key 使用资源后端约定：`Resources/VFX/HitSpark.prefab` 在 Resources 模式下对应 `VFX/HitSpark`，在 YooAsset 模式下使用 Collector 发布的资源地址。
 
 ```csharp
 using MotionCore.Infrastructure;
@@ -86,6 +86,7 @@ public sealed class PooledProjectile : MonoBehaviour, IPoolLifecycle
 - prefab 上必须挂着 `PrefabPool<T>` 的 `T` 组件，例如 `PrefabPool<ParticleSystem>` 对应 prefab 上的 `ParticleSystem`。
 - `poolRoot` 可以为空；不为空时，归还的实例会重新挂到这个节点下。
 - 池创建出来的实例不要直接 `Destroy`，应该调用 `Release`。
+- `Release` 只接受当前由该池租借的实例；外部实例或重复归还会直接报错。
 - `initialCapacity` 决定 `Prewarm` 会提前创建多少个实例。
 - `minCachedCount` 决定压力下降后至少保留多少个空闲实例。
 - 压力变高时，池会临时提高缓存目标；实例归还时会按时间间隔逐步裁掉多余缓存。

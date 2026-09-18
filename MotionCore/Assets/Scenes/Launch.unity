@@ -585,7 +585,7 @@ MonoBehaviour:
   m_AssetProviderMode: 1
   m_YooAssetPackageName: DefaultPackage
   m_YooAssetPlayMode: 0
-  m_VfxRoot: {fileID: 1846869884}
+  m_RuntimeRoot: {fileID: 1846869884}
   m_StartupSceneName: SampleScene
 --- !u!4 &1846869884
 Transform:

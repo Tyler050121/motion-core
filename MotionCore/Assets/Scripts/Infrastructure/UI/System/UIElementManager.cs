@@ -57,7 +57,7 @@ namespace MotionCore.Infrastructure
                     if (m_WorldWidgetInstances.ContainsKey(source))
                         continue;
 
-                    RectTransform instance = CreateWidget(source.WidgetId).transform as RectTransform;
+                    RectTransform instance = (RectTransform)CreateWidget(source.WidgetId).transform;
                     instance.SetPositionAndRotation(
                         source.Anchor.position + source.Offset,
                         m_RenderCamera.transform.rotation);
@@ -168,8 +168,7 @@ namespace MotionCore.Infrastructure
             if (!TryGetLoadedHandle(elementId, out UIElementHandle handle))
             {
                 CreateElement(elementId);
-                if (!TryGetLoadedHandle(elementId, out handle))
-                    return;
+                handle = m_LoadedElements[elementId];
             }
 
             if (handle.IsClosing)
@@ -192,7 +191,7 @@ namespace MotionCore.Infrastructure
         public GameObject CreateWidget(string widgetId)
         {
             if (!m_Config.TryGetWidget(widgetId, out UISystemConfig.UIWidgetEntry entry))
-                return null;
+                throw new InvalidOperationException($"UI Widget 未注册：{widgetId}");
 
             RectTransform parent = m_LayerRoots[entry.LayerId];
             GameObject instance;
@@ -206,8 +205,8 @@ namespace MotionCore.Infrastructure
             }
             else
             {
-                GameObject prefab = m_AssetProvider.Load<GameObject>(entry.AssetKey);
-                instance = Instantiate(prefab, parent, false);
+                RectTransform prefab = m_AssetProvider.LoadComponent<RectTransform>(entry.AssetKey);
+                instance = Instantiate(prefab, parent, false).gameObject;
                 instance.name = widgetId;
                 m_TransientWidgetInstances.Add(instance);
             }
@@ -339,10 +338,7 @@ namespace MotionCore.Infrastructure
         void CreateElement(string elementId)
         {
             if (!m_Config.TryGetOpenable(elementId, out UISystemConfig.UIPrefabBaseEntry entry))
-            {
-                Debug.LogError("[UIElementManager] UI not registered: " + elementId);
-                return;
-            }
+                throw new InvalidOperationException($"UI 元素未注册：{elementId}");
 
             RectTransform parent = m_LayerRoots[entry.LayerId];
             GameObject prefab = m_AssetProvider.Load<GameObject>(entry.AssetKey);
@@ -423,9 +419,7 @@ namespace MotionCore.Infrastructure
         bool CanOpenElement(string elementId)
         {
             if (!m_Config.TryGetOpenable(elementId, out UISystemConfig.UIPrefabBaseEntry entry))
-            {
-                return false;
-            }
+                throw new InvalidOperationException($"UI 元素未注册：{elementId}");
 
             return m_AllowedElementIds.Contains(elementId) ||
                    entry.PrefabType == UISystemConfig.UIPrefabType.Window ||

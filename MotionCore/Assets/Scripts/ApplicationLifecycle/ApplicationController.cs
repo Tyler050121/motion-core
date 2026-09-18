@@ -30,8 +30,8 @@ namespace MotionCore.ApplicationLifecycle
          Tooltip("编辑器下的 YooAsset 播放模式，Player 固定使用 Offline")]
         YooAssetPlayMode m_YooAssetPlayMode = YooAssetPlayMode.EditorSimulate;
 
-        [SerializeField, Tooltip("VFX 根节点")]
-        Transform m_VfxRoot;
+        [SerializeField, Tooltip("运行时实例根节点")]
+        Transform m_RuntimeRoot;
 
         [SerializeField, Tooltip("启动完成后进入的场景")]
         string m_StartupSceneName;
@@ -43,6 +43,7 @@ namespace MotionCore.ApplicationLifecycle
         IAssetProvider m_Assets;
         IConfigProvider m_Configs;
         CharacterSpawner m_CharacterSpawner;
+        AudioService m_Audio;
         VfxService m_Vfx;
         SceneNavigator m_SceneNavigator;
         UIRuntimeBootstrap m_UiBootstrap;
@@ -58,7 +59,8 @@ namespace MotionCore.ApplicationLifecycle
             m_GameTime = new GameTimeService();
             m_EventBus = new EventBus();
             m_Assets = CreateAssetProvider();
-            m_Vfx = new VfxService(m_Assets, m_Timer, m_VfxRoot);
+            m_Audio = new AudioService(m_Assets, m_RuntimeRoot);
+            m_Vfx = new VfxService(m_Assets, m_Timer, m_RuntimeRoot);
             m_SceneNavigator = new SceneNavigator(m_EventBus);
             m_UiBootstrap = GetComponent<UIRuntimeBootstrap>();
             ServiceLocator.Register(m_Cursor);
@@ -66,6 +68,7 @@ namespace MotionCore.ApplicationLifecycle
             ServiceLocator.Register(m_GameTime);
             ServiceLocator.Register(m_EventBus);
             ServiceLocator.Register(m_Assets);
+            ServiceLocator.Register<IAudioService>(m_Audio);
             ServiceLocator.Register<IVfxService>(m_Vfx);
             ServiceLocator.Register<ISceneNavigator>(m_SceneNavigator);
         }
@@ -98,6 +101,7 @@ namespace MotionCore.ApplicationLifecycle
             m_Cursor.Tick();
             m_Timer.Tick(Time.deltaTime);
             m_GameTime.Tick(Time.unscaledDeltaTime);
+            m_Audio.Tick();
         }
 
         void OnApplicationFocus(bool focus)
@@ -119,11 +123,13 @@ namespace MotionCore.ApplicationLifecycle
             ServiceLocator.Unregister(m_Assets);
             ServiceLocator.Unregister<IConfigProvider>(m_Configs);
             ServiceLocator.Unregister(m_CharacterSpawner);
+            ServiceLocator.Unregister<IAudioService>(m_Audio);
             ServiceLocator.Unregister<IVfxService>(m_Vfx);
             ServiceLocator.Unregister<ISceneNavigator>(m_SceneNavigator);
             m_SceneNavigator.Dispose();
             m_EventBus.Clear();
             m_Vfx.Dispose();
+            m_Audio.Dispose();
             m_GameTime.Reset();
             if (m_Assets is System.IDisposable disposableAssets)
             {
