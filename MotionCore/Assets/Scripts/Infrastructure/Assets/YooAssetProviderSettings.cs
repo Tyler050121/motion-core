@@ -6,8 +6,10 @@ namespace MotionCore.Infrastructure
     public sealed class YooAssetProviderSettings
     {
         public const string DefaultPackageName = "DefaultPackage";
+        public const string DefaultAssetRoot = "Assets/ResourcesAssets";
 
         public string PackageName { get; set; } = DefaultPackageName;
+        public string AssetRoot { get; set; } = DefaultAssetRoot;
         public YooAssetPlayMode PlayMode { get; set; } = YooAssetPlayMode.EditorSimulate;
     }
 

@@ -13,6 +13,7 @@ namespace MotionCore.Infrastructure
     {
         readonly Dictionary<string, AssetHandle> m_LoadedHandles = new(StringComparer.Ordinal);
         readonly ResourcePackage m_Package;
+        readonly string m_AssetRoot;
         bool m_IsInitialized;
 
         /// <summary>
@@ -20,13 +21,9 @@ namespace MotionCore.Infrastructure
         /// </summary>
         public YooAssetProvider(YooAssetProviderSettings settings)
         {
-            if (string.IsNullOrWhiteSpace(settings.PackageName))
-                throw new ArgumentException("YooAsset 包名不能为空。", nameof(settings.PackageName));
-            if (YooAssets.Initialized)
-                throw new InvalidOperationException("YooAsset 运行时已经初始化。");
-
             YooAssets.Initialize();
             m_Package = YooAssets.CreatePackage(settings.PackageName);
+            m_AssetRoot = settings.AssetRoot.Replace('\\', '/').TrimEnd('/');
             InitializationTask = InitializeAsync(settings.PlayMode);
         }
 
@@ -41,31 +38,65 @@ namespace MotionCore.Infrastructure
         public T Load<T>(string key)
             where T : UnityEngine.Object
         {
-            if (string.IsNullOrWhiteSpace(key))
-                throw new ArgumentException("资源 key 不能为空。", nameof(key));
-
             if (!m_IsInitialized)
                 throw new InvalidOperationException("YooAsset 尚未初始化完成，请先等待 InitializationTask。");
 
+            T asset = LoadAsset<T>(key, typeof(T));
+            if (!asset)
+                throw new InvalidOperationException($"YooAsset 未找到资源：{key} ({typeof(T).Name})");
+
+            return asset;
+        }
+
+        /// <summary>
+        /// 从资源清单中加载指定目录内的全部指定类型资源，空路径表示资源根目录。
+        /// </summary>
+        public T[] LoadAll<T>(string path)
+            where T : UnityEngine.Object
+        {
+            if (!m_IsInitialized)
+                throw new InvalidOperationException("YooAsset 尚未初始化完成，请先等待 InitializationTask。");
+
+            path = path.Replace('\\', '/').Trim('/');
+            string directory = path.Length == 0 ? m_AssetRoot : $"{m_AssetRoot}/{path}";
+            string prefix = directory + "/";
+            AssetInfo[] assetInfos = m_Package.GetAllAssetInfos();
+            var assets = new List<T>();
+            for (int i = 0; i < assetInfos.Length; i++)
+            {
+                AssetInfo assetInfo = assetInfos[i];
+                if (!assetInfo.AssetPath.StartsWith(prefix, StringComparison.Ordinal))
+                    continue;
+
+                if (LoadAsset<T>(assetInfo.Address, typeof(UnityEngine.Object)) is T asset)
+                    assets.Add(asset);
+            }
+
+            return assets.ToArray();
+        }
+
+        // 单项按目标类型加载；批量先读取主资源，仅缓存类型匹配的结果。
+        T LoadAsset<T>(string key, Type loadType) where T : UnityEngine.Object
+        {
             key = key.Replace('\\', '/');
             string cacheKey = typeof(T).FullName + ":" + key;
-            if (!m_LoadedHandles.TryGetValue(cacheKey, out AssetHandle handle))
-            {
-                handle = m_Package.LoadAssetAsync<T>(key);
-                handle.WaitForAsyncComplete();
-                if (handle.Status != EOperationStatus.Succeed)
-                {
-                    string error = handle.LastError;
-                    handle.Release();
-                    throw new InvalidOperationException($"YooAsset 加载资源失败：{key} ({typeof(T).Name})，{error}");
-                }
+            if (m_LoadedHandles.TryGetValue(cacheKey, out AssetHandle cached))
+                return cached.GetAssetObject<T>();
 
-                m_LoadedHandles.Add(cacheKey, handle);
+            AssetHandle handle = m_Package.LoadAssetAsync(key, loadType);
+            handle.WaitForAsyncComplete();
+            if (handle.Status != EOperationStatus.Succeed)
+            {
+                string error = handle.LastError;
+                handle.Release();
+                throw new InvalidOperationException($"YooAsset 加载资源失败：{key} ({typeof(T).Name})，{error}");
             }
 
             T asset = handle.GetAssetObject<T>();
-            if (!asset)
-                throw new InvalidOperationException($"YooAsset 未找到资源：{key} ({typeof(T).Name})");
+            if (asset)
+                m_LoadedHandles.Add(cacheKey, handle);
+            else
+                handle.Release();
 
             return asset;
         }

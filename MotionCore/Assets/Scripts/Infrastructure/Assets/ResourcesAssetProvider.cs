@@ -10,15 +10,18 @@ namespace MotionCore.Infrastructure
     {
         public T Load<T>(string key) where T : UnityEngine.Object
         {
-            if (string.IsNullOrWhiteSpace(key))
-                throw new ArgumentException("资源 key 不能为空。", nameof(key));
-
             key = key.Replace('\\', '/');
             T asset = Resources.Load<T>(key);
             if (!asset)
                 throw new InvalidOperationException($"Resources 未找到资源：{key} ({typeof(T).Name})");
 
             return asset;
+        }
+
+        public T[] LoadAll<T>(string path) where T : UnityEngine.Object
+        {
+            path = path.Replace('\\', '/').Trim('/');
+            return Resources.LoadAll<T>(path);
         }
 
         public T LoadComponent<T>(string key) where T : Component

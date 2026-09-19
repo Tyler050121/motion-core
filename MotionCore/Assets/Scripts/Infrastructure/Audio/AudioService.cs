@@ -148,7 +148,7 @@ namespace MotionCore.Infrastructure
             bool is3D,
             Transform followTarget)
         {
-            RequirePreset(preset);
+            RequireBus(preset.Bus);
             AudioClip clip = m_Assets.Load<AudioClip>(preset.AssetKey);
             AudioSource source = m_SourcePool.Get();
             ApplyPreset(source, preset, clip, position, is3D);
@@ -223,20 +223,8 @@ namespace MotionCore.Infrastructure
             UnityEngine.Object.Destroy(source.gameObject);
         }
 
-        static void RequirePreset(AudioPreset preset)
-        {
-            if (!preset)
-                throw new ArgumentNullException(nameof(preset));
-            if (string.IsNullOrWhiteSpace(preset.AssetKey))
-                throw new InvalidOperationException($"AudioPreset 缺少资源 key：{preset.name}");
-
-            RequireBus(preset.Bus);
-        }
-
         static void RequireBus(AudioBus bus)
         {
-            if (!bus)
-                throw new ArgumentNullException(nameof(bus));
             if (!bus.Output)
                 throw new InvalidOperationException($"AudioBus 缺少 Mixer Group：{bus.name}");
             if (string.IsNullOrWhiteSpace(bus.VolumeParameter))

@@ -1,3 +1,4 @@
+using System.IO;
 using MotionCore.Gameplay.Character;
 using MotionCore.Gameplay.Configs;
 using MotionCore.Infrastructure;
@@ -26,6 +27,9 @@ namespace MotionCore.ApplicationLifecycle
         [SerializeField, ShowIf("m_AssetProviderMode", AssetProviderMode.YooAsset), Tooltip("YooAsset 包名")]
         string m_YooAssetPackageName = YooAssetProviderSettings.DefaultPackageName;
 
+        [SerializeField, ShowIf("m_AssetProviderMode", AssetProviderMode.YooAsset), Tooltip("YooAsset 收集资源根目录")]
+        string m_YooAssetAssetRoot = YooAssetProviderSettings.DefaultAssetRoot;
+
         [SerializeField, ShowIf("m_AssetProviderMode", AssetProviderMode.YooAsset),
          Tooltip("编辑器下的 YooAsset 播放模式，Player 固定使用 Offline")]
         YooAssetPlayMode m_YooAssetPlayMode = YooAssetPlayMode.EditorSimulate;
@@ -44,6 +48,7 @@ namespace MotionCore.ApplicationLifecycle
         IConfigProvider m_Configs;
         CharacterSpawner m_CharacterSpawner;
         AudioService m_Audio;
+        ISaveService m_Save;
         VfxService m_Vfx;
         SceneNavigator m_SceneNavigator;
         UIRuntimeBootstrap m_UiBootstrap;
@@ -60,6 +65,7 @@ namespace MotionCore.ApplicationLifecycle
             m_EventBus = new EventBus();
             m_Assets = CreateAssetProvider();
             m_Audio = new AudioService(m_Assets, m_RuntimeRoot);
+            m_Save = new JsonSaveService(Path.Combine(Application.persistentDataPath, "Saves"));
             m_Vfx = new VfxService(m_Assets, m_Timer, m_RuntimeRoot);
             m_SceneNavigator = new SceneNavigator(m_EventBus);
             m_UiBootstrap = GetComponent<UIRuntimeBootstrap>();
@@ -69,6 +75,7 @@ namespace MotionCore.ApplicationLifecycle
             ServiceLocator.Register(m_EventBus);
             ServiceLocator.Register(m_Assets);
             ServiceLocator.Register<IAudioService>(m_Audio);
+            ServiceLocator.Register(m_Save);
             ServiceLocator.Register<IVfxService>(m_Vfx);
             ServiceLocator.Register<ISceneNavigator>(m_SceneNavigator);
         }
@@ -124,6 +131,7 @@ namespace MotionCore.ApplicationLifecycle
             ServiceLocator.Unregister<IConfigProvider>(m_Configs);
             ServiceLocator.Unregister(m_CharacterSpawner);
             ServiceLocator.Unregister<IAudioService>(m_Audio);
+            ServiceLocator.Unregister(m_Save);
             ServiceLocator.Unregister<IVfxService>(m_Vfx);
             ServiceLocator.Unregister<ISceneNavigator>(m_SceneNavigator);
             m_SceneNavigator.Dispose();
@@ -160,6 +168,7 @@ namespace MotionCore.ApplicationLifecycle
             return new YooAssetProvider(new YooAssetProviderSettings
             {
                 PackageName = m_YooAssetPackageName,
+                AssetRoot = m_YooAssetAssetRoot,
                 PlayMode = GetYooAssetPlayMode()
             });
         }

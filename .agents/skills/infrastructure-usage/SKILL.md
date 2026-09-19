@@ -1,6 +1,6 @@
 ---
 name: infrastructure-usage
-description: 使用项目 Infrastructure API 接入资源、配置、事件、计时、对象池、UI、VFX、音频和场景服务时使用。
+description: 使用项目 Infrastructure API 接入资源、配置、事件、计时、对象池、UI、VFX、音频、存档和场景服务时使用。
 ---
 
 # Infrastructure API Reference
@@ -32,11 +32,13 @@ ServiceLocator.Unregister<IEventBus>(eventBus);
 | API | 返回值 |
 | --- | --- |
 | `Load<T>(string key)` | `T` 类型资源。 |
+| `LoadAll<T>(string path)` | 指定目录中的全部 `T` 类型资源。 |
 | `LoadComponent<T>(string key)` | Prefab 根节点上的 `T` 组件。 |
 
 ```csharp
 IAssetProvider assets = ServiceLocator.Resolve<IAssetProvider>();
 GameObject prefab = assets.Load<GameObject>(assetKey);
+AudioBus[] buses = assets.LoadAll<AudioBus>("Audio/Buses");
 RectTransform view = assets.LoadComponent<RectTransform>(assetKey);
 ```
 
@@ -207,6 +209,28 @@ AudioHandle handle = audio.PlayFollow(loopPreset, target);
 audio.Stop(handle);
 audio.SetVolume(sfxBus, 0.8f);
 ```
+
+## ISaveService
+
+按存档标识同步读写完整数据对象，不维护业务状态或自动保存。
+
+| API | 说明 |
+| --- | --- |
+| `TryLoad<T>(saveId, out data)` | 文件不存在返回 false，读取或转换失败抛出异常。 |
+| `Save<T>(saveId, data)` | 立即写盘，覆盖同标识存档。 |
+| `Exists(saveId)` | 检查文件存在，不校验内容。 |
+| `Delete(saveId)` | 删除存档，不存在时无操作。 |
+
+```csharp
+ISaveService saves = ServiceLocator.Resolve<ISaveService>();
+if (saves.TryLoad("slot_01", out ProgressData data))
+    RestoreProgress(data);
+saves.Save("slot_01", progress);
+```
+
+`ProgressData` 和恢复行为由消费者定义。支持普通对象、列表、字典和标量，不直接保存 Unity 对象图。
+默认实现 `JsonSaveService`，目录由构造参数提供，应用入口使用 `persistentDataPath/Saves`。
+标识使用 `slot_01` 等稳定名称，不传入文件路径。Schema 与迁移策略由消费者定义。
 
 ## ISceneNavigator
 
