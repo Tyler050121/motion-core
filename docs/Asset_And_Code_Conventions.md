@@ -39,3 +39,14 @@ Behavior Designer 节点在 `Gameplay/AI/BehaviorDesigner/`。不要在文档另
 
 配置字段、ID 号段和源表路径统一见 [配置设计](Configuration_Architecture.md)；
 第三方兼容例外见 [架构决策](Architecture_Decisions.md)。
+
+## 提交信息
+
+提交标题使用 `type: 描述`，允许的类型以 [commit-msg](../.githooks/commit-msg) 为准；
+支持可选 scope 和破坏性变更标记，例如 `fix(combat): 修复命中重复结算`、`refactor!: 调整初始化接口`。
+合并、回滚提交也使用相同格式，例如 `chore: 合并开发分支`、`revert: 回退目标锁定修改`。
+
+首次打开 Unity 并完成脚本编译后，Editor 自动安装提交检查；也可通过
+`MotionCore > Git > Install Commit Hook` 重试。只安装提交钩子的转发入口，保留 LFS 等其他钩子；
+已有自定义 hooks 路径或提交钩子时不会覆盖，Console 会提示手动接入。
+下载 ZIP、批处理构建不会自动安装。打开 Unity 前以及跳过本地钩子的提交不受此检查限制。
